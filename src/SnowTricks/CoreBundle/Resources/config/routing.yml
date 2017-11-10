@@ -1,0 +1,7 @@
+snow_tricks_core_homepage:
+    path:     /
+    defaults: { _controller: SnowTricksCoreBundle:Core:index }
+
+snow_tricks_core_contact:
+    path:     /contact 
+    defaults: { _controller: SnowTricksCoreBundle:Core:contact }

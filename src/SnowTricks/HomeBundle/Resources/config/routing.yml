@@ -1,0 +1,23 @@
+snow_tricks_home_homepage:
+    path:     /{page}
+    defaults: { _controller: SnowTricksHomeBundle:Tricks:home, page: 1 }
+    requirements:
+          page: \d*
+
+snow_tricks_home_view:
+    path:     /tricks/{id}
+    defaults: { _controller: SnowTricksHomeBundle:Tricks:view }
+    requirements:
+          id: \d+
+
+snow_tricks_home_view_slug:
+    path:     /{year}/{slug}.{_format}
+    defaults: { _controller: SnowTricksHomeBundle:Tricks:viewSlug, _format: html }
+    requirements:
+          year:   \d{4}
+          format: html|xml
+
+snow_tricks_home_add:
+    path:     /add 
+    defaults: { _controller: SnowTricksHomeBundle:Tricks:add }
+

@@ -1,0 +1,10 @@
+snow_tricks_core:
+    resource: "@SnowTricksCoreBundle/Resources/config/routing.yml"
+    prefix:   /
+
+snow_tricks_home:
+    resource: "@SnowTricksHomeBundle/Resources/config/routing.yml"
+    prefix:   /home
+
+
+
