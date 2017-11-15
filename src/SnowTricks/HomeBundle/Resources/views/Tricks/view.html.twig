@@ -1,5 +1,9 @@
-
 {% extends "SnowTricksHomeBundle::layout.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
 
 {% block title %}
   Lecture d'une annonce - {{ parent() }}
