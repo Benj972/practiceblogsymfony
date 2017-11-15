@@ -2,9 +2,12 @@
 
 namespace SnowTricks\HomeBundle\Controller;
 
+use SnowTricks\HomeBundle\Entity\Member;
+use SnowTricks\HomeBundle\Entity\Picture;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class TricksController extends Controller
 {
@@ -59,20 +62,46 @@ class TricksController extends Controller
 
     public function addAction(Request $request)
     {
-    $session = $request->getSession();
-    
-    // Bien sûr, cette méthode devra réellement ajouter l'annonce
-    
-    // Mais faisons comme si c'était le cas
-    $session->getFlashBag()->add('info', 'Annonce bien enregistrée');
 
-    // Le « flashBag » est ce qui contient les messages flash dans la session
-    // Il peut bien sûr contenir plusieurs messages :
-    $session->getFlashBag()->add('info', 'Oui oui, elle est bien enregistrée !');
+// Création de l'entité Advert
+    $member = new Member();
+    $member->setPseudo('Ben');
+    $member->setDescription("apprenti developpeur");
+    $member->setLogin('ben972');
+    $member->setPassword('tetetete');
 
-    // Puis on redirige vers la page de visualisation de cette annonce
-    return $this->redirectToRoute('snow_tricks_home_view', array('id' => 5));
+    // Création de l'entité Image
+    $picture = new Picture();
+    $picture->setUrl('http://sdz-upload.s3.amazonaws.com/prod/upload/job-de-reve.jpg');
+    $picture->setAlt('Job de rêve');
+
+    // On lie l'image à l'annonce
+    $member->setPicture($picture);
+
+    // On récupère l'EntityManager
+    $em = $this->getDoctrine()->getManager();
+
+    // Étape 1 : On « persiste » l'entité
+    $em->persist($member);
+
+    // Étape 1 bis : si on n'avait pas défini le cascade={"persist"},
+    // on devrait persister à la main l'entité $image
+    // $em->persist($image);
+
+    // Étape 2 : On déclenche l'enregistrement
+    $em->flush();
+
+    if ($request->isMethod('POST')) {
+      $request->getSession()->getFlashBag()->add('notice', 'Annonce bien enregistrée.');
+      // Puis on redirige vers la page de visualisation de cettte annonce
+      return $this->redirectToRoute('snow_tricks_home_view', array('id' => $member->getId()));
     }
+    // Si on n'est pas en POST, alors on affiche le formulaire
+    return $this->render('SnowTricksHomeBundle:Tricks:add.html.twig');
+    }
+
+
+
 
      public function menuAction($limit)
   {
