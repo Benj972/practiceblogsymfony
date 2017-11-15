@@ -42,6 +42,17 @@ class Message
      */
     private $date;
 
+    /**
+    * @ORM\ManyToOne(targetEntity="SnowTricks\HomeBundle\Entity\Trick")
+    * @ORM\JoinColumn(nullable=false)
+    */
+    private $trick;
+
+    /**
+    * @ORM\ManyToOne(targetEntity="SnowTricks\HomeBundle\Entity\Member")
+    * @ORM\JoinColumn(nullable=false)
+    */
+    private $member;
 
     /**
      * Get id
@@ -123,6 +134,30 @@ class Message
     public function getDate()
     {
         return $this->date;
+    }
+
+    public function setTrick(Trick $trick)
+    {
+        $this->trick = $trick;
+
+        return $this;
+    }
+
+    public function getTrick()
+    {
+        return $this->trick;
+    }
+
+    public function setMember(Member $member)
+    {
+        $this->member = $member;
+
+        return $this;
+    }
+
+    public function getMember()
+    {
+        return $this->member;
     }
 }
 

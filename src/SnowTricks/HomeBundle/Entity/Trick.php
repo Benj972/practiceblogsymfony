@@ -35,6 +35,28 @@ class Trick
      */
     private $content;
 
+    /**
+    * @ORM\OneToOne(targetEntity="SnowTricks\HomeBundle\Entity\Image", cascade={"persist", "remove"})
+    * @ORM\JoinColumn(nullable=false)
+    */
+    private $image;
+
+    /**
+    * @ORM\OneToOne(targetEntity="SnowTricks\HomeBundle\Entity\Video", cascade={"persist", "remove"})
+    * @ORM\JoinColumn(nullable=false)
+    */
+    private $video;
+
+    /**
+    * @ORM\ManyToOne(targetEntity="SnowTricks\HomeBundle\Entity\Category", cascade={"persist"})
+    */
+    private $category;
+
+    /**
+    * @ORM\ManyToOne(targetEntity="SnowTricks\HomeBundle\Entity\Member", cascade={"persist"})
+    */
+    private $member;
+
 
     /**
      * Get id
@@ -94,5 +116,45 @@ class Trick
         return $this->content;
     }
 
+
+      public function setImage(Image $image)
+    {
+        $this->image = $image;
+    }
+
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+      public function setVideo(Video $video)
+    {
+        $this->video = $video;
+    }
+
+    public function getVideo()
+    {
+        return $this->video;
+    }
+
+    public function setCategory(Category $category)
+    {
+        $this->category = $category;
+    }
+
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    public function setMember(Member $member)
+    {
+        $this->member = $member;
+    }
+
+    public function getMember()
+    {
+        return $this->member;
+    }
 }
 
