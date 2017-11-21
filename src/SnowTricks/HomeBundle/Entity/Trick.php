@@ -47,6 +47,11 @@ class Trick
     private $videos;
 
     /**
+    * @ORM\OneToMany(targetEntity="SnowTricks\HomeBundle\Entity\Message", mappedBy="trick")
+    */
+    private $messages;
+
+    /**
     * @ORM\ManyToOne(targetEntity="SnowTricks\HomeBundle\Entity\Category", cascade={"persist"})
     */
     private $category;
@@ -61,6 +66,7 @@ class Trick
     {
         $this->images = new ArrayCollection();
         $this->videos = new ArrayCollection();
+        $this->messages = new ArrayCollection();
     }
 
 
@@ -175,6 +181,23 @@ class Trick
     public function getVideos()
     {
         return $this->videos;
+    }
+
+    public function addMessage(Message $message)
+    {
+        $this->messages[] = $message;
+        // We link the message to the figure
+        $message->setTrick($this);
+    }
+
+    public function removeMessage(Message $message)
+    {
+        $this->messages->removeElement($message);
+    }
+    
+    public function getMessages()
+    {
+        return $this->messages;
     }
 }
 
