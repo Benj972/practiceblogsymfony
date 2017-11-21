@@ -169,7 +169,7 @@ class Member
      *
      * @return Member
      */
-    public function setPicture(Picture $picture)
+    public function setPicture($picture)
     {
         $this->picture = $picture;
     }
