@@ -35,6 +35,11 @@ class Video
      */
     private $alt;
 
+    /**
+    * @ORM\ManyToOne(targetEntity="SnowTricks\HomeBundle\Entity\Trick", inversedBy="videos")
+    * @ORM\JoinColumn(nullable=false)
+    */
+    private $trick;
 
     /**
      * Get id
@@ -93,5 +98,24 @@ class Video
     {
         return $this->alt;
     }
+
+    /**
+    * @param Trick $trick
+    */
+    public function setTrick(Trick $trick)
+    {
+        $this->trick = $trick;
+
+        return $this;
+    }
+
+    /**
+    * @return Trick
+    */
+    public function getTrick()
+    {
+        return $this->trick;
+    }
+
 }
 
