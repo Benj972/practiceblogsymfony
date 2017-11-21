@@ -43,7 +43,7 @@ class Message
     private $date;
 
     /**
-    * @ORM\ManyToOne(targetEntity="SnowTricks\HomeBundle\Entity\Trick")
+    * @ORM\ManyToOne(targetEntity="SnowTricks\HomeBundle\Entity\Trick", inversedBy="messages")
     * @ORM\JoinColumn(nullable=false)
     */
     private $trick;

@@ -2,6 +2,7 @@
 
 namespace SnowTricks\HomeBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -36,16 +37,19 @@ class Trick
     private $content;
 
     /**
-    * @ORM\OneToOne(targetEntity="SnowTricks\HomeBundle\Entity\Image", cascade={"persist", "remove"})
-    * @ORM\JoinColumn(nullable=false)
+    * @ORM\OneToMany(targetEntity="SnowTricks\HomeBundle\Entity\Image", mappedBy="trick")
     */
-    private $image;
+    private $images;
 
     /**
-    * @ORM\OneToOne(targetEntity="SnowTricks\HomeBundle\Entity\Video", cascade={"persist", "remove"})
-    * @ORM\JoinColumn(nullable=false)
+    * @ORM\OneToMany(targetEntity="SnowTricks\HomeBundle\Entity\Video", mappedBy="trick")
     */
-    private $video;
+    private $videos;
+
+    /**
+    * @ORM\OneToMany(targetEntity="SnowTricks\HomeBundle\Entity\Message", mappedBy="trick")
+    */
+    private $messages;
 
     /**
     * @ORM\ManyToOne(targetEntity="SnowTricks\HomeBundle\Entity\Category", cascade={"persist"})
@@ -56,6 +60,14 @@ class Trick
     * @ORM\ManyToOne(targetEntity="SnowTricks\HomeBundle\Entity\Member", cascade={"persist"})
     */
     private $member;
+
+
+    public function __construct()
+    {
+        $this->images = new ArrayCollection();
+        $this->videos = new ArrayCollection();
+        $this->messages = new ArrayCollection();
+    }
 
 
     /**
@@ -116,27 +128,6 @@ class Trick
         return $this->content;
     }
 
-
-      public function setImage(Image $image)
-    {
-        $this->image = $image;
-    }
-
-    public function getImage()
-    {
-        return $this->image;
-    }
-
-      public function setVideo(Video $video)
-    {
-        $this->video = $video;
-    }
-
-    public function getVideo()
-    {
-        return $this->video;
-    }
-
     public function setCategory(Category $category)
     {
         $this->category = $category;
@@ -155,6 +146,58 @@ class Trick
     public function getMember()
     {
         return $this->member;
+    }
+
+    
+    public function addImage(Image $image)
+    {
+        $this->images[] = $image;
+        // We link the image to the figure
+        $image->setTrick($this);
+    }
+
+    public function removeImage(Image $image)
+    {
+        $this->images->removeElement($image);
+    }
+    
+    public function getImages()
+    {
+        return $this->images;
+    }
+
+     public function addVideo(Video $video)
+    {
+        $this->videos[] = $video;
+        // We link the video to the figure
+        $video->setTrick($this);
+    }
+
+    public function removeVideo(Video $video)
+    {
+        $this->videos->removeElement($video);
+    }
+    
+    public function getVideos()
+    {
+        return $this->videos;
+    }
+
+    public function addMessage(Message $message)
+    {
+        $this->messages[] = $message;
+        // We link the message to the figure
+        $message->setTrick($this);
+    }
+
+    public function removeMessage(Message $message)
+    {
+        $this->messages->removeElement($message);
+    }
+    
+    public function getMessages()
+    {
+        return $this->messages;
     }
 }
 

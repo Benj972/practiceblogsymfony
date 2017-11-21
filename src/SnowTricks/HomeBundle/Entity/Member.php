@@ -50,9 +50,10 @@ class Member
     private $description;
 
     /**
-    * @ORM\OneToOne(targetEntity="SnowTricks\HomeBundle\Entity\Picture", cascade={"persist", "remove"})
-    * @ORM\JoinColumn(nullable=false)
-    */
+     * @var string
+     *
+     * @ORM\Column(name="picture", type="string", length=255)
+     */
     private $picture;
 
     /**
@@ -161,13 +162,23 @@ class Member
         return $this->description;
     }
 
-   
-    
-    public function setPicture(Picture $picture)
+   /**
+     * Set picture
+     *
+     * @param string $picture
+     *
+     * @return Member
+     */
+    public function setPicture($picture)
     {
         $this->picture = $picture;
     }
 
+     /**
+     * Get picture
+     *
+     * @return string
+     */
     public function getPicture()
     {
         return $this->picture;

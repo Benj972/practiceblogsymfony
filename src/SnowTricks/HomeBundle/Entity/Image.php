@@ -35,6 +35,11 @@ class Image
      */
     private $alt;
 
+    /**
+    * @ORM\ManyToOne(targetEntity="SnowTricks\HomeBundle\Entity\Trick", inversedBy="images")
+    * @ORM\JoinColumn(nullable=false)
+    */
+    private $trick;
 
     /**
      * Get id
@@ -92,6 +97,24 @@ class Image
     public function getAlt()
     {
         return $this->alt;
+    }
+
+    /**
+    * @param Trick $trick
+    */
+    public function setTrick(Trick $trick)
+    {
+        $this->trick = $trick;
+
+        return $this;
+    }
+
+    /**
+    * @return Trick
+    */
+    public function getTrick()
+    {
+        return $this->trick;
     }
 }
 
