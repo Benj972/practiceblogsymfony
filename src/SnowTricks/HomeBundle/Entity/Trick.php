@@ -2,6 +2,7 @@
 
 namespace SnowTricks\HomeBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -58,8 +59,8 @@ class Trick
 
     public function __construct()
     {
-    $this->images   = new ArrayCollection();
-    $this->videos = new ArrayCollection();
+        $this->images = new ArrayCollection();
+        $this->videos = new ArrayCollection();
     }
 
 
