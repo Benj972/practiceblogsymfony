@@ -1,18 +1,64 @@
 
 {% extends "SnowTricksHomeBundle::layout.html.twig" %}
 
+
 {% block title %}
-  Lecture d'une annonce - {{ parent() }}
+   {{ parent() }}
 {% endblock %}
 
 {% block snow_tricks_body %}
 
-  <h2>{{ advert.title }}</h2>
-  <i>Par {{ advert.author }}, le {{ advert.date|date('d/m/Y') }}</i>
+ <article>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-md-10 mx-auto">
 
-  <div class="well">
-    {{ advert.content }}
-  </div>
+  <h2 class="section-heading">
+      {{ trick.name}} 
+  </h2>
+
+  <p>
+    {{ trick.content }}
+  </p>
+
+    <div style="float: left; margin-right: 1em;">
+    {# On vérifie qu'une image soit bien associée à l'article #}
+    {% for image in listImages%}
+      <img
+        src="{{ image.url }}"
+        alt="{{ image.alt }}"
+        height="60"
+      />
+      {% endfor %}
+    </div>
+
+<div>
+{% for video in listVideos%}
+  <object type="application/x-shockwave-flash" width="425" height="355" data=" {{ video.url }} ">
+    <param name="movie" value=" {{ video.url }} " />
+    <param name="wmode" value="transparent" />
+  </object>
+
+  <!--[if lte IE 6 ]>
+  <embed src=" {{ video.url }}" type="application/x-shockwave-flash" wmode="transparent" width="425" height="355"></embed>
+<![endif]-->
+{% endfor %}
+</div>
+
+
+ <blockquote class="blockquote">>
+      Espace de discussion:
+      <ul>
+        {% for message in listMessages %}
+          <li>{{ message.title }} : {{ message.content }} </li>
+        {% endfor %}
+      </ul>
+</blockquote>
+
+     </div>
+        </div>
+      </div>
+    </article>
 
   <p>
     <a href="{{ path('snow_tricks_home_homepage') }}" class="btn btn-default">
