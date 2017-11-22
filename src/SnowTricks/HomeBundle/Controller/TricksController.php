@@ -3,9 +3,11 @@
 namespace SnowTricks\HomeBundle\Controller;
 
 use SnowTricks\HomeBundle\Entity\Member;
+use SnowTricks\HomeBundle\Entity\Video;
 use SnowTricks\HomeBundle\Entity\Image;
 use SnowTricks\HomeBundle\Entity\Trick;
 use SnowTricks\HomeBundle\Entity\Message;
+use SnowTricks\HomeBundle\Entity\Category;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -43,11 +45,11 @@ class TricksController extends Controller
     }
 
 
- 	public function viewAction($id)
+ 	public function viewAction( Trick $trick)
   	{
       $em = $this->getDoctrine()->getManager();
       // On récupère l'annonce $id
-      $trick= $em->getRepository('SnowTricksHomeBundle:Trick')->find(7);
+      //$trick= $em->getRepository('SnowTricksHomeBundle:Trick')->find($id);
       // $advert est donc une instance de OC\PlatformBundle\Entity\Advert
       // ou null si l'id $id n'existe pas, d'où ce if :
       if (null === $trick) {
@@ -59,18 +61,27 @@ class TricksController extends Controller
        ->findBy(array('trick' => $trick))
        ;
 
+       $listVideos = $em
+       ->getRepository('SnowTricksHomeBundle:Video')
+       ->findBy(array('trick' => $trick))
+       ;
+
       $listMessages = $em
        ->getRepository('SnowTricksHomeBundle:Message')
        ->findBy(array('trick' => $trick))
        ;
 
-      $member = $em->getRepository('SnowTricksHomeBundle:Member')->find($id);
+      $member = $em->getRepository('SnowTricksHomeBundle:Member')->find($trick);
+
+      $category = $em->getRepository('SnowTricksHomeBundle:Category')->find($trick);
   
       return $this->render('SnowTricksHomeBundle:Tricks:view.html.twig', array(
           'trick' => $trick,
           'listImages' => $listImages,
+          'listVideos' => $listVideos,
           'listMessages' => $listMessages,
           'member' => $member,
+          'category' => $category,
             ));   
     }
 
@@ -80,10 +91,26 @@ class TricksController extends Controller
 
       $em = $this->getDoctrine()->getManager();
 
+    $category = new Category();
+    $category->setName('Les Grabs');
+
     $trick = new Trick();
-    $trick->setName('Mute');
+    $trick->setName('Mute2');
     $trick->setContent("Saisie de la carre frontside de la planche 
       entre les deux pieds avec la main avant.");
+
+    $trick->setCategory($category);
+
+    $video1 = new Video();
+    $video1->setUrl('https://www.youtube.com/embed/6z6KBAbM0MY');
+    $video1->setAlt('truc de ouf');
+
+    $video2 = new Video();
+    $video2->setUrl('https://www.youtube.com/embed/6z6KBAbM0MY');
+    $video2->setAlt('Oops');
+
+    $video1->setTrick($trick);
+    $video2->setTrick($trick);
 
     $image1 = new Image();
     $image1->setUrl('http://sdz-upload.s3.amazonaws.com/prod/upload/job-de-reve.jpg');
@@ -117,13 +144,17 @@ class TricksController extends Controller
     $message2->setTrick($trick);
     $message1->setMember($member);
     $message2->setMember($member);
-
+    
+    $em->persist($category);
     $em->persist($trick);
+    $em->persist($video1);
+    $em->persist($video2);
     $em->persist($image1);
     $em->persist($image2);
     $em->persist($member);
     $em->persist($message1);
     $em->persist($message2);
+    
   
     // Étape 2 : On déclenche l'enregistrement
     $em->flush();
