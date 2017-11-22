@@ -3,23 +3,25 @@
 
 
 {% block title %}
-  Accueil - {{ parent() }}
+  {{ parent() }}
 {% endblock %}
 
 {% block snow_tricks_body %}
 
-<h2>Liste des annonces</h2>
+<h2 class="post-title">Liste des figures</h2>
 
   <ul>
     {% for trick in listTricks %}
       <li>
-        <a href="{{ path('snow_tricks_home_view', {'id': trick.id}) }}">
+        <h3 class="post-subtitle"><a href="{{ path('snow_tricks_home_view', {'id': trick.id}) }}">
           {{ trick.name }}
-        </a>
+        </a></h3>
       </li>
+   
     {% else %}
       <li>Pas (encore !) de figures</li>
     {% endfor %}
+    <hr>
   </ul>
 
   <ul class="pagination">
