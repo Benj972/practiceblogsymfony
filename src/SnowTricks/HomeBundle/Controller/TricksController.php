@@ -3,7 +3,9 @@
 namespace SnowTricks\HomeBundle\Controller;
 
 use SnowTricks\HomeBundle\Entity\Member;
-use SnowTricks\HomeBundle\Entity\Picture;
+use SnowTricks\HomeBundle\Entity\Image;
+use SnowTricks\HomeBundle\Entity\Trick;
+use SnowTricks\HomeBundle\Entity\Message;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,97 +13,128 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class TricksController extends Controller
 {
- 	public function viewAction($id)
-  	{
-       $advert = array(
-      'title'   => 'Recherche développpeur Symfony',
-      'id'      => $id,
-      'author'  => 'Alexandre',
-      'content' => 'Nous recherchons un développeur Symfony débutant sur Lyon. Blabla…',
-      'date'    => new \Datetime()
-    ); 
 
-    	return $this->render('SnowTricksHomeBundle:Tricks:view.html.twig', array(
-          'advert' => $advert
-            ));
-  	}
-
-  
     public function homeAction($page)
     {
-    	 if ($page < 1) {
+       if ($page < 1) {
       throw new NotFoundHttpException('Page "'.$page.'" inexistante.');
+      }
+      $nbPerPage = 3;
+
+      $listTricks = $this->getDoctrine()
+       ->getManager()
+       ->getRepository('SnowTricksHomeBundle:Trick')
+       ->getTricks($page, $nbPerPage)
+       ;
+
+       $nbPages = ceil(count($listAdverts) / $nbPerPage);
+        
+      if ($page > $nbPages) {
+      throw $this->createNotFoundException("La page ".$page." n'existe pas.");
+
+      return $this->render('SnowTricksHomeBundle:Tricks:home.html.twig', array(
+      'listTricks' => $listTricks,
+      'nbPages'    => $nbPages,
+      'page'       => $page,
+    ));
+
+    }
     }
 
-    // Notre liste d'annonce en dur
-    $listAdverts = array(
-      array(
-        'title'   => 'Recherche développpeur Symfony',
-        'id'      => 1,
-        'author'  => 'Alexandre',
-        'content' => 'Nous recherchons un développeur Symfony débutant sur Lyon. Blabla…',
-        'date'    => new \Datetime()),
-      array(
-        'title'   => 'Mission de webmaster',
-        'id'      => 2,
-        'author'  => 'Hugo',
-        'content' => 'Nous recherchons un webmaster capable de maintenir notre site internet. Blabla…',
-        'date'    => new \Datetime()),
-      array(
-        'title'   => 'Offre de stage webdesigner',
-        'id'      => 3,
-        'author'  => 'Mathieu',
-        'content' => 'Nous proposons un poste pour webdesigner. Blabla…',
-        'date'    => new \Datetime())
-    );
-    return $this->render('SnowTricksHomeBundle:Tricks:home.html.twig', array(
-      'listAdverts' => $listAdverts,
-    ));
+
+ 	public function viewAction($id)
+  	{
+      $em = $this->getDoctrine()->getManager();
+      // On récupère l'annonce $id
+      $trick= $em->getRepository('SnowTricksHomeBundle:Trick')->find(7);
+      // $advert est donc une instance de OC\PlatformBundle\Entity\Advert
+      // ou null si l'id $id n'existe pas, d'où ce if :
+      if (null === $trick) {
+      throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas.");
+      }
+    	
+      $listImages = $em
+       ->getRepository('SnowTricksHomeBundle:Image')
+       ->findBy(array('trick' => $trick))
+       ;
+
+      $listMessages = $em
+       ->getRepository('SnowTricksHomeBundle:Message')
+       ->findBy(array('trick' => $trick))
+       ;
+
+      $member = $em->getRepository('SnowTricksHomeBundle:Member')->find($id);
+  
+      return $this->render('SnowTricksHomeBundle:Tricks:view.html.twig', array(
+          'trick' => $trick,
+          'listImages' => $listImages,
+          'listMessages' => $listMessages,
+          'member' => $member,
+            ));   
     }
 
 
     public function addAction(Request $request)
     {
 
-// Création de l'entité Advert
+      $em = $this->getDoctrine()->getManager();
+
+    $trick = new Trick();
+    $trick->setName('Mute');
+    $trick->setContent("Saisie de la carre frontside de la planche 
+      entre les deux pieds avec la main avant.");
+
+    $image1 = new Image();
+    $image1->setUrl('http://sdz-upload.s3.amazonaws.com/prod/upload/job-de-reve.jpg');
+    $image1->setAlt('Job de rêve');
+
+    $image2 = new Image();
+    $image2->setUrl('http://snowforever.free.fr/snowboard/grabs/mute.jpg');
+    $image2->setAlt('Coucou du soleil');
+
+    $image1->setTrick($trick);
+    $image2->setTrick($trick);
+
     $member = new Member();
     $member->setPseudo('Ben');
-    $member->setDescription("apprenti developpeur");
-    $member->setLogin('ben972');
-    $member->setPassword('tetetete');
+    $member->setLogin('tratata');
+    $member->setPassword('bbeenn');
+    $member->setDescription('trarratratartratratratratratrarratartrartaaartar');
+    $member->setPicture('https://cdn1.iconfinder.com/data/icons/ninja-things-1/1772/ninja-simple-512.png');
 
-    // Création de l'entité Image
-    $picture = new Picture();
-    $picture->setUrl('http://sdz-upload.s3.amazonaws.com/prod/upload/job-de-reve.jpg');
-    $picture->setAlt('Job de rêve');
+    $message1 = new Message();
+    $message1->setTitle('Enjoy');
+    $message1->setContent('arartataraatatatatatatatatatatatata');
+    $message1->setDate(new \DateTime());
 
-    // On lie l'image à l'annonce
-    $member->setPicture($picture);
+    $message2 = new Message();
+    $message2->setTitle('Hello');
+    $message2->setContent('Hello World');
+    $message2->setDate(new \DateTime());
 
-    // On récupère l'EntityManager
-    $em = $this->getDoctrine()->getManager();
+    $message1->setTrick($trick);
+    $message2->setTrick($trick);
+    $message1->setMember($member);
+    $message2->setMember($member);
 
-    // Étape 1 : On « persiste » l'entité
+    $em->persist($trick);
+    $em->persist($image1);
+    $em->persist($image2);
     $em->persist($member);
-
-    // Étape 1 bis : si on n'avait pas défini le cascade={"persist"},
-    // on devrait persister à la main l'entité $image
-    // $em->persist($image);
-
+    $em->persist($message1);
+    $em->persist($message2);
+  
     // Étape 2 : On déclenche l'enregistrement
     $em->flush();
 
     if ($request->isMethod('POST')) {
       $request->getSession()->getFlashBag()->add('notice', 'Annonce bien enregistrée.');
       // Puis on redirige vers la page de visualisation de cettte annonce
-      return $this->redirectToRoute('snow_tricks_home_view', array('id' => $member->getId()));
+      return $this->redirectToRoute('snow_tricks_home_view', array('id' => $trick->getId()));
     }
     // Si on n'est pas en POST, alors on affiche le formulaire
     return $this->render('SnowTricksHomeBundle:Tricks:add.html.twig');
     }
-
-
-
 
      public function menuAction($limit)
   {
