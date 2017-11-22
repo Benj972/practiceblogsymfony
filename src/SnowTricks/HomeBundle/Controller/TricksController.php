@@ -19,6 +19,7 @@ class TricksController extends Controller
        if ($page < 1) {
       throw new NotFoundHttpException('Page "'.$page.'" inexistante.');
       }
+
       $nbPerPage = 3;
 
       $listTricks = $this->getDoctrine()
@@ -27,18 +28,18 @@ class TricksController extends Controller
        ->getTricks($page, $nbPerPage)
        ;
 
-       $nbPages = ceil(count($listAdverts) / $nbPerPage);
+       $nbPages = ceil(count($listTricks) / $nbPerPage);
         
       if ($page > $nbPages) {
       throw $this->createNotFoundException("La page ".$page." n'existe pas.");
-
+    }
       return $this->render('SnowTricksHomeBundle:Tricks:home.html.twig', array(
       'listTricks' => $listTricks,
       'nbPages'    => $nbPages,
       'page'       => $page,
     ));
 
-    }
+      
     }
 
 
