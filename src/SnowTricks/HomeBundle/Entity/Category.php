@@ -2,6 +2,7 @@
 
 namespace SnowTricks\HomeBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -28,9 +29,18 @@ class Category
      */
     private $name;
 
-
     /**
-     * Get id
+    * @ORM\OneToMany(targetEntity="SnowTricks\HomeBundle\Entity\Trick", mappedBy="category")
+    */
+    private $tricks;
+
+
+    public function __construct()
+    {
+        $this->tricks = new ArrayCollection();
+    }
+
+     /** Get id
      *
      * @return int
      */
@@ -62,5 +72,25 @@ class Category
     {
         return $this->name;
     }
+
+    public function addTrick(Trick $trick)
+    {
+        $this->tricks[] = $trick;
+        // We link the trick to the category
+        $trick->setCategory($this);
+    }
+
+    public function removeTrick(Trick $trick)
+    {
+        $this->tricks->removeElement($trick);
+    }
+    
+    public function getTricks()
+    {
+        return $this->tricks;
+    }
+
+
+
 }
 
