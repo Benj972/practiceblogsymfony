@@ -52,7 +52,7 @@ class Trick
     private $messages;
 
     /**
-    * @ORM\ManyToOne(targetEntity="SnowTricks\HomeBundle\Entity\Category", cascade={"persist"})
+    * @ORM\ManyToOne(targetEntity="SnowTricks\HomeBundle\Entity\Category", inversedBy="tricks")
     */
     private $category;
 
@@ -128,11 +128,17 @@ class Trick
         return $this->content;
     }
 
+   /**
+    * @param Category $category
+    */
     public function setCategory(Category $category)
     {
         $this->category = $category;
     }
 
+    /**
+    * @return Category
+    */
     public function getCategory()
     {
         return $this->category;
