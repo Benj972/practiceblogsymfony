@@ -45,17 +45,15 @@ class TricksController extends Controller
     }
 
 
- 	public function viewAction( Trick $trick)
+ 	public function viewAction(Trick $trick)
   	{
       $em = $this->getDoctrine()->getManager();
-      // On récupère l'annonce $id
-      //$trick= $em->getRepository('SnowTricksHomeBundle:Trick')->find($id);
-      // $advert est donc une instance de OC\PlatformBundle\Entity\Advert
-      // ou null si l'id $id n'existe pas, d'où ce if :
-      if (null === $trick) {
-      throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas.");
-      }
     	
+       $listCategories = $em
+      ->getRepository('SnowTricksHomeBundle:Category')
+      ->getCategoryWithTricks()
+      ;
+
       $listImages = $em
        ->getRepository('SnowTricksHomeBundle:Image')
        ->findBy(array('trick' => $trick))
@@ -71,17 +69,14 @@ class TricksController extends Controller
        ->findBy(array('trick' => $trick))
        ;
 
-      $member = $em->getRepository('SnowTricksHomeBundle:Member')->find($trick);
 
-      $category = $em->getRepository('SnowTricksHomeBundle:Category')->find($trick);
-  
+
       return $this->render('SnowTricksHomeBundle:Tricks:view.html.twig', array(
           'trick' => $trick,
           'listImages' => $listImages,
           'listVideos' => $listVideos,
           'listMessages' => $listMessages,
-          'member' => $member,
-          'category' => $category,
+          'listCategories' => $listCategories,
             ));   
     }
 
@@ -92,7 +87,7 @@ class TricksController extends Controller
       $em = $this->getDoctrine()->getManager();
 
     $category = new Category();
-    $category->setName('Les Grabs');
+    $category->setName('Les PAs Grabs');
 
     $trick = new Trick();
     $trick->setName('Mute2');
@@ -168,17 +163,10 @@ class TricksController extends Controller
     return $this->render('SnowTricksHomeBundle:Tricks:add.html.twig');
     }
 
-     public function menuAction($limit)
-  {
-    // On fixe en dur une liste ici, bien entendu par la suite on la récupérera depuis la BDD !
-    $listAdverts = array(
-      array('id' => 2, 'title' => 'Recherche développeur Symfony'),
-      array('id' => 5, 'title' => 'Mission de webmaster'),
-      array('id' => 9, 'title' => 'Offre de stage webdesigner')
-    );
-    return $this->render('SnowTricksHomeBundle:Tricks:menu.html.twig', array(
-      // Tout l'intérêt est ici : le contrôleur passe les variables nécessaires au template !
-      'listAdverts' => $listAdverts
-    ));
-  }
+    public function editAction(Trick $trick, Request $request) 
+    {}
+    public function deleteAction(Request $request, Trick $trick)
+    {}
+    public function addmessageAction( Request $request)
+    {}
 }
