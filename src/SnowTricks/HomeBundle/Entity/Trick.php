@@ -37,7 +37,7 @@ class Trick
     private $content;
 
     /**
-    * @ORM\OneToMany(targetEntity="SnowTricks\HomeBundle\Entity\Image", mappedBy="trick")
+    * @ORM\OneToMany(targetEntity="SnowTricks\HomeBundle\Entity\Image", mappedBy="trick", cascade={"persist"})
     */
     private $images;
 
@@ -52,7 +52,7 @@ class Trick
     private $messages;
 
     /**
-    * @ORM\ManyToOne(targetEntity="SnowTricks\HomeBundle\Entity\Category", inversedBy="tricks")
+    * @ORM\ManyToOne(targetEntity="SnowTricks\HomeBundle\Entity\Category", inversedBy="tricks", cascade={"persist"})
     */
     private $category;
 
