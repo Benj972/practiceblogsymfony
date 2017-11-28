@@ -8,6 +8,13 @@
 
 {% block snow_tricks_body %}
 
+  <div>
+      {# On affiche tous les messages flash dont le nom est « info » #}
+      {% for message in app.session.flashbag.get('info') %}
+        <p>Message flash : {{ message }}</p>
+      {% endfor %}
+  </div>
+
 <h2 class="post-title">Liste des figures</h2>
 
   <ul>
