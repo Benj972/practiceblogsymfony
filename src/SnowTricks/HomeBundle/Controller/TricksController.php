@@ -8,6 +8,7 @@ use SnowTricks\HomeBundle\Entity\Image;
 use SnowTricks\HomeBundle\Entity\Trick;
 use SnowTricks\HomeBundle\Entity\Message;
 use SnowTricks\HomeBundle\Entity\Category;
+use SnowTricks\HomeBundle\Form\TrickType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -56,83 +57,20 @@ class TricksController extends Controller
     public function addAction(Request $request)
     {
 
-      $em = $this->getDoctrine()->getManager();
-
-    $category = new Category();
-    $category->setName('Les PAs Grabs');
-
     $trick = new Trick();
-    $trick->setName('Mute2');
-    $trick->setContent("Saisie de la carre frontside de la planche 
-      entre les deux pieds avec la main avant.");
+    $form   = $this->get('form.factory')->create(TrickType::class, $trick);
 
-    $trick->setCategory($category);
+    if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
 
-    $video1 = new Video();
-    $video1->setUrl('https://www.youtube.com/embed/6z6KBAbM0MY');
-    $video1->setAlt('truc de ouf');
+      $em = $this->getDoctrine()->getManager();
+      $em->persist($trick);
+      $em->flush();
 
-    $video2 = new Video();
-    $video2->setUrl('https://www.youtube.com/embed/6z6KBAbM0MY');
-    $video2->setAlt('Oops');
-
-    $video1->setTrick($trick);
-    $video2->setTrick($trick);
-
-    $image1 = new Image();
-    $image1->setUrl('http://sdz-upload.s3.amazonaws.com/prod/upload/job-de-reve.jpg');
-    $image1->setAlt('Job de rêve');
-
-    $image2 = new Image();
-    $image2->setUrl('http://snowforever.free.fr/snowboard/grabs/mute.jpg');
-    $image2->setAlt('Coucou du soleil');
-
-    $image1->setTrick($trick);
-    $image2->setTrick($trick);
-
-    $member = new Member();
-    $member->setPseudo('Ben');
-    $member->setLogin('tratata');
-    $member->setPassword('bbeenn');
-    $member->setDescription('trarratratartratratratratratrarratartrartaaartar');
-    $member->setPicture('https://cdn1.iconfinder.com/data/icons/ninja-things-1/1772/ninja-simple-512.png');
-
-    $message1 = new Message();
-    $message1->setTitle('Enjoy');
-    $message1->setContent('arartataraatatatatatatatatatatatata');
-    $message1->setDate(new \DateTime());
-
-    $message2 = new Message();
-    $message2->setTitle('Hello');
-    $message2->setContent('Hello World');
-    $message2->setDate(new \DateTime());
-
-    $message1->setTrick($trick);
-    $message2->setTrick($trick);
-    $message1->setMember($member);
-    $message2->setMember($member);
-    
-    $em->persist($category);
-    $em->persist($trick);
-    $em->persist($video1);
-    $em->persist($video2);
-    $em->persist($image1);
-    $em->persist($image2);
-    $em->persist($member);
-    $em->persist($message1);
-    $em->persist($message2);
-    
-  
-    // Étape 2 : On déclenche l'enregistrement
-    $em->flush();
-
-    if ($request->isMethod('POST')) {
-      $request->getSession()->getFlashBag()->add('notice', 'Annonce bien enregistrée.');
-      // Puis on redirige vers la page de visualisation de cettte annonce
-      return $this->redirectToRoute('snow_tricks_home_view', array('id' => $trick->getId()));
+      $request->getSession()->getFlashBag()->add('info', 'Figure bien enregistrée.');
+      return $this->redirectToRoute('snow_tricks_home_homepage');
     }
     // Si on n'est pas en POST, alors on affiche le formulaire
-    return $this->render('SnowTricksHomeBundle:Tricks:add.html.twig');
+    return $this->render('SnowTricksHomeBundle:Tricks:add.html.twig', array('form' => $form->createView(), ));
     }
 
     public function editAction(Trick $trick, Request $request) 
