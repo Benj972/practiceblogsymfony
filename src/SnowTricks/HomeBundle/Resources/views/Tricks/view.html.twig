@@ -21,9 +21,13 @@
     			{{ trick.content }}  
   			</p>
 
+        {% if trick.category is null %}
+        Il n'y a pas de catégories définies
+        {% else %}
   			<p><em>
   			Dans la catégorie {{ trick.category.name }}
   			</em></p>
+        {% endif %}
 
 		<div style="float: left; margin-right: 1em;">
     		{% for image in trick.images%}
