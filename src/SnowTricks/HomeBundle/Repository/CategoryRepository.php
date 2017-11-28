@@ -10,18 +10,6 @@ namespace SnowTricks\HomeBundle\Repository;
  */
 class CategoryRepository extends \Doctrine\ORM\EntityRepository
 {
-	public function getCategoryWithTricks()
-    {
-    $qb = $this
-    ->createQueryBuilder('c')
-    ->leftJoin('c.tricks', 't')
-    ->addSelect('t')
-    ;
-
-  return $qb
-    ->getQuery()
-    ->getResult()
-  ;
-}
+	
 
 }
