@@ -45,38 +45,10 @@ class TricksController extends Controller
     }
 
 
- 	public function viewAction(Trick $trick)
+ 	  public function viewAction(Trick $trick)
   	{
-      $em = $this->getDoctrine()->getManager();
-    	
-       $listCategories = $em
-      ->getRepository('SnowTricksHomeBundle:Category')
-      ->getCategoryWithTricks()
-      ;
-
-      $listImages = $em
-       ->getRepository('SnowTricksHomeBundle:Image')
-       ->findBy(array('trick' => $trick))
-       ;
-
-       $listVideos = $em
-       ->getRepository('SnowTricksHomeBundle:Video')
-       ->findBy(array('trick' => $trick))
-       ;
-
-      $listMessages = $em
-       ->getRepository('SnowTricksHomeBundle:Message')
-       ->findBy(array('trick' => $trick))
-       ;
-
-
-
       return $this->render('SnowTricksHomeBundle:Tricks:view.html.twig', array(
           'trick' => $trick,
-          'listImages' => $listImages,
-          'listVideos' => $listVideos,
-          'listMessages' => $listMessages,
-          'listCategories' => $listCategories,
             ));   
     }
 
