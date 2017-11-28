@@ -13,67 +13,60 @@
         <div class="row">
           <div class="col-lg-8 col-md-10 mx-auto">
 
+  			<h2 class="section-heading">
+      			{{ trick.name }} 
+  			</h2>
 
-  <h2 class="section-heading">
-      {{ trick.name}} 
-  </h2>
+  			<p>
+    			{{ trick.content }}  
+  			</p>
 
-  <p>
-    {{ trick.content }}  
-  </p>
+  			<p><em>
+  			Dans la catégorie {{ trick.category.name }}
+  			</em></p>
 
-  
-{% for category in listCategories %}
-  dans la catégorie {{ category.name }}
-{% else %}
-    <li>Pas de catégories trouvées.</li>
+		<div style="float: left; margin-right: 1em;">
+    		{% for image in trick.images%}
+      			<img
+        		src="{{ image.url }}"
+        		alt="{{ image.alt }}"
+        		height="60"
+      			/>
+      		{% endfor %}
+    	</div>
 
-{% endfor %}
- 
+		<div>
+			{% for video in trick.videos%}
+  				<object type="application/x-shockwave-flash" width="425" height="355" data=" {{ video.url }} ">
+    			<param name="movie" value=" {{ video.url }} " />
+    			<param name="wmode" value="transparent" />
+  				</object>
 
-    <div style="float: left; margin-right: 1em;">
-    {# On vérifie qu'une image soit bien associée à l'article #}
-    {% for image in listImages%}
-      <img
-        src="{{ image.url }}"
-        alt="{{ image.alt }}"
-        height="60"
-      />
-      {% endfor %}
-    </div>
-
-<div>
-{% for video in listVideos%}
-  <object type="application/x-shockwave-flash" width="425" height="355" data=" {{ video.url }} ">
-    <param name="movie" value=" {{ video.url }} " />
-    <param name="wmode" value="transparent" />
-  </object>
-
-  <!--[if lte IE 6 ]>
-  <embed src=" {{ video.url }}" type="application/x-shockwave-flash" wmode="transparent" width="425" height="355"></embed>
-<![endif]-->
-{% endfor %}
-</div>
+  				<!--[if lte IE 6 ]>
+  				<embed src=" {{ video.url }}" type="application/x-shockwave-flash" wmode="transparent" width="425" height="355"></embed>
+				<![endif]-->
+			{% endfor %}
+		</div>
 
 
- <blockquote class="blockquote">>
-      Espace de discussion:
-      <ul>
-        {% for message in listMessages %}
-          <li>{{ message.title }} : {{ message.content }} </li>
-        {% endfor %}
-      </ul>
-</blockquote>
+ 		<blockquote class="blockquote">>
+      		Espace de discussion:
+      	<ul>
+        	{% for message in trick.messages %}
+          	<li>{{ message.title }} : {{ message.content }} </li>
+        	{% endfor %}
+      	</ul>
+		</blockquote>
 
-     </div>
+          </div>
         </div>
-      </div>
-    </article>
+     </div>
+  </article>
 
   <p>
     <a href="{{ path('snow_tricks_home_homepage') }}" class="btn btn-default">
       <i class="glyphicon glyphicon-chevron-left"></i>
-      Retour à la liste
+      Retour à la liste des figures
     </a>
   </p>
 
