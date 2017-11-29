@@ -9,6 +9,7 @@ use SnowTricks\HomeBundle\Entity\Trick;
 use SnowTricks\HomeBundle\Entity\Message;
 use SnowTricks\HomeBundle\Entity\Category;
 use SnowTricks\HomeBundle\Form\TrickType;
+use SnowTricks\HomeBundle\Form\TrickEditType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -58,6 +59,8 @@ class TricksController extends Controller
     {
 
     $trick = new Trick();
+   
+
     $form   = $this->get('form.factory')->create(TrickType::class, $trick);
 
     if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
@@ -73,8 +76,32 @@ class TricksController extends Controller
     return $this->render('SnowTricksHomeBundle:Tricks:add.html.twig', array('form' => $form->createView(), ));
     }
 
-    public function editAction(Trick $trick, Request $request) 
-    {}
+    public function editAction($id, Request $request) 
+    {
+      $em = $this->getDoctrine()->getManager();
+
+      $trick = $em->getRepository('SnowTricksHomeBundle:Trick')->find($id);
+
+      if (null === $trick) {
+      throw new NotFoundHttpException("La figure ".$id." n'existe pas.");
+       }
+
+       $form = $this->get('form.factory')->create(TrickEditType::class, $trick);
+
+      if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+      $em->flush();
+
+      $request->getSession()->getFlashBag()->add('info', 'Figure bien modifiée.');
+
+      return $this->redirectToRoute('snow_tricks_home_homepage');
+      }
+
+    return $this->render('SnowTricksHomeBundle:Tricks:edit.html.twig', array(
+      'trick' => $trick,
+      'form'   => $form->createView(),
+    ));
+    }
+
     public function deleteAction(Request $request, Trick $trick)
     {}
     public function addmessageAction( Request $request)
