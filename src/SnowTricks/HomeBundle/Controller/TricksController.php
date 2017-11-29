@@ -102,8 +102,34 @@ class TricksController extends Controller
     ));
     }
 
-    public function deleteAction(Request $request, Trick $trick)
-    {}
+    public function deleteAction(Request $request, $id)
+    {
+         
+      $em = $this->getDoctrine()->getManager();
+
+      $trick = $em->getRepository('SnowTricksHomeBundle:Trick')->find($id);
+
+      if (null === $trick) {
+      throw new NotFoundHttpException("La figure ".$id." n'existe pas.");
+       }
+
+       $form = $this->get('form.factory')->create();
+
+      if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+      $em->remove($trick);
+      $em->flush();
+
+      $request->getSession()->getFlashBag()->add('info', 'La figure a bien été supprimée.');
+
+      return $this->redirectToRoute('snow_tricks_home_homepage');
+      }
+
+    return $this->render('SnowTricksHomeBundle:Tricks:delete.html.twig', array(
+      'trick' => $trick,
+      'form'   => $form->createView(),
+    ));
+    }
+
     public function addmessageAction( Request $request)
     {}
 }
