@@ -16,11 +16,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TrickType extends AbstractType
 {
+
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+
         $builder
         ->add('name', TextType::class)
         ->add('content', TextareaType::class)
@@ -32,12 +34,14 @@ class TrickType extends AbstractType
         ->add('images', CollectionType::class, array(
         'entry_type'   => ImageType::class,
         'allow_add'    => true,
-        'allow_delete' => true
+        'allow_delete' => true,
+        'by_reference' => false
          ))
         ->add('videos', CollectionType::class, array(
         'entry_type'   => VideoType::class,
         'allow_add'    => true,
-        'allow_delete' => true
+        'allow_delete' => true,
+        'by_reference' => false
          ))
         ->add('save',  SubmitType::class);
     }
