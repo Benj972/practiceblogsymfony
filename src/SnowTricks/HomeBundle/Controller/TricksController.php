@@ -20,11 +20,11 @@ class TricksController extends Controller
 
     public function homeAction($page)
     {
-       if ($page < 1) {
-      throw new NotFoundHttpException('Page "'.$page.'" inexistante.');
+      if ($page < 1) {
+        throw new NotFoundHttpException('Page "'.$page.'" inexistante.');
       }
 
-      $nbPerPage = 3;
+      $nbPerPage = 10;
 
       $listTricks = $this->getDoctrine()
        ->getManager()
@@ -32,49 +32,70 @@ class TricksController extends Controller
        ->getTricks($page, $nbPerPage)
        ;
 
-       $nbPages = ceil(count($listTricks) / $nbPerPage);
+      $nbPages = ceil(count($listTricks) / $nbPerPage);
         
       if ($page > $nbPages) {
-      throw $this->createNotFoundException("La page ".$page." n'existe pas.");
-    }
+        throw $this->createNotFoundException("La page ".$page." n'existe pas.");
+      }
+
       return $this->render('SnowTricksHomeBundle:Tricks:home.html.twig', array(
       'listTricks' => $listTricks,
       'nbPages'    => $nbPages,
       'page'       => $page,
-    ));
-
-      
+        )); 
     }
 
 
- 	  public function viewAction(Trick $trick)
+ 	  public function viewAction(Trick $trick, $page=1)
   	{
-      return $this->render('SnowTricksHomeBundle:Tricks:view.html.twig', array(
+
+      if ($page < 1) {
+        throw new NotFoundHttpException('Page "'.$page.'" inexistante.');
+      }
+
+      $nbPerPage = 10;
+
+      $listMessages = $this->getDoctrine()
+       ->getManager()
+       ->getRepository('SnowTricksHomeBundle:Message')
+       ->getMessages($page, $nbPerPage, $trick)
+       ;
+
+       $nbPages = ceil(count($listMessages) / $nbPerPage);
+        
+      if ($page > $nbPages) {
+        throw $this->createNotFoundException("La page ".$page." n'existe pas.");
+      }
+
+       return $this->render('SnowTricksHomeBundle:Tricks:view.html.twig', array(
           'trick' => $trick,
-            ));   
+          'listMessages' => $listMessages,
+          'nbPages' => $nbPages,
+          'page' => $page,
+          ));   
     }
 
 
     public function addAction(Request $request)
     {
+    
+      $trick = new Trick();
 
-    $trick = new Trick();
-   
+      $form = $this->get('form.factory')->create(TrickType::class, $trick);
 
-    $form   = $this->get('form.factory')->create(TrickType::class, $trick);
+      if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
 
-    if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($trick);
+        $em->flush();
 
-      $em = $this->getDoctrine()->getManager();
-      $em->persist($trick);
-      $em->flush();
-
-      $request->getSession()->getFlashBag()->add('info', 'Figure bien enregistrée.');
-      return $this->redirectToRoute('snow_tricks_home_homepage');
+        $request->getSession()->getFlashBag()->add('info', 'Figure bien enregistrée.');
+        return $this->redirectToRoute('snow_tricks_home_homepage');
+      }
+        // Si on n'est pas en POST, alors on affiche le formulaire
+        return $this->render('SnowTricksHomeBundle:Tricks:add.html.twig', array('form' => $form->createView(), ));
     }
-    // Si on n'est pas en POST, alors on affiche le formulaire
-    return $this->render('SnowTricksHomeBundle:Tricks:add.html.twig', array('form' => $form->createView(), ));
-    }
+
 
     public function editAction($id, Request $request) 
     {
@@ -83,24 +104,23 @@ class TricksController extends Controller
       $trick = $em->getRepository('SnowTricksHomeBundle:Trick')->find($id);
 
       if (null === $trick) {
-      throw new NotFoundHttpException("La figure ".$id." n'existe pas.");
-       }
-
-       $form = $this->get('form.factory')->create(TrickEditType::class, $trick);
-
-      if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
-      $em->flush();
-
-      $request->getSession()->getFlashBag()->add('info', 'Figure bien modifiée.');
-
-      return $this->redirectToRoute('snow_tricks_home_homepage');
+        throw new NotFoundHttpException("La figure ".$id." n'existe pas.");
       }
 
-    return $this->render('SnowTricksHomeBundle:Tricks:edit.html.twig', array(
+      $form = $this->get('form.factory')->create(TrickEditType::class, $trick);
+
+      if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+          $em->flush();
+          $request->getSession()->getFlashBag()->add('info', 'Figure bien modifiée.');
+          return $this->redirectToRoute('snow_tricks_home_homepage');
+      }
+
+      return $this->render('SnowTricksHomeBundle:Tricks:edit.html.twig', array(
       'trick' => $trick,
       'form'   => $form->createView(),
-    ));
+      ));
     }
+
 
     public function deleteAction(Request $request, $id)
     {
@@ -110,25 +130,24 @@ class TricksController extends Controller
       $trick = $em->getRepository('SnowTricksHomeBundle:Trick')->find($id);
 
       if (null === $trick) {
-      throw new NotFoundHttpException("La figure ".$id." n'existe pas.");
-       }
-
-       $form = $this->get('form.factory')->create();
-
-      if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
-      $em->remove($trick);
-      $em->flush();
-
-      $request->getSession()->getFlashBag()->add('info', 'La figure a bien été supprimée.');
-
-      return $this->redirectToRoute('snow_tricks_home_homepage');
+        throw new NotFoundHttpException("La figure ".$id." n'existe pas.");
       }
 
-    return $this->render('SnowTricksHomeBundle:Tricks:delete.html.twig', array(
+      $form = $this->get('form.factory')->create();
+
+      if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+        $em->remove($trick);
+        $em->flush();
+        $request->getSession()->getFlashBag()->add('info', 'La figure a bien été supprimée.');
+        return $this->redirectToRoute('snow_tricks_home_homepage');
+      }
+
+      return $this->render('SnowTricksHomeBundle:Tricks:delete.html.twig', array(
       'trick' => $trick,
       'form'   => $form->createView(),
-    ));
+      ));
     }
+
 
     public function addmessageAction( Request $request)
     {}
