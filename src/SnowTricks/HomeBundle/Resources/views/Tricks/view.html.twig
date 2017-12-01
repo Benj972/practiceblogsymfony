@@ -13,65 +13,78 @@
         <div class="row">
           <div class="col-lg-8 col-md-10 mx-auto">
 
-  			<h2 class="section-heading">
-      			{{ trick.name }} 
-  			</h2>
+  			   <h2 class="section-heading">
+      		   {{ trick.name }} 
+  			   </h2>
 
-  			<p>
-    			{{ trick.content }}  
-  			</p>
+  			   <p>
+    			   {{ trick.content }}  
+  			   </p>
 
-        {% if trick.category is null %}
-        Il n'y a pas de catégories définies
-        {% else %}
-  			<p><em>
-  			Dans la catégorie {{ trick.category.name }}
-  			</em></p>
-        {% endif %}
+           {% if trick.category is null %}
+              Il n'y a pas de catégories définies
+           {% else %}
+  			     <p><em>
+  			       Dans la catégorie {{ trick.category.name }}
+  			     </em></p>
+           {% endif %}
 
-		<div style="float: left; margin-right: 1em;">
-    		{% for image in trick.images%}
-      			<img
-        		src="{{ image.url }}"
-        		alt="{{ image.alt }}"
-        		height="60"
-      			/>
-      		{% endfor %}
-    	</div>
+		      <div style="float: left; margin-right: 1em;">
+    		    {% for image in trick.images%}
+      			   <img
+        		    src="{{ image.url }}"
+        		    alt="{{ image.alt }}"
+        		    height="60"
+      			   />
+      		  {% endfor %}
+    	    </div>
 
-		<div>
-			{% for video in trick.videos%}
-  				<object type="application/x-shockwave-flash" width="425" height="355" data=" {{ video.url }} ">
-    			<param name="movie" value=" {{ video.url }} " />
-    			<param name="wmode" value="transparent" />
-  				</object>
+		      <div>
+			       {% for video in trick.videos%}
+  				      <object type="application/x-shockwave-flash" width="425" height="355" data=" {{ video.url }} ">
+    			       <param name="movie" value=" {{ video.url }} " />
+    			       <param name="wmode" value="transparent" />
+  				      </object>
+  				      <!--[if lte IE 6 ]>
+  				          <embed src=" {{ video.url }}" type="application/x-shockwave-flash" wmode="transparent" width="425" height="355"></embed>
+				        <![endif]-->
+			       {% endfor %}
+		      </div>
 
-  				<!--[if lte IE 6 ]>
-  				<embed src=" {{ video.url }}" type="application/x-shockwave-flash" wmode="transparent" width="425" height="355"></embed>
-				<![endif]-->
-			{% endfor %}
-		</div>
+          {% if listMessages is defined %}
+ 		      <blockquote class="blockquote">>
+      		    Espace de discussion:
+              <ul>
+                {% for message in listMessages %}
+                   <li><h3> {{ message.title }} </h3></li>
+                {% else %}
+                    <li>Pas (encore !) de messages</li>
+                {% endfor %}
+                </hr>
+              </ul>
 
+              <ul class="pagination">
+                  {# On utilise la fonction range(a, b) qui crée un tableau de valeurs entre a et b #}
+                {% for p in range(1, nbPages) %}
+                    <li{% if p == page %} class="active"{% endif %}>
+                    <a href="{{ path('snow_tricks_home_view', {'page': p, id:trick.id }) }}">{{ p }}</a> 
+                    </li>
+                {% endfor %} 
+              </ul>   
+		      </blockquote>
+          {% endif %}
 
- 		<blockquote class="blockquote">>
-      		Espace de discussion:
-      	<ul>
-        	{% for message in trick.messages %}
-          	<li>{{ message.title }} : {{ message.content }} </li>
-        	{% endfor %}
-      	</ul>
-		</blockquote>
 
           </div>
         </div>
      </div>
   </article>
 
-  <p>
-    <a href="{{ path('snow_tricks_home_homepage') }}" class="btn btn-default">
-      <i class="glyphicon glyphicon-chevron-left"></i>
-      Retour à la liste des figures
-    </a>
-  </p>
+        <p>
+            <a href="{{ path('snow_tricks_home_homepage') }}" class="btn btn-default">
+            <i class="glyphicon glyphicon-chevron-left"></i>
+                Retour à la liste des figures
+            </a>
+        </p>
 
 {% endblock %}
