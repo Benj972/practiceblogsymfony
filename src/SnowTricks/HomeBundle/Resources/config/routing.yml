@@ -5,19 +5,28 @@ snow_tricks_home_homepage:
           page: \d*
 
 snow_tricks_home_view:
-    path:     /tricks/{id}
-    defaults: { _controller: SnowTricksHomeBundle:Tricks:view }
+    path:     /tricks/{id}/{page}
+    defaults: { _controller: SnowTricksHomeBundle:Tricks:view, page: 1 }
     requirements:
           id: \d+
-
-snow_tricks_home_view_slug:
-    path:     /{year}/{slug}.{_format}
-    defaults: { _controller: SnowTricksHomeBundle:Tricks:viewSlug, _format: html }
-    requirements:
-          year:   \d{4}
-          format: html|xml
+          page: \d*
 
 snow_tricks_home_add:
     path:     /add 
     defaults: { _controller: SnowTricksHomeBundle:Tricks:add }
 
+snow_tricks_home_edit:
+    path:     /edit/{id}
+    defaults: { _controller: SnowTricksHomeBundle:Tricks:edit }
+    requirements: 
+           id: \d+
+
+snow_tricks_home_delete:
+    path:     /delete/{id}
+    defaults: { _controller: SnowTricksHomeBundle:Tricks:delete }
+    requirements:
+           id: \d+
+
+snow_tricks_home_addmessage:
+    path:     /addmessage
+    defaults: { _controller: SnowTricksHomeBundle:Tricks:addmessage }
