@@ -10,6 +10,7 @@ use SnowTricks\HomeBundle\Entity\Message;
 use SnowTricks\HomeBundle\Entity\Category;
 use SnowTricks\HomeBundle\Form\TrickType;
 use SnowTricks\HomeBundle\Form\TrickEditType;
+use SnowTricks\HomeBundle\Form\MessageType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -46,8 +47,19 @@ class TricksController extends Controller
     }
 
 
- 	  public function viewAction(Trick $trick, $page=1)
+ 	  public function viewAction(Trick $trick, $page=1, Request $request)
   	{
+
+      $message = new Message();
+
+      $form = $this->get('form.factory')->create(MessageType::class, $message);
+
+      if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($message);
+        $em->flush();
+      }
 
       if ($page < 1) {
         throw new NotFoundHttpException('Page "'.$page.'" inexistante.');
@@ -64,7 +76,8 @@ class TricksController extends Controller
        $nbPages = ceil(count($listMessages) / $nbPerPage);
         
       if ($page > $nbPages) {
-        throw $this->createNotFoundException("La page ".$page." n'existe pas.");
+        //throw $this->createNotFoundException("La page ".$page." n'existe pas.");
+        $nbPages = 1;
       }
 
        return $this->render('SnowTricksHomeBundle:Tricks:view.html.twig', array(
@@ -72,6 +85,8 @@ class TricksController extends Controller
           'listMessages' => $listMessages,
           'nbPages' => $nbPages,
           'page' => $page,
+          'message' => $message,
+          'form' => $form->createview()
           ));   
     }
 
@@ -80,6 +95,11 @@ class TricksController extends Controller
     {
     
       $trick = new Trick();
+      //second method form nested
+      //$video = new Video();
+      //$image = new Image();
+      //$trick->addVideo($video);
+      //$trick->addImage($image);
 
       $form = $this->get('form.factory')->create(TrickType::class, $trick);
 
@@ -149,6 +169,23 @@ class TricksController extends Controller
     }
 
 
-    public function addmessageAction( Request $request)
-    {}
-}
+    /*public function addmessageAction( Request $request)
+    {
+    
+      $message = new Message();
+
+      $form = $this->get('form.factory')->create(MessageType::class, $message);
+
+      if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($message);
+        $em->flush();
+
+        $request->getSession()->getFlashBag()->add('info', 'Message bien enregistré.');
+        return $this->redirectToRoute('snow_tricks_home_homepage');
+      }
+        // Si on n'est pas en POST, alors on affiche le formulaire
+        return $this->render('SnowTricksHomeBundle:Tricks:messageform.html.twig', array('form' => $form->createView(), ));
+      }*/
+    }
