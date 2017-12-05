@@ -3,25 +3,40 @@
 
 
 {% block title %}
-  Accueil - {{ parent() }}
+  {{ parent() }}
 {% endblock %}
 
 {% block snow_tricks_body %}
 
-  <h2>Liste des annonces</h2>
+  <div>
+      {# On affiche tous les messages flash dont le nom est « info » #}
+      {% for message in app.session.flashbag.get('info') %}
+        <p>Message flash : {{ message }}</p>
+      {% endfor %}
+  </div>
+
+<h2 class="post-title">Liste des figures</h2>
 
   <ul>
-    {% for advert in listAdverts %}
+    {% for trick in listTricks %}
       <li>
-        <a href="{{ path('snow_tricks_home_view', {'id': advert.id}) }}">
-          {{ advert.title }}
-        </a>
-        par {{ advert.author }},
-        le {{ advert.date|date('d/m/Y') }}
+        <h3 class="post-subtitle"><a href="{{ path('snow_tricks_home_view', {'id': trick.id}) }}">
+          {{ trick.name }} 
+          {% if trick.member is not null %} par {{ trick.member.pseudo }} <img src= "{{ trick.member.picture }}" height="40"/> {% else %} vide {% endif %}
+        </a></h3>
       </li>
     {% else %}
-      <li>Pas (encore !) d'annonces</li>
+      <li>Pas (encore !) de figures</li>
     {% endfor %}
+    <hr>
   </ul>
 
+  <ul class="pagination">
+    {# On utilise la fonction range(a, b) qui crée un tableau de valeurs entre a et b #}
+    {% for p in range(1, nbPages) %}
+      <li{% if p == page %} class="active"{% endif %}>
+        <a href="{{ path('snow_tricks_home_homepage', {'page': p}) }}">{{ p }}</a>
+      </li>
+    {% endfor %}
+  </ul>
 {% endblock %}

@@ -1,0 +1,23 @@
+
+
+{% extends "SnowTricksHomeBundle::layout.html.twig" %}
+
+{% block body %}
+
+  <h2>Modifier une figure</h2>
+
+  {{ include("SnowTricksHomeBundle:Tricks:form.html.twig") }}
+
+  <p>
+    Vous éditez une figure déjà existante, merci de ne pas changer
+    l'esprit générale de la figure déjà publiée.
+  </p>
+
+  <p>
+    <a href="{{ path('snow_tricks_home_view', {'id': trick.id}) }}" class="btn btn-default">
+      <i class="glyphicon glyphicon-chevron-left"></i>
+      Retour à la figure
+    </a>
+  </p>
+
+{% endblock %}

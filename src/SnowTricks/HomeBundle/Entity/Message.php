@@ -3,6 +3,7 @@
 namespace SnowTricks\HomeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Message
@@ -25,6 +26,7 @@ class Message
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=255)
+     * @Assert\Length(min=2)
      */
     private $title;
 
@@ -32,6 +34,7 @@ class Message
      * @var string
      *
      * @ORM\Column(name="content", type="text")
+     * @Assert\NotBlank()
      */
     private $content;
 
@@ -39,18 +42,21 @@ class Message
      * @var \DateTime
      *
      * @ORM\Column(name="date", type="datetime")
+     * @Assert\DateTime()
      */
     private $date;
 
     /**
     * @ORM\ManyToOne(targetEntity="SnowTricks\HomeBundle\Entity\Trick", inversedBy="messages")
     * @ORM\JoinColumn(nullable=false)
+    * @Assert\Valid()
     */
     private $trick;
 
     /**
     * @ORM\ManyToOne(targetEntity="SnowTricks\HomeBundle\Entity\Member")
     * @ORM\JoinColumn(nullable=false)
+    * @Assert\Valid()
     */
     private $member;
 

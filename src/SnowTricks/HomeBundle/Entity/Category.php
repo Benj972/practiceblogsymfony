@@ -2,7 +2,9 @@
 
 namespace SnowTricks\HomeBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Category
@@ -25,12 +27,23 @@ class Category
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     * @Assert\NotNull()
      */
     private $name;
 
-
     /**
-     * Get id
+    * @ORM\OneToMany(targetEntity="SnowTricks\HomeBundle\Entity\Trick", mappedBy="category")
+    * @Assert\Valid()
+    */
+    private $tricks;
+
+
+    public function __construct()
+    {
+        $this->tricks = new ArrayCollection();
+    }
+
+     /** Get id
      *
      * @return int
      */
@@ -62,5 +75,25 @@ class Category
     {
         return $this->name;
     }
+
+    public function addTrick(Trick $trick)
+    {
+        $this->tricks[] = $trick;
+        // We link the trick to the category
+        $trick->setCategory($this);
+    }
+
+    public function removeTrick(Trick $trick)
+    {
+        $this->tricks->removeElement($trick);
+    }
+    
+    public function getTricks()
+    {
+        return $this->tricks;
+    }
+
+
+
 }
 

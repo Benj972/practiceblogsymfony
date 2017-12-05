@@ -10,4 +10,6 @@ namespace SnowTricks\HomeBundle\Repository;
  */
 class CategoryRepository extends \Doctrine\ORM\EntityRepository
 {
+	
+
 }

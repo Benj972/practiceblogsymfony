@@ -4,6 +4,7 @@ namespace SnowTricks\HomeBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Trick
@@ -26,6 +27,7 @@ class Trick
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     * @Assert\Length(min=2)
      */
     private $name;
 
@@ -33,31 +35,37 @@ class Trick
      * @var string
      *
      * @ORM\Column(name="content", type="text")
+     * @Assert\NotBlank()
      */
     private $content;
 
     /**
-    * @ORM\OneToMany(targetEntity="SnowTricks\HomeBundle\Entity\Image", mappedBy="trick")
+    * @ORM\OneToMany(targetEntity="SnowTricks\HomeBundle\Entity\Image", mappedBy="trick", cascade={"persist"})
+    * @Assert\Valid()
     */
     private $images;
 
     /**
-    * @ORM\OneToMany(targetEntity="SnowTricks\HomeBundle\Entity\Video", mappedBy="trick")
+    * @ORM\OneToMany(targetEntity="SnowTricks\HomeBundle\Entity\Video", mappedBy="trick", cascade={"persist"})
+    * @Assert\Valid()
     */
     private $videos;
 
     /**
     * @ORM\OneToMany(targetEntity="SnowTricks\HomeBundle\Entity\Message", mappedBy="trick")
+    * @Assert\Valid()
     */
     private $messages;
 
     /**
-    * @ORM\ManyToOne(targetEntity="SnowTricks\HomeBundle\Entity\Category", cascade={"persist"})
+    * @ORM\ManyToOne(targetEntity="SnowTricks\HomeBundle\Entity\Category", inversedBy="tricks", cascade={"persist"})
+    * @Assert\Valid()
     */
     private $category;
 
     /**
     * @ORM\ManyToOne(targetEntity="SnowTricks\HomeBundle\Entity\Member", cascade={"persist"})
+    * @Assert\Valid()
     */
     private $member;
 
@@ -128,11 +136,17 @@ class Trick
         return $this->content;
     }
 
+   /**
+    * @param Category $category
+    */
     public function setCategory(Category $category)
     {
         $this->category = $category;
     }
 
+    /**
+    * @return Category
+    */
     public function getCategory()
     {
         return $this->category;
@@ -154,6 +168,8 @@ class Trick
         $this->images[] = $image;
         // We link the image to the figure
         $image->setTrick($this);
+        //return $this->images; 
+        //second method form nested
     }
 
     public function removeImage(Image $image)
@@ -171,6 +187,8 @@ class Trick
         $this->videos[] = $video;
         // We link the video to the figure
         $video->setTrick($this);
+        //return $this;
+        ////second method form nested
     }
 
     public function removeVideo(Video $video)

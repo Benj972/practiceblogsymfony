@@ -3,6 +3,7 @@
 namespace SnowTricks\HomeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Member
@@ -25,6 +26,7 @@ class Member
      * @var string
      *
      * @ORM\Column(name="pseudo", type="string", length=255)
+     * @Assert\Length(min=2)
      */
     private $pseudo;
 
@@ -32,6 +34,7 @@ class Member
      * @var string
      *
      * @ORM\Column(name="login", type="string", length=255)
+     * @Assert\Length(min=2)
      */
     private $login;
 
@@ -39,6 +42,7 @@ class Member
      * @var string
      *
      * @ORM\Column(name="password", type="string", length=255)
+     * @Assert\Length(min=2)
      */
     private $password;
 
@@ -46,6 +50,7 @@ class Member
      * @var string
      *
      * @ORM\Column(name="description", type="text")
+     * @Assert\NotBlank()
      */
     private $description;
 
@@ -53,6 +58,7 @@ class Member
      * @var string
      *
      * @ORM\Column(name="picture", type="string", length=255)
+     * @Assert\URL()
      */
     private $picture;
 

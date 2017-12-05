@@ -3,6 +3,7 @@
 namespace SnowTricks\HomeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Video
@@ -25,6 +26,7 @@ class Video
      * @var string
      *
      * @ORM\Column(name="url", type="string", length=255)
+     * @Assert\Url()
      */
     private $url;
 
@@ -32,12 +34,14 @@ class Video
      * @var string
      *
      * @ORM\Column(name="alt", type="string", length=255)
+     * @Assert\Length(min=2)
      */
     private $alt;
 
     /**
-    * @ORM\ManyToOne(targetEntity="SnowTricks\HomeBundle\Entity\Trick", inversedBy="videos")
+    * @ORM\ManyToOne(targetEntity="SnowTricks\HomeBundle\Entity\Trick", inversedBy="videos", cascade={"persist"})
     * @ORM\JoinColumn(nullable=false)
+    * @Assert\Valid()
     */
     private $trick;
 
