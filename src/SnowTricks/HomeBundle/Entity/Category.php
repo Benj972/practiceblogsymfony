@@ -4,6 +4,7 @@ namespace SnowTricks\HomeBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Category
@@ -26,11 +27,13 @@ class Category
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     * @Assert\NotNull()
      */
     private $name;
 
     /**
     * @ORM\OneToMany(targetEntity="SnowTricks\HomeBundle\Entity\Trick", mappedBy="category")
+    * @Assert\Valid()
     */
     private $tricks;
 
