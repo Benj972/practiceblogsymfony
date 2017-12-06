@@ -6,5 +6,16 @@ snow_tricks_home:
     resource: "@SnowTricksHomeBundle/Resources/config/routing.yml"
     prefix:   /home
 
+login:
+    path: /login
+    defaults:
+        _controller: SnowTricksUserBundle:Security:login
+
+login_check:
+    path: /login_check
+
+logout:
+    path: /logout
+
 
 
