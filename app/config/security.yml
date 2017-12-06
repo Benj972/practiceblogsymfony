@@ -6,15 +6,15 @@ security:
 
   role_hierarchy:
     # Un admin hérite des droits d'auteur et de modérateur
-    ROLE_ADMIN:       ROLE_USER
+    ROLE_ADMIN:       [ROLE_MEMBER, ROLE MODERATOR]
     # On garde ce rôle superadmin, il nous resservira par la suite
-    ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+    ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
   providers:
       in_memory:
         memory:
             users:
-                user:  { password: userpass, roles: [ 'ROLE_USER'] }
+                user:  { password: userpass, roles: [ 'ROLE_MEMBER'] }
                 admin: { password: adminpass, roles: [ 'ROLE_ADMIN'] }
 
   firewalls:
