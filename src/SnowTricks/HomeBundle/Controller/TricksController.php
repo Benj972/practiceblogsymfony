@@ -2,7 +2,7 @@
 
 namespace SnowTricks\HomeBundle\Controller;
 
-use SnowTricks\HomeBundle\Entity\Member;
+use SnowTricks\UserBundle\Entity\User;
 use SnowTricks\HomeBundle\Entity\Video;
 use SnowTricks\HomeBundle\Entity\Image;
 use SnowTricks\HomeBundle\Entity\Trick;
@@ -93,7 +93,7 @@ class TricksController extends Controller
 
 
   /**
-   * @Security("has_role('ROLE_MEMBER')")
+   * @Security("has_role('ROLE_USER')")
    */
     public function addAction(Request $request)
     {
