@@ -35,4 +35,20 @@ class TrickRepository extends EntityRepository
     return new Paginator($query, true);
   	}
 
+    /*public function getTrickWithCategory()
+    {
+    $qb = $this
+    ->createQueryBuilder('t')
+    ->leftJoin('t.category', 'c')
+    ->addSelect('c')
+    ;
+
+    return $qb
+    ->getQuery()
+    ->getResult()
+      ;
+    }*/
+
+    
+
 }
