@@ -19,12 +19,18 @@ class MessageType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder//->add('title', TextType::class)
+        $builder->add('title', TextType::class)
                 ->add('content', TextareaType::class)
-                //->add('date', DateTimeType::class)
+                ->add('date', DateTimeType::class)
                 //->add('trick', TrickType::class, array('required' => false))
                 //->add('member', MemberType::class, array('required' => false))
-                ->add('save',  SubmitType::class);
+                ->add('save',  SubmitType::class)
+                ->add('trick', EntityType::class, array(
+                    'class'         => 'SnowTricksHomeBundle:Trick',
+                    'choice_label'  => 'name',
+                    'multiple'      => false
+                ))
+                ->add('user', TextType::class);
     }
     
     /**
