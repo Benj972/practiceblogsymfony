@@ -30,3 +30,7 @@ snow_tricks_home_delete:
 snow_tricks_home_addmessage:
     path:     /addmessage
     defaults: { _controller: SnowTricksHomeBundle:Tricks:addmessage }
+
+snow_tricks_home_login:
+    path:     /login
+    defaults: { _controller: SnowTricksHomeBundle:Security:login }
