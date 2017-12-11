@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity
  * @ORM\Table(name="user")
+ * @ORM\Entity(repositoryClass="SnowTricks\HomeBundle\Repository\UserRepository")
  */
 
 class User implements UserInterface
