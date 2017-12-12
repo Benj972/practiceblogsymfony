@@ -1,4 +1,10 @@
 services:
-#    snow_tricks_home.example:
-#        class: SnowTricks\HomeBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]
+    snow_tricks_home.authenticator:
+        class: SnowTricks\HomeBundle\Security\LoginFormAuthenticator
+        autowire: true
+        #arguments: ["@service_id", "plain_value", "%parameter%"]
+    snow_tricks_home.hash_password_listener:
+        class: SnowTricks\HomeBundle\Doctrine\HashPasswordListener
+        autowire: true
+        tags:
+          - { name: doctrine.event_subscriber }
