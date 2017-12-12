@@ -14,7 +14,9 @@
          	{{ form_start(form) }}
                 {{ form_row(form._username) }}
                 {{ form_row(form._password) }}
-				<button type="submit" class="btn btn-success">Login <span class="fa fa-lock"></span></button>
+                <button type="submit" class="btn btn-success">Login <span class="fa fa-lock"></span></button>
+                &nbsp;
+                <a href="{{ path('snow_tricks_home_register') }}">Register</a>
             {{ form_end(form) }}
         </div>
     </div>
