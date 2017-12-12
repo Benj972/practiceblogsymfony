@@ -2,14 +2,16 @@
 
 namespace SnowTricks\HomeBundle\Entity;
 
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\Role\Role;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="SnowTricks\HomeBundle\Repository\UserRepository")
+ * @UniqueEntity(fields={"email"}, message="It looks like your already have an account!")
  */
 
 class User implements UserInterface
@@ -24,6 +26,8 @@ class User implements UserInterface
 
 
     /**
+     * @Assert\NotBlank()
+     * @Assert\Email()
      * @ORM\Column(type="string", unique=true)
      */
     private $email;
@@ -37,10 +41,16 @@ class User implements UserInterface
 
     /**
      * A non-persisted field that's used to create the encoded password.
+     * @Assert\NotBlank()
      *
      * @var string
      */
     private $plainPassword;
+
+    /**
+     * @ORM\Column(type="json")
+     */
+    private $roles = [];
 
 
     public function getUsername()
@@ -50,7 +60,18 @@ class User implements UserInterface
 
     public function getRoles()
     {
-        return ['ROLE_USER'];
+        $roles = $this->roles;
+        // give everyone ROLE_USER!
+        if (!in_array('ROLE_USER', $roles)) {
+            $roles[] = 'ROLE_USER';
+        }
+
+        return $roles;
+    }
+
+    public function setRoles(array $roles)
+    {
+        $this->roles = $roles;
     }
 
     public function getPassword()
@@ -58,14 +79,19 @@ class User implements UserInterface
         return $this->password;
     }
 
-    public function setPassword($password)
-    {
-        $this->password = $password;
-    }
-
     public function getSalt()
     {
+    	// leaving blank - I don't need/have a password!
+    }
 
+    public function eraseCredentials()
+    {
+        $this->plainPassword = null;
+    }
+    
+    public function getEmail()
+    {
+        return $this->email;
     }
 
     public function setEmail($email)
@@ -73,9 +99,9 @@ class User implements UserInterface
         $this->email = $email;
     }
 
-    public function eraseCredentials()
+    public function setPassword($password)
     {
-        $this->plainPassword = null;
+        $this->password = $password;
     }
 
     public function getPlainPassword()
