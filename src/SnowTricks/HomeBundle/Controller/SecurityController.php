@@ -32,4 +32,10 @@ class SecurityController extends Controller
             )
         );
     }
+
+    public function logoutAction()
+    {
+        throw new \Exception('this should not be reached!');
+    }
+
 }
