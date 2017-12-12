@@ -28,3 +28,8 @@ security:
 
             # https://symfony.com/doc/current/security/form_login_setup.html
             #form_login: ~
+    encoders:
+        SnowTricks\HomeBundle\Entity\User: bcrypt
+
+    access_control:
+        #- { path: /home/admin, roles: ROLE_USER }
