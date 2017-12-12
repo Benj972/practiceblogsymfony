@@ -38,3 +38,11 @@ snow_tricks_home_login:
 snow_tricks_home_logout:
     path:     /logout
     defaults: { _controller: SnowTricksHomeBundle:Security:logout }
+
+snow_tricks_home_admin:
+    path:     /admin
+    defaults: { _controller: SnowTricksHomeBundle:Admin/GenusAdmin:index }
+
+snow_tricks_home_register:
+    path:     /register
+    defaults: { _controller: SnowTricksHomeBundle:User:register }
