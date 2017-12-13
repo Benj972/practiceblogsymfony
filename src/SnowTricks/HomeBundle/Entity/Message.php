@@ -54,11 +54,11 @@ class Message
     private $trick;
 
     /**
-    * @ORM\ManyToOne(targetEntity="SnowTricks\HomeBundle\Entity\Member")
+    * @ORM\ManyToOne(targetEntity="SnowTricks\UserBundle\Entity\User")
     * @ORM\JoinColumn(nullable=false)
     * @Assert\Valid()
     */
-    private $member;
+    private $user;
 
     /**
      * Get id
@@ -154,16 +154,16 @@ class Message
         return $this->trick;
     }
 
-    public function setMember(Member $member)
+    public function setUser(User $user)
     {
-        $this->member = $member;
+        $this->user = $user;
 
         return $this;
     }
 
-    public function getMember()
+    public function getUser()
     {
-        return $this->member;
+        return $this->user;
     }
 }
 

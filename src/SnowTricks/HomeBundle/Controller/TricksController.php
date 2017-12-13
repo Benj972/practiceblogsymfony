@@ -2,7 +2,7 @@
 
 namespace SnowTricks\HomeBundle\Controller;
 
-use SnowTricks\HomeBundle\Entity\Member;
+use SnowTricks\UserBundle\Entity\User;
 use SnowTricks\HomeBundle\Entity\Video;
 use SnowTricks\HomeBundle\Entity\Image;
 use SnowTricks\HomeBundle\Entity\Trick;
@@ -15,6 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class TricksController extends Controller
 {
@@ -91,6 +92,9 @@ class TricksController extends Controller
     }
 
 
+  /**
+   * @Security("has_role('ROLE_USER')")
+   */
     public function addAction(Request $request)
     {
     
