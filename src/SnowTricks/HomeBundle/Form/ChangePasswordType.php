@@ -15,17 +15,20 @@ class ChangePasswordType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
     	$builder
-    		->add('oldplainPassword', PasswordType::class)
-       		->add('newplainPassword', RepeatedType::class, [
-            	'type' => PasswordType::class
-        ]);
+    		->add('oldPassword', PasswordType::class)
+       		->add('newPassword', RepeatedType::class,array(
+            	'type' => PasswordType::class,
+                'required' => true,
+                'first_options'  => array('label' => PasswordType::class),
+                'second_options' => array('label' => RepeatedType::class)
+            ));
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([
-            'data_class' => ChangePassword::class
-        ]);
+        $resolver->setDefaults(array(
+            'data_class' => 'SnowTricks\HomeBundle\Form\Model\ChangePassword'
+        ));
     }
 
 }
