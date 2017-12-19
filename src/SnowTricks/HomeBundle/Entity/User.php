@@ -1,3 +1,4 @@
+
 <?php
 
 namespace SnowTricks\HomeBundle\Entity;
@@ -52,6 +53,19 @@ class User implements UserInterface
      */
     private $roles = [];
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="token", type="string", length=100, unique=true)
+     */
+    private $token;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean")
+     */
+    private $isAlreadyRequested = false;
 
     public function getUsername()
     {
@@ -113,5 +127,17 @@ class User implements UserInterface
     {
         $this->plainPassword = $plainPassword;
         $this->password = null;
+    }
+
+    public function getToken()
+    {
+        return $this->token;
+    }
+
+    public function setToken($token)
+    {
+        $this->token = $token;
+
+        return $this;
     }
 }
