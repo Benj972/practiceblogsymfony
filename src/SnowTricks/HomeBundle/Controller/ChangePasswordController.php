@@ -1,5 +1,5 @@
 <?php
-
+/*
 namespace SnowTricks\HomeBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -14,21 +14,17 @@ class ChangePasswordController extends Controller
 
 	public function changePasswordAction(Request $request)
 	{
-      
-
-	    $changePasswordModel = new ChangePassword();
-      $form = $this->createForm(ChangePasswordType::class, $changePasswordModel);
-
-      $form->handleRequest($request);
-
-      if ($form->isSubmitted() && $form->isValid()) {
-        
+        $changePasswordModel = new ChangePassword();
         $oldPassword = $changePasswordModel->getOldPassword();
         $newPassword = $changePasswordModel->getNewPassword();
         $user = $this->getUser();
         $encoder = $this->container->get('security.password_encoder');
         $oldplainPassword = $encoder->encodePassword($user, $oldPassword);
-
+      
+      $form = $this->createForm(ChangePasswordType::class, $changePasswordModel);
+      $form->handleRequest($request);
+      if ($form->isSubmitted() && $form->isValid()) {
+        
           if ($user->getPassword() != $oldplainPassword){
             $request->getSession()->getFlashBag()->add('info', "Wrong old password!");
           } else {
@@ -36,9 +32,7 @@ class ChangePasswordController extends Controller
             $user->setPassword($newplainPassword);
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
-
             $em->flush();
-            
             $request->getSession()->getFlashBag()->add('info', "Password change successfully!");
           }
           // perform some action,
