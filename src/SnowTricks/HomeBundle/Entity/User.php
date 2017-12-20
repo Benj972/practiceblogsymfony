@@ -1,4 +1,3 @@
-
 <?php
 
 namespace SnowTricks\HomeBundle\Entity;
@@ -8,20 +7,21 @@ use Symfony\Component\Security\Core\Role\Role;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+
 /**
  * @ORM\Entity
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="SnowTricks\HomeBundle\Repository\UserRepository")
  * @UniqueEntity(fields={"email"}, message="It looks like your already have an account!")
  */
-
 class User implements UserInterface
 {
 
     /**
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(type="integer")
+     * @ORM\Column(name="id", type="integer")
      */
     private $id;
 
@@ -53,19 +53,14 @@ class User implements UserInterface
      */
     private $roles = [];
 
-    /**
+     /**
      * @var string
      *
-     * @ORM\Column(name="token", type="string", length=100, unique=true)
+     * @ORM\Column(name="picture", type="string", length=255)
+     * @Assert\URL()
      */
-    private $token;
+    private $avatar;
 
-    /**
-     * @var bool
-     *
-     * @ORM\Column(type="boolean")
-     */
-    private $isAlreadyRequested = false;
 
     public function getUsername()
     {
@@ -129,15 +124,13 @@ class User implements UserInterface
         $this->password = null;
     }
 
-    public function getToken()
+    public function setAvatar($avatar)
     {
-        return $this->token;
+        $this->avatar = $avatar;
     }
 
-    public function setToken($token)
+    public function getAvatar()
     {
-        $this->token = $token;
-
-        return $this;
+        return $this->avatar;
     }
 }
