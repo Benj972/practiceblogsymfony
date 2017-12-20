@@ -1,14 +1,14 @@
 <?php
 
 
-namespace SnowTricks\HomeBundle\Model;
+namespace SnowTricks\HomeBundle\Form\Model;
 
 
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\EventDispatcher\Event;
 
-
-class RequestPassword
+class RequestPassword extends Event
 {
     /**
      *
@@ -21,6 +21,10 @@ class RequestPassword
 
     private $identifier; 
 
+   
+    private $token;
+
+
     public function getIdentifier()
     {
         return $this->identifier;
@@ -31,13 +35,25 @@ class RequestPassword
         $this->identifier = $identifier;
     }
 
-    function getUser()
+    public function getUser()
     {
         return $this->user;
     }
 
-    function setUser(UserInterface $user)
+    public function setUser(UserInterface $user)
     {
         $this->user = $user;
+    }
+
+    public function getToken()
+    {
+        return $this->token;
+    }
+
+    public function setToken($token)
+    {
+        $this->token = $token;
+
+        return $this;
     }
 }
