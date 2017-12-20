@@ -49,4 +49,15 @@ snow_tricks_home_register:
 
 snow_tricks_home_change_password:
     path:     /change
-    defaults: { _controller: SnowTricksHomeBundle:ChangePassword:changePassword }
+    defaults: { _controller: SnowTricksHomeBundle:User:changePassword }
+    requirements:
+
+snow_tricks_home_request_password:
+    path:     /request
+    defaults: { _controller: SnowTricksHomeBundle:User:requestPassword }
+
+snow_tricks_home_reset_password:
+    path:     /reset
+    defaults: { _controller: SnowTricksHomeBundle:User:resetPassword }
+    requirements:
+        
