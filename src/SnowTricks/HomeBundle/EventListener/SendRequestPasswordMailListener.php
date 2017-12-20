@@ -6,7 +6,8 @@ namespace SnowTricks\HomeBundle\EventListener;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Routing\RouterInterface;
-
+use Doctrine\ORM\Event\LifecycleEventArgs;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 
 class SendRequestPasswordMailListener
@@ -31,15 +32,15 @@ class SendRequestPasswordMailListener
     /**
      * @param UserDataEvent $event
      */
-    public function notiffyByEmail($message, UserInterface $user)
+    public function notifyByEmail($message, UserInterface $user)
     {
 
         $message = \Swift_Message::newInstance()
-            ->setSubject('SnowTricks : Récupération de votre mot de passe');
-            ->setFrom($user->getEmail() );
-            ->setTo($user->getEmail() );
-            ->setBody('<a href="'. $this->router->generate('reset_password',
-                    ['token' => $token], true).'">Cliquez ici pour réinitialiser votre mot de passe</a>', 'text/html');
+            ->setSubject('SnowTricks : Récupération de votre mot de passe')
+            ->setFrom('ben@hotmail.fr')
+            ->setTo($user->getEmail())
+            ->setBody('<a href="'. $this->router->generate('reset_password').'">Cliquez ici pour réinitialiser votre mot de passe</a>');
+
         $this->mailer->send($message);
 
     }
