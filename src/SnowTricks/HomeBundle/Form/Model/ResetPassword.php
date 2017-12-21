@@ -1,12 +1,12 @@
 <?php
 
-
 namespace SnowTricks\HomeBundle\Form\Model;
+
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\User\UserInterface;
+use SnowTricks\HomeBundle\Entity\User;
 
-
-
-class ResetPassword
+    class ResetPassword 
 {
     /**
      * @Assert\NotBlank()
@@ -29,4 +29,19 @@ class ResetPassword
     {
         return $this->password;
     }
+
+    /*abstract public function getRoles();
+
+    abstract public function getSalt();
+
+    abstract public function getUsername();
+
+    abstract public function getEmail();
+
+    abstract public function getAvatar();
+
+    abstract public function getToken();
+
+    abstract public function getPlainPassword();*/
+
 }
