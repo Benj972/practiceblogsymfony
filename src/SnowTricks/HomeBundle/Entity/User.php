@@ -52,6 +52,7 @@ class User implements UserInterface
      */
     private $roles = [];
 
+
      /**
      * @ORM\Column(name="avatar", type="string", length=255)
      * @Assert\URL()
