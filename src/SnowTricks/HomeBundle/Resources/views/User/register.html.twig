@@ -8,10 +8,13 @@
                 {{ form_start(form) }}
                     {{ form_row(form.email) }}
                     {{ form_row(form.plainPassword.first, {
-                        'label': 'Password'
+                        'label': 'Mot de Passe'
                     }) }}
                     {{ form_row(form.plainPassword.second, {
-                        'label': 'Repeat Password'
+                        'label': 'Confirmez Mot de Passe'
+                    }) }}
+                    {{ form_row(form.avatar, {
+                        'label': 'Adresse url de l\'Avatar'
                     }) }}
                     <button type="submit" class="btn btn-primary" formnovalidate>Register</button>
                 {{ form_end(form) }}
