@@ -64,10 +64,10 @@ class Trick
     private $category;
 
     /**
-    * @ORM\ManyToOne(targetEntity="SnowTricks\HomeBundle\Entity\Member", cascade={"persist"})
+    * @ORM\ManyToOne(targetEntity="SnowTricks\HomeBundle\Entity\User", cascade={"persist"})
     * @Assert\Valid()
     */
-    private $member;
+    private $user;
 
 
     public function __construct()
@@ -152,14 +152,14 @@ class Trick
         return $this->category;
     }
 
-    public function setMember(Member $member)
+    public function setUser(User $user)
     {
-        $this->member = $member;
+        $this->user = $user;
     }
 
-    public function getMember()
+    public function getUser()
     {
-        return $this->member;
+        return $this->user;
     }
 
     
