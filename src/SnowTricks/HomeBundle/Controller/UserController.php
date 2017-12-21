@@ -13,14 +13,14 @@ use SnowTricks\HomeBundle\Form\RequestPasswordType;
 use SnowTricks\HomeBundle\Form\Model\ChangePassword;
 use SnowTricks\HomeBundle\Form\Model\ResetPassword;
 use SnowTricks\HomeBundle\Form\Model\RequestPassword;
-use SnowTricks\HomeBundle\Event\HomeEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use SnowTricks\HomeBundle\EventListener\SendRequestPasswordMailListener;
 
 class UserController extends Controller
 {
-    
+
     public function registerAction(Request $request)
     {
     	$form = $this->createForm(UserRegistrationType::class);
@@ -102,18 +102,24 @@ class UserController extends Controller
     public function requestPasswordAction(Request $request)
     {
         $requestpassword = new RequestPassword;
-        $identifier = $requestpassword->getIdentifier();
+        /*$identifier = $requestpassword->getIdentifier();*/
 
         $form = $this->createForm(RequestPasswordType::class, $requestpassword);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) { 
-        		/*$user = $this->getUser();
-            	$user->getEmail() = $identifier;*/ 
-                $event = new RequestPassword();
-                /*$user = $this->get('security.token_storage')->getToken()->getUser();*/
-                // On déclenche l'évènement
-                $this->get('event_dispatcher')->dispatch(HomeEvents::NEW_PASSWORD_REQUESTED, $event);
-                
+        $user = $this->getDoctrine()
+          ->getManager()
+          ->getRepository('SnowTricksHomeBundle:User')
+          ->findOneByEmail($form->getData()["email"]);
+
+        if($user !== null) {
+                $user->setToken(bcrypt(time()));
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($user);
+                $em->flush();
+                $notifyByEmail = $this->container->get('snow_tricks_home.request_password_mail');
+                /*$this->mail->notifyByEmail($user->getEmail(),$user->getToken());*/
+        }
                 $this->addFlash('info', "A mail has been sent to your mailbox to reset your password.");  
                 return $this->redirectToRoute('snow_tricks_home_homepage');
         }
