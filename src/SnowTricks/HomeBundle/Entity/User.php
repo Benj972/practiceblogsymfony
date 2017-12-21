@@ -25,7 +25,6 @@ class User implements UserInterface
      */
     private $id;
 
-
     /**
      * @Assert\NotBlank()
      * @Assert\Email()
@@ -54,12 +53,16 @@ class User implements UserInterface
     private $roles = [];
 
      /**
-     * @var string
-     *
-     * @ORM\Column(name="picture", type="string", length=255)
+     * @ORM\Column(name="avatar", type="string", length=255)
      * @Assert\URL()
      */
     private $avatar;
+
+    /**
+     * @ORM\Column(name="token", type="string", length=255, nullable=true)
+     * @Assert\URL()
+     */
+    private $token;
 
 
     public function getUsername()
@@ -132,5 +135,17 @@ class User implements UserInterface
     public function getAvatar()
     {
         return $this->avatar;
+    }
+
+    public function getToken()
+    {
+        return $this->token;
+    }
+
+    public function setToken($token)
+    {
+        $this->token = $token;
+
+        return $this;
     }
 }
