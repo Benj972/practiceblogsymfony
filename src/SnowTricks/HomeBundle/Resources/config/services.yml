@@ -11,9 +11,10 @@ services:
          - { name: doctrine.event_subscriber }
 
     snow_tricks_home.request_password_mail:
-        class: SnowTricks\HomeBundle\EventListener\SendRequestPasswordMailListener
+        class: SnowTricks\HomeBundle\EventListener\SendRequestPasswordMail
         arguments:
             - "@mailer"
+            - "@router"
 
     #snow_tricks_home.request_password:
         #class: SnowTricks\HomeBundle\EventListener\RequestListener

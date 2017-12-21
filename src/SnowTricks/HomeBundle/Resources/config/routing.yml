@@ -57,7 +57,8 @@ snow_tricks_home_request_password:
     defaults: { _controller: SnowTricksHomeBundle:User:requestPassword }
 
 snow_tricks_home_reset_password:
-    path:     /reset
+    path:     /reset/{token}
     defaults: { _controller: SnowTricksHomeBundle:User:resetPassword }
     requirements:
+        
         
