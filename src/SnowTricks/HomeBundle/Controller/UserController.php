@@ -14,9 +14,11 @@ use SnowTricks\HomeBundle\Form\Model\ChangePassword;
 use SnowTricks\HomeBundle\Form\Model\ResetPassword;
 use SnowTricks\HomeBundle\Form\Model\RequestPassword;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use SnowTricks\HomeBundle\EventListener\SendRequestPasswordMailListener;
+
 
 class UserController extends Controller
 {
@@ -71,29 +73,30 @@ class UserController extends Controller
       ));      
     }
 
-    public function resetPasswordAction(Request $request)
+    public function resetPasswordAction(Request $request, $token)
     {
             $resetpassword = new ResetPassword;
             $newpassword = $resetpassword->getPassword();
-
+            $user = $this->getDoctrine()->getManager()->getRepository('SnowTricksHomeBundle:User')->findOneByToken($token);
+                    
+            if($user !== null) {
             $form = $this->createForm(ResetPasswordType::class, $resetpassword);
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
-                $passwordEncoder = $this->container->get('security.password_encoder');
-                $password = $passwordEncoder->encodePassword($resetpassword, $newpassword);
-                $user->setPassword($password);
-
+                $user->setToken(null);
+                /*$passwordEncoder = $this->container->get('security.password_encoder');
+                $password = $passwordEncoder->encodePassword($resetpassword, $newpassword);*/
+                $user->setPassword($newpassword);
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($user);
                 $em->flush();
-           
-                $securityToken = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
-                $this->get('security.token_storage')->setToken($securityToken);
 
+               /* $securityToken = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
+                $this->get('security.token_storage')->setToken($securityToken);*/
                 $this->addFlash('info', "Your password has been resetted. You can login now.");  
                 return $this->redirectToRoute('snow_tricks_home_homepage');
             }
-
+            }
             return $this->render('SnowTricksHomeBundle:User:resetPassword.html.twig', array(
             'form' => $form->createView(),
             ));      
@@ -102,7 +105,6 @@ class UserController extends Controller
     public function requestPasswordAction(Request $request)
     {
         $requestpassword = new RequestPassword;
-        /*$identifier = $requestpassword->getIdentifier();*/
 
         $form = $this->createForm(RequestPasswordType::class, $requestpassword);
         $form->handleRequest($request);
@@ -110,15 +112,15 @@ class UserController extends Controller
         $user = $this->getDoctrine()
           ->getManager()
           ->getRepository('SnowTricksHomeBundle:User')
-          ->findOneByEmail($form->getData()["email"]);
+          ->findOneByEmail($requestpassword->getEmail());
 
         if($user !== null) {
-                $user->setToken(bcrypt(time()));
+                $confirmationtoken = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
+                $user->setToken($confirmationtoken);
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($user);
                 $em->flush();
                 $notifyByEmail = $this->container->get('snow_tricks_home.request_password_mail');
-                /*$this->mail->notifyByEmail($user->getEmail(),$user->getToken());*/
         }
                 $this->addFlash('info', "A mail has been sent to your mailbox to reset your password.");  
                 return $this->redirectToRoute('snow_tricks_home_homepage');
