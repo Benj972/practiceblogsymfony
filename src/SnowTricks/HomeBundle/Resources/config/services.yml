@@ -10,16 +10,13 @@ services:
         tags:
          - { name: doctrine.event_subscriber }
 
-    snow_tricks_home.events:
-        class: SnowTricks\HomeBundle\Event\HomeEvents
-
     snow_tricks_home.request_password_mail:
         class: SnowTricks\HomeBundle\EventListener\SendRequestPasswordMailListener
         arguments:
             - "@mailer"
 
-    snow_tricks_home.request_password:
-        class: SnowTricks\HomeBundle\EventListener\RequestListener
-        arguments: "@snow_tricks_home.request_password_mail"
-        tags:
-            - { name: kernel.event_listener, event: snow_tricks_homebundle.new_password_requested, method: processMail }
+    #snow_tricks_home.request_password:
+        #class: SnowTricks\HomeBundle\EventListener\RequestListener
+        #arguments: "@snow_tricks_home.request_password_mail"
+        #tags:
+            #- { name: kernel.event_listener, event: snow_tricks_homebundle.new_password_requested, method: processMail }
