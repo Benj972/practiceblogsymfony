@@ -1,7 +1,7 @@
 <?php
 
 
-namespace SnowTricks\HomeBundle\Model;
+namespace SnowTricks\HomeBundle\Form\Model;
 use Symfony\Component\Validator\Constraints as Assert;
 
 
