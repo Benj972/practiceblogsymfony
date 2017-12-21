@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use SnowTricks\HomeBundle\Form\Model\ResetPassword;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use SnowTricks\HomeBundle\Manager\UserManagerInterface;
 
 class ResetPasswordType extends AbstractType
@@ -23,7 +24,7 @@ class ResetPasswordType extends AbstractType
             'second_options' => array('label' => RepeatedType::class),
             'type'           => PasswordType::class,
         ));
-        $builder->add('Reset Password', 'submit');
+        $builder->add('Reset Password', SubmitType::class);
 
     }
 
