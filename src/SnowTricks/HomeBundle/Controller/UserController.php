@@ -15,9 +15,10 @@ use SnowTricks\HomeBundle\Form\Model\ResetPassword;
 use SnowTricks\HomeBundle\Form\Model\RequestPassword;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use SnowTricks\HomeBundle\EventListener\SendRequestPasswordMailListener;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 
 class UserController extends Controller
@@ -44,26 +45,24 @@ class UserController extends Controller
     public function changePasswordAction(Request $request)
     {
         $changePasswordModel = new ChangePassword();
-        $oldPassword = $changePasswordModel->getOldPassword();
-        $newPassword = $changePasswordModel->getNewPassword();
-        
+        $user = $this->getUser();
         $form = $this->createForm(ChangePasswordType::class, $changePasswordModel);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-        $user = $this->getUser();
-        $encoder = $this->container->get('security.password_encoder');
-        $oldplainPassword = $encoder->encodePassword($changePasswordModel, $oldPassword);
 
-          if ($user->getPassword() != $oldplainPassword){
+        $passwordEncoder = $this->container->get('security.password_encoder');
+        $oldplainPassword = $changePasswordModel->getOldPassword();
+        $newplainPassword = $changePasswordModel->getNewPassword();
+		if (!$passwordEncoder->isPasswordValid($user, $oldplainPassword)) {
             $this->addFlash('info', "Wrong old password!");
           } else {
-            $newplainPassword = $encoder->encodePassword($user, $newPassword);
-            $user->setPassword($newplainPassword);
+            $encoded = $passwordEncoder->encodePassword($user, $newplainPassword);
+            $user->setPassword($encoded);
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
             $this->addFlash('info', "Password change successfully!");
-          }
+        }
 
           return $this->redirectToRoute('snow_tricks_home_homepage');
       }
@@ -76,7 +75,7 @@ class UserController extends Controller
     public function resetPasswordAction(Request $request, $token)
     {
             $resetpassword = new ResetPassword;
-            $newpassword = $resetpassword->getPassword();
+            $newpassword = $resetpassword->getPlainPassword();
             $user = $this->getDoctrine()->getManager()->getRepository('SnowTricksHomeBundle:User')->findOneByToken($token);
                     
             if($user !== null) {
@@ -84,15 +83,12 @@ class UserController extends Controller
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
                 $user->setToken(null);
-                /*$passwordEncoder = $this->container->get('security.password_encoder');
-                $password = $passwordEncoder->encodePassword($resetpassword, $newpassword);*/
-                $user->setPassword($newpassword);
+                $passwordEncoder = $this->container->get('security.password_encoder');
+                $encoded = $passwordEncoder->encodePassword($user, $newpassword);
+                $user->setPassword($encoded);
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($user);
                 $em->flush();
-
-               /* $securityToken = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
-                $this->get('security.token_storage')->setToken($securityToken);*/
                 $this->addFlash('info', "Your password has been resetted. You can login now.");  
                 return $this->redirectToRoute('snow_tricks_home_homepage');
             }
