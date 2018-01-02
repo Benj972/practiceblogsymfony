@@ -3,7 +3,6 @@
 
 namespace SnowTricks\HomeBundle\Form;
 
-
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -19,12 +18,11 @@ class ResetPasswordType extends AbstractType
     
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('password', RepeatedType::class, array(
+        $builder->add('plainPassword', RepeatedType::class, array(
             'first_options'  => array('label' => PasswordType::class),
             'second_options' => array('label' => RepeatedType::class),
             'type'           => PasswordType::class,
         ));
-        $builder->add('Reset Password', SubmitType::class);
 
     }
 
