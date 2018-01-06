@@ -75,13 +75,14 @@ class UserController extends Controller
     public function resetPasswordAction(Request $request, $token)
     {
             $resetpassword = new ResetPassword;
-            $newpassword = $resetpassword->getPlainPassword();
+            
             $user = $this->getDoctrine()->getManager()->getRepository('SnowTricksHomeBundle:User')->findOneByToken($token);
                     
             if($user !== null) {
             $form = $this->createForm(ResetPasswordType::class, $resetpassword);
             $form->handleRequest($request);
-            if ($form->isSubmitted() && $form->isValid()) {
+            $newpassword = $resetpassword->getPlainPassword();
+            if ($form->isSubmitted() && $form->isValid()) {  	
                 $user->setToken(null);
                 $passwordEncoder = $this->container->get('security.password_encoder');
                 $encoded = $passwordEncoder->encodePassword($user, $newpassword);
@@ -109,13 +110,15 @@ class UserController extends Controller
           ->getRepository('SnowTricksHomeBundle:User')
           ->findOneByEmail($requestpassword->getEmail());
 
+        /*$notifyByEmail = $this->container->get('snow_tricks_home.request_password_mail');*/
         if($user !== null) {
-                /*$confirmationtoken = new UsernamePasswordToken($user, null, 'main', $user->getRoles());*/
-                $user->setToken(2/*$confirmationtoken*/);
+                $confirmationtoken = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
+                $user->setToken($confirmationtoken);
                 $em = $this->getDoctrine()->getManager();
-                $em->persist($user);
                 $em->flush();
-                $notifyByEmail = $this->container->get('snow_tricks_home.request_password_mail');
+                $email = $this->container->get('snow_tricks_home.request_password_mail');
+                $message='...';
+                $email->notifyByEmail($message, $user);
         }
                 $this->addFlash('info', "A mail has been sent to your mailbox to reset your password.");  
                 return $this->redirectToRoute('snow_tricks_home_homepage');
