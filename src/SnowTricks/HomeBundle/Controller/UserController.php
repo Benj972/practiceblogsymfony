@@ -87,7 +87,6 @@ class UserController extends Controller
                 $encoded = $passwordEncoder->encodePassword($user, $newpassword);
                 $user->setPassword($encoded);
                 $em = $this->getDoctrine()->getManager();
-                $em->persist($user);
                 $em->flush();
                 $this->addFlash('info', "Your password has been resetted. You can login now.");  
                 return $this->redirectToRoute('snow_tricks_home_homepage');
@@ -111,8 +110,8 @@ class UserController extends Controller
           ->findOneByEmail($requestpassword->getEmail());
 
         if($user !== null) {
-                $confirmationtoken = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
-                $user->setToken($confirmationtoken);
+                /*$confirmationtoken = new UsernamePasswordToken($user, null, 'main', $user->getRoles());*/
+                $user->setToken(2/*$confirmationtoken*/);
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($user);
                 $em->flush();
