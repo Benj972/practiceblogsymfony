@@ -19,7 +19,7 @@ use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class UserController extends Controller
 {
@@ -42,6 +42,9 @@ class UserController extends Controller
         ]);
     }
 
+    /**
+    * @Security("has_role('ROLE_USER')")
+    */
     public function changePasswordAction(Request $request)
     {
         $changePasswordModel = new ChangePassword();
