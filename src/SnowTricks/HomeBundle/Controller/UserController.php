@@ -61,7 +61,7 @@ class UserController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
-            $this->addFlash('info', "Password change successfully!");
+            $this->addFlash('info', "Le mot de passe est changé avec succès!");
         }
 
           return $this->redirectToRoute('snow_tricks_home_homepage');
@@ -89,7 +89,7 @@ class UserController extends Controller
                 $user->setPassword($encoded);
                 $em = $this->getDoctrine()->getManager();
                 $em->flush();
-                $this->addFlash('info', "Your password has been resetted. You can login now.");  
+                $this->addFlash('info', "Votre mot de passe a été réinitialisé. Vous pouvez vous connecter.");  
                 return $this->redirectToRoute('snow_tricks_home_homepage');
             }
             }
@@ -110,7 +110,6 @@ class UserController extends Controller
           ->getRepository('SnowTricksHomeBundle:User')
           ->findOneByEmail($requestpassword->getEmail());
 
-        /*$notifyByEmail = $this->container->get('snow_tricks_home.request_password_mail');*/
         if($user !== null) {
                 $confirmationtoken = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
                 $user->setToken($confirmationtoken);
@@ -120,7 +119,7 @@ class UserController extends Controller
                 $message='...';
                 $email->notifyByEmail($message, $user);
         }
-                $this->addFlash('info', "A mail has been sent to your mailbox to reset your password.");  
+                $this->addFlash('info', "Un email a été envoyé à votre boîte aux lettres pour réinitialiser votre mot de passe.");  
                 return $this->redirectToRoute('snow_tricks_home_homepage');
         }
 
