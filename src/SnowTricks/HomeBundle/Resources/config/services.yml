@@ -1,4 +1,5 @@
 services:
+<<<<<<< HEAD
     snow_tricks_home.authenticator:
         class: SnowTricks\HomeBundle\Security\LoginFormAuthenticator
         autowire: true
@@ -18,3 +19,8 @@ services:
             - "@templating"
             
             
+=======
+    #snow_tricks_home.discussion:
+    #class: SnowTricks\HomeBundle\DiscussionArea\Discussion
+    #arguments: ["@service_id", "plain_value", "%parameter%"]
+>>>>>>> origin/UserBundleGuard

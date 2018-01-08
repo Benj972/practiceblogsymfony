@@ -4,7 +4,11 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
+<<<<<<< HEAD
     "content-hash": "60f5781669cd23e377e9c86ab748b0a4",
+=======
+    "content-hash": "629b836e3b1fb139632697eec5692f22",
+>>>>>>> origin/UserBundleGuard
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -828,6 +832,7 @@
         },
         {
             "name": "doctrine/migrations",
+<<<<<<< HEAD
             "version": "v1.6.2",
             "source": {
                 "type": "git",
@@ -854,6 +859,36 @@
                 "mikey179/vfsstream": "^1.6",
                 "phpunit/phpunit": "~6.2",
                 "squizlabs/php_codesniffer": "^3.0"
+=======
+            "version": "v1.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/doctrine/migrations.git",
+                "reference": "c81147c0f2938a6566594455367e095150547f72"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/doctrine/migrations/zipball/c81147c0f2938a6566594455367e095150547f72",
+                "reference": "c81147c0f2938a6566594455367e095150547f72",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/dbal": "~2.2",
+                "ocramius/proxy-manager": "^1.0|^2.0",
+                "php": "^5.5|^7.0",
+                "symfony/console": "~2.3|~3.0",
+                "symfony/yaml": "~2.3|~3.0"
+            },
+            "require-dev": {
+                "doctrine/coding-standard": "dev-master",
+                "doctrine/orm": "2.*",
+                "jdorn/sql-formatter": "~1.1",
+                "johnkary/phpunit-speedtrap": "~1.0@dev",
+                "mikey179/vfsstream": "^1.6",
+                "mockery/mockery": "^0.9.4",
+                "phpunit/phpunit": "~4.7",
+                "satooshi/php-coveralls": "^1.0"
+>>>>>>> origin/UserBundleGuard
             },
             "suggest": {
                 "jdorn/sql-formatter": "Allows to generate formatted SQL with the diff command."
@@ -896,7 +931,11 @@
                 "database",
                 "migrations"
             ],
+<<<<<<< HEAD
             "time": "2017-11-24T14:13:17+00:00"
+=======
+            "time": "2016-12-25T22:54:00+00:00"
+>>>>>>> origin/UserBundleGuard
         },
         {
             "name": "doctrine/orm",
@@ -1258,6 +1297,7 @@
         },
         {
             "name": "ocramius/proxy-manager",
+<<<<<<< HEAD
             "version": "2.1.1",
             "source": {
                 "type": "git",
@@ -1285,6 +1325,31 @@
                 "phpunit/phpunit": "^5.6.4",
                 "phpunit/phpunit-mock-objects": "^3.4.1",
                 "squizlabs/php_codesniffer": "^2.7.0"
+=======
+            "version": "2.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Ocramius/ProxyManager.git",
+                "reference": "a55d08229f4f614bf335759ed0cf63378feeb2e6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Ocramius/ProxyManager/zipball/a55d08229f4f614bf335759ed0cf63378feeb2e6",
+                "reference": "a55d08229f4f614bf335759ed0cf63378feeb2e6",
+                "shasum": ""
+            },
+            "require": {
+                "ocramius/package-versions": "^1.0",
+                "php": "7.0.0 - 7.0.5 || ^7.0.7",
+                "zendframework/zend-code": "3.0.0 - 3.0.2 || ^3.0.4"
+            },
+            "require-dev": {
+                "couscous/couscous": "^1.4.0",
+                "ext-phar": "*",
+                "phpbench/phpbench": "^0.11.2",
+                "phpunit/phpunit": "^5.4.6",
+                "squizlabs/php_codesniffer": "^2.6.0"
+>>>>>>> origin/UserBundleGuard
             },
             "suggest": {
                 "ocramius/generated-hydrator": "To have very fast object to array to object conversion for ghost objects",
@@ -1323,7 +1388,11 @@
                 "proxy pattern",
                 "service proxies"
             ],
+<<<<<<< HEAD
             "time": "2017-05-04T11:12:50+00:00"
+=======
+            "time": "2016-11-04T15:53:15+00:00"
+>>>>>>> origin/UserBundleGuard
         },
         {
             "name": "paragonie/random_compat",
@@ -2237,6 +2306,7 @@
             "time": "2017-10-11T12:05:26+00:00"
         },
         {
+<<<<<<< HEAD
             "name": "symfony/security",
             "version": "v3.4.1",
             "source": {
@@ -2248,10 +2318,24 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/security/zipball/3e2df407f47c0f6fbfb73d3ea2fefe7ff9ab2ed5",
                 "reference": "3e2df407f47c0f6fbfb73d3ea2fefe7ff9ab2ed5",
+=======
+            "name": "symfony/security-guard",
+            "version": "v3.4.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/security-guard.git",
+                "reference": "8d22b5b285d23fc23c46bdce11f02d134bfe7e9e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/security-guard/zipball/8d22b5b285d23fc23c46bdce11f02d134bfe7e9e",
+                "reference": "8d22b5b285d23fc23c46bdce11f02d134bfe7e9e",
+>>>>>>> origin/UserBundleGuard
                 "shasum": ""
             },
             "require": {
                 "php": "^5.5.9|>=7.0.8",
+<<<<<<< HEAD
                 "symfony/event-dispatcher": "~2.8|~3.0|~4.0",
                 "symfony/http-foundation": "^2.8.31|~3.3.13|~3.4|~4.0",
                 "symfony/http-kernel": "~3.3|~4.0",
@@ -2283,6 +2367,13 @@
                 "symfony/ldap": "For using the LDAP user and authentication providers",
                 "symfony/routing": "For using the HttpUtils class to create sub-requests, redirect the user, and match URLs",
                 "symfony/validator": "For using the user password constraint"
+=======
+                "symfony/security-core": "~2.8|~3.0|~4.0",
+                "symfony/security-http": "~3.1|~4.0"
+            },
+            "require-dev": {
+                "psr/log": "~1.0"
+>>>>>>> origin/UserBundleGuard
             },
             "type": "library",
             "extra": {
@@ -2292,7 +2383,11 @@
             },
             "autoload": {
                 "psr-4": {
+<<<<<<< HEAD
                     "Symfony\\Component\\Security\\": ""
+=======
+                    "Symfony\\Component\\Security\\Guard\\": ""
+>>>>>>> origin/UserBundleGuard
                 },
                 "exclude-from-classmap": [
                     "/Tests/"
@@ -2312,9 +2407,15 @@
                     "homepage": "https://symfony.com/contributors"
                 }
             ],
+<<<<<<< HEAD
             "description": "Symfony Security Component",
             "homepage": "https://symfony.com",
             "time": "2017-12-03T21:15:09+00:00"
+=======
+            "description": "Symfony Security Component - Guard",
+            "homepage": "https://symfony.com",
+            "time": "2017-11-07T14:20:24+00:00"
+>>>>>>> origin/UserBundleGuard
         },
         {
             "name": "symfony/swiftmailer-bundle",
@@ -2528,6 +2629,7 @@
                 "framework"
             ],
             "time": "2017-12-04T22:26:41+00:00"
+<<<<<<< HEAD
         },
         {
             "name": "symfony/templating",
@@ -2583,6 +2685,8 @@
             "description": "Symfony Templating Component",
             "homepage": "https://symfony.com",
             "time": "2018-01-03T07:38:00+00:00"
+=======
+>>>>>>> origin/UserBundleGuard
         },
         {
             "name": "twig/twig",
@@ -2652,6 +2756,7 @@
         },
         {
             "name": "zendframework/zend-code",
+<<<<<<< HEAD
             "version": "3.3.0",
             "source": {
                 "type": "git",
@@ -2666,13 +2771,34 @@
             },
             "require": {
                 "php": "^7.1",
+=======
+            "version": "3.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zendframework/zend-code.git",
+                "reference": "2899c17f83a7207f2d7f53ec2f421204d3beea27"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zendframework/zend-code/zipball/2899c17f83a7207f2d7f53ec2f421204d3beea27",
+                "reference": "2899c17f83a7207f2d7f53ec2f421204d3beea27",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.6 || 7.0.0 - 7.0.4 || ^7.0.6",
+>>>>>>> origin/UserBundleGuard
                 "zendframework/zend-eventmanager": "^2.6 || ^3.0"
             },
             "require-dev": {
                 "doctrine/annotations": "~1.0",
                 "ext-phar": "*",
+<<<<<<< HEAD
                 "phpunit/phpunit": "^6.2.3",
                 "zendframework/zend-coding-standard": "^1.0.0",
+=======
+                "phpunit/phpunit": "^4.8.21",
+                "squizlabs/php_codesniffer": "^2.5",
+>>>>>>> origin/UserBundleGuard
                 "zendframework/zend-stdlib": "^2.7 || ^3.0"
             },
             "suggest": {
@@ -2682,8 +2808,13 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
+<<<<<<< HEAD
                     "dev-master": "3.2-dev",
                     "dev-develop": "3.3-dev"
+=======
+                    "dev-master": "3.1-dev",
+                    "dev-develop": "3.2-dev"
+>>>>>>> origin/UserBundleGuard
                 }
             },
             "autoload": {
@@ -2701,7 +2832,11 @@
                 "code",
                 "zf2"
             ],
+<<<<<<< HEAD
             "time": "2017-10-20T15:21:32+00:00"
+=======
+            "time": "2016-10-24T13:23:32+00:00"
+>>>>>>> origin/UserBundleGuard
         },
         {
             "name": "zendframework/zend-eventmanager",
