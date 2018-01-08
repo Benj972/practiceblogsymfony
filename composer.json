@@ -22,6 +22,7 @@
     "require": {
         "php": ">=5.5.9",
         "doctrine/doctrine-bundle": "^1.6",
+        "doctrine/doctrine-fixtures-bundle": "v2.4.1",
         "doctrine/doctrine-migrations-bundle": "^1.0",
         "doctrine/orm": "^2.5",
         "incenteev/composer-parameter-handler": "^2.0",
@@ -32,7 +33,6 @@
         "symfony/polyfill-apcu": "^1.0",
         "symfony/routing": "v3.3.14",
         "symfony/security": "v3.4.1",
-        "symfony/security-guard": "v3.4.1",
         "symfony/security-guard": "^3.4",
         "symfony/swiftmailer-bundle": "^2.3.10",
         "symfony/symfony": "3.3.*",
