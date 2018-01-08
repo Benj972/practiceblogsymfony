@@ -1,0 +1,24 @@
+{% extends "SnowTricksHomeBundle::layout.html.twig" %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <h1>Login!</h1>
+
+			{% if error %}
+				<div class="alert alert-danger">
+            	<div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
+
+         	{{ form_start(form) }}
+                {{ form_row(form._username) }}
+                {{ form_row(form._password) }}
+                <button type="submit" class="btn btn-success">Login <span class="fa fa-lock"></span></button>
+                &nbsp;
+                <a href="{{ path('snow_tricks_home_register') }}">Register</a>
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>
+{% endblock %}

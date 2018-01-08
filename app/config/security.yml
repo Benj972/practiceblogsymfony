@@ -4,8 +4,8 @@ security:
 
     # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
-        in_memory:
-            memory: ~
+        our_users:
+            entity: { class: SnowTricks\HomeBundle\Entity\User, property: email }
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -15,6 +15,12 @@ security:
 
         main:
             anonymous: ~
+
+            guard:
+                authenticators:
+                    - snow_tricks_home.authenticator
+            logout:
+                path: /home/logout
             # activate different ways to authenticate
 
             # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
@@ -22,3 +28,12 @@ security:
 
             # https://symfony.com/doc/current/security/form_login_setup.html
             #form_login: ~
+    encoders:
+        SnowTricks\HomeBundle\Entity\User: bcrypt
+
+    role_hierarchy:
+        ROLE_ADMIN:       [ ROLE_USER ]
+    # On garde ce rôle superadmin, il nous resservira par la suite
+
+    access_control:
+        - { path: /home/admin, roles: ROLE_ADMIN }

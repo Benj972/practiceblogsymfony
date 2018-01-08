@@ -54,9 +54,11 @@
           {% if listMessages is defined %}
  		      <blockquote class="blockquote">>
       		    Espace de discussion:
+              {% if is_granted('ROLE_USER') %}
               <div>
                 {{ include("SnowTricksHomeBundle:Tricks:messageform.html.twig") }}
               </div>
+              {% endif %}
               <ul>
                 {% for message in listMessages %}
                    <li><h3> {{ message.title }} </h3></li>

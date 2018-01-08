@@ -1,0 +1,24 @@
+{% extends "SnowTricksHomeBundle::layout.html.twig" %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <h1>Register!</h1>
+                {{ form_start(form) }}
+                    {{ form_row(form.email) }}
+                    {{ form_row(form.plainPassword.first, {
+                        'label': 'Mot de Passe'
+                    }) }}
+                    {{ form_row(form.plainPassword.second, {
+                        'label': 'Confirmez Mot de Passe'
+                    }) }}
+                    {{ form_row(form.avatar, {
+                        'label': 'Adresse url de l\'Avatar'
+                    }) }}
+                    <button type="submit" class="btn btn-primary" formnovalidate>Register</button>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

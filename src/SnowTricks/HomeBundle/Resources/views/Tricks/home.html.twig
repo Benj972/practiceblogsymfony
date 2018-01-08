@@ -22,7 +22,7 @@
       <li>
         <h3 class="post-subtitle"><a href="{{ path('snow_tricks_home_view', {'id': trick.id}) }}">
           {{ trick.name }} 
-          {% if trick.member is not null %} par {{ trick.member.pseudo }} <img src= "{{ trick.member.picture }}" height="40"/> {% else %} vide {% endif %}
+          {% if trick.user is not null %} par {{ trick.user.email }} <img src= "{{ trick.user.avatar }}" height="40"/> {% else %} vide {% endif %}
         </a></h3>
       </li>
     {% else %}
