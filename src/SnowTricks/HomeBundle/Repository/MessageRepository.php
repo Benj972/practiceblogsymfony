@@ -18,8 +18,8 @@ class MessageRepository extends \Doctrine\ORM\EntityRepository
 	public function getMessages($page, $nbPerPage, $trick)
   {
     $query = $this->createQueryBuilder('m')
-      ->leftJoin('m.member', 'mem')
-      ->addSelect('mem')
+      ->leftJoin('m.user', 'u')
+      ->addSelect('u')
       ->leftJoin('m.trick', 't')
       ->addSelect('t')
       ->where('m.trick = :trick')
