@@ -18,6 +18,7 @@ class AppKernel extends Kernel
             new SnowTricks\HomeBundle\SnowTricksHomeBundle(),
             new SnowTricks\CoreBundle\SnowTricksCoreBundle(),
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
+            new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
