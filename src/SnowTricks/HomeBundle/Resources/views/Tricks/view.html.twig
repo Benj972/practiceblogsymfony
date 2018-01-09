@@ -40,14 +40,10 @@
     	    </div>
 
 		      <div>
-			       {% for video in trick.videos%}
-  				      <object type="application/x-shockwave-flash" width="425" height="355" data=" {{ video.url }} ">
-    			       <param name="movie" value=" {{ video.url }} " />
-    			       <param name="wmode" value="transparent" />
-  				      </object>
-  				      <!--[if lte IE 6 ]>
-  				          <embed src=" {{ video.url }}" type="application/x-shockwave-flash" wmode="transparent" width="425" height="355"></embed>
-				        <![endif]-->
+			       {% for video in trick.videos %}
+
+              <embed src="{{ video.url }}" allowfullscreen="true" width="425" height="344"> 
+
 			       {% endfor %}
 		      </div>
 
@@ -61,7 +57,8 @@
               {% endif %}
               <ul>
                 {% for message in listMessages %}
-                   <li><h3> {{ message.title }} </h3></li>
+                   <li><h6> {{ message.title }} par {{ message.user.email }} le {{ message.date|date("d/m/Y") }}</h3></li>
+                   <p> {{ message.content }} </p>
                 {% else %}
                     <li>Pas (encore !) de messages</li>
                 {% endfor %}
