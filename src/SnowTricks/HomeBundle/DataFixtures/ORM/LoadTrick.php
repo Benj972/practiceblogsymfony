@@ -17,6 +17,7 @@ class LoadTrick extends Fixture
   	$trick1->setUser($this->getReference('user1'));
   	$trick1->setContent('Saisie de la carre frontside de la planche 
       entre les deux pieds avec la main avant.');
+    $trick1->setDate(new \DateTime('2018-01-09 16:10:36'));
   	$manager->persist($trick1);
 
   	$trick2 = new Trick;
@@ -24,6 +25,7 @@ class LoadTrick extends Fixture
   	$trick2->setCategory($this->getReference('category1'));
   	$trick2->setUser($this->getReference('user2'));
   	$trick2->setContent('Saisie de la carre backside de la planche, entre les deux pieds, avec la main avant.');
+    $trick2->setDate(new \DateTime('2018-01-09 16:10:36'));
   	$manager->persist($trick2);
 
   	$trick3 = new Trick;
@@ -31,6 +33,7 @@ class LoadTrick extends Fixture
   	$trick3->setCategory($this->getReference('category1'));
   	$trick3->setUser($this->getReference('user3'));
   	$trick3->setContent('Saisie de la carre frontside de la planche, entre les deux pieds, avec la main arrière.');
+    $trick3->setDate(new \DateTime('2018-01-09 16:10:36'));
   	$manager->persist($trick3);
 
   	$trick4 = new Trick;
@@ -38,6 +41,7 @@ class LoadTrick extends Fixture
   	$trick4->setCategory($this->getReference('category1'));
   	$trick4->setUser($this->getReference('user3'));
   	$trick4->setContent('Saisie de la carre backside de la planche entre les deux pieds avec la main arrière.');
+    $trick4->setDate(new \DateTime('2018-01-09 16:10:36'));
   	$manager->persist($trick4);
 
   	$trick5 = new Trick;
@@ -45,6 +49,7 @@ class LoadTrick extends Fixture
   	$trick5->setCategory($this->getReference('category1'));
   	$trick5->setUser($this->getReference('user1'));
   	$trick5->setContent('Saisie de la partie arrière de la planche, avec la main arrière.');
+    $trick5->setDate(new \DateTime('2018-01-09 16:10:36'));
   	$manager->persist($trick5);
 
   	$trick6 = new Trick;
@@ -52,6 +57,7 @@ class LoadTrick extends Fixture
   	$trick6->setCategory($this->getReference('category1'));
   	$trick6->setUser($this->getReference('user2'));
   	$trick6->setContent('Saisie de la partie avant de la planche, avec la main avant.');
+    $trick6->setDate(new \DateTime('2018-01-09 16:10:36'));
   	$manager->persist($trick6);
 
   	$trick7 = new Trick;
@@ -59,6 +65,7 @@ class LoadTrick extends Fixture
   	$trick7->setCategory($this->getReference('category2'));
   	$trick7->setUser($this->getReference('user1'));
   	$trick7->setContent('Un 180 désigne un demi-tour.');
+    $trick7->setDate(new \DateTime('2018-01-09 16:10:36'));
   	$manager->persist($trick7);
 
   	$trick8 = new Trick;
@@ -66,6 +73,7 @@ class LoadTrick extends Fixture
   	$trick8->setCategory($this->getReference('category2'));
   	$trick8->setUser($this->getReference('user2'));
   	$trick8->setContent('Trois six pour un tour complet.');
+    $trick8->setDate(new \DateTime('2018-01-09 16:10:36'));
   	$manager->persist($trick8);
 
   	$trick9 = new Trick;
@@ -73,6 +81,7 @@ class LoadTrick extends Fixture
   	$trick9->setCategory($this->getReference('category2'));
   	$trick9->setUser($this->getReference('user3'));
   	$trick9->setContent('Cinq quatre pour un tour et demi.');
+    $trick9->setDate(new \DateTime('2018-01-09 16:10:36'));
   	$manager->persist($trick9);
 
   	$trick10 = new Trick;
@@ -80,6 +89,7 @@ class LoadTrick extends Fixture
   	$trick10->setCategory($this->getReference('category2'));
   	$trick10->setUser($this->getReference('user3'));
   	$trick10->setContent('Sept deux pour deux tours complets.');
+    $trick10->setDate(new \DateTime('2018-01-09 16:10:36'));
   	$manager->persist($trick10);
 
   	$trick11 = new Trick;
@@ -87,6 +97,7 @@ class LoadTrick extends Fixture
   	$trick11->setCategory($this->getReference('category3'));
   	$trick11->setUser($this->getReference('user1'));
   	$trick11->setContent('Une rotation verticale en avant.');
+    $trick11->setDate(new \DateTime('2018-01-09 16:10:36'));
   	$manager->persist($trick11);
 
   	$trick12 = new Trick;
@@ -94,6 +105,7 @@ class LoadTrick extends Fixture
   	$trick12->setCategory($this->getReference('category3'));
   	$trick12->setUser($this->getReference('user2'));
   	$trick12->setContent('Une rotation verticale en arrière.');
+    $trick12->setDate(new \DateTime('2018-01-09 16:10:36'));
   	$manager->persist($trick12);
 
   	$trick13 = new Trick;
@@ -101,6 +113,7 @@ class LoadTrick extends Fixture
   	$trick13->setCategory($this->getReference('category4'));
   	$trick13->setUser($this->getReference('user3'));
   	$trick13->setContent('Le saut étoile');
+    $trick13->setDate(new \DateTime('2018-01-09 16:10:36'));
   	$manager->persist($trick13);
 
   	$manager->flush();
