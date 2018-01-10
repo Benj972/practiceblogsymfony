@@ -55,16 +55,17 @@
                 {{ include("SnowTricksHomeBundle:Tricks:messageform.html.twig") }}
               </div>
               {% endif %}
+              <div class="col-sm-12 col-sm-offset-8 frame">
               <ul>
                 {% for message in listMessages %}
-                   <li><h6> {{ message.title }} par {{ message.user.email }} le {{ message.date|date("d/m/Y") }}</h3></li>
+                   <li><h6> {{ message.title }} par {{ message.user.email }} le {{ message.date|date("d/m/Y H:i:s") }}</h3></li>
                    <p> {{ message.content }} </p>
                 {% else %}
                     <li>Pas (encore !) de messages</li>
                 {% endfor %}
                 </hr>
               </ul>
-
+</div>
               <ul class="pagination">
                   {# On utilise la fonction range(a, b) qui crée un tableau de valeurs entre a et b #}
                 {% for p in range(1, nbPages) %}
