@@ -26,7 +26,7 @@ class Trick
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255)
+     * @ORM\Column(name="name", type="string", length=255, unique=true)
      * @Assert\Length(min=2)
      */
     private $name;
@@ -38,6 +38,14 @@ class Trick
      * @Assert\NotBlank()
      */
     private $content;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date", type="datetime")
+     * @Assert\DateTime()
+     */
+    private $date;
 
     /**
     * @ORM\OneToMany(targetEntity="SnowTricks\HomeBundle\Entity\Image", mappedBy="trick", cascade={"persist"})
@@ -75,6 +83,7 @@ class Trick
         $this->images = new ArrayCollection();
         $this->videos = new ArrayCollection();
         $this->messages = new ArrayCollection();
+        $this->date = new \Datetime();
     }
 
 
@@ -134,6 +143,22 @@ class Trick
     public function getContent()
     {
         return $this->content;
+    }
+
+    /**
+    * @param \DateTime $date
+    */
+    public function setDate($date)
+    {
+        $this->date = $date;
+    }
+
+    /**
+    * @return \DateTime
+    */
+    public function getDate()
+    {
+        return $this->date;
     }
 
    /**
