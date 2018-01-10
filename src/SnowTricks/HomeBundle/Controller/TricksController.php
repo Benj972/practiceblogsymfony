@@ -109,7 +109,7 @@ class TricksController extends Controller
       $form = $this->get('form.factory')->create(TrickType::class, $trick);
 
       if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
-
+        $trick->setUser($user = $this->getUser());
         $em = $this->getDoctrine()->getManager();
         $em->persist($trick);
         $em->flush();
