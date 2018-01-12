@@ -67,7 +67,6 @@ class Trick
 
     /**
     * @ORM\ManyToOne(targetEntity="SnowTricks\HomeBundle\Entity\Category", inversedBy="tricks", cascade={"persist"})
-    * @Assert\Valid()
     */
     private $category;
 
