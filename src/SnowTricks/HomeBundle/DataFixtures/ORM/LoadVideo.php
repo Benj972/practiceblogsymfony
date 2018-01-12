@@ -2,12 +2,12 @@
 
 namespace SnowTricks\HomeBundle\DataFixtures\ORM;
 
-use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use SnowTricks\HomeBundle\Entity\Video;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
-class LoadVideo extends Fixture
+class LoadVideo extends AbstractFixture implements DependentFixtureInterface
 {
   public function load(ObjectManager $manager)
   {
@@ -108,10 +108,7 @@ class LoadVideo extends Fixture
   public function getDependencies()
   {
     return array(
-    	LoadCategory::class,
-    	LoadUser::class,
-    	LoadTrick::class,
-      LoadImage::class,
+    	LoadTrick::class,  
     );
   }
 }

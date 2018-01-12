@@ -2,8 +2,6 @@
 
 namespace SnowTricks\HomeBundle\DataFixtures\ORM;
 
-use Doctrine\Common\DataFixtures\FixtureInterface;
-use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use SnowTricks\HomeBundle\Entity\User;
@@ -12,7 +10,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 
 
-class LoadUser extends AbstractFixture implements FixtureInterface, ContainerAwareInterface, DependentFixtureInterface
+class LoadUser extends AbstractFixture implements FixtureInterface, ContainerAwareInterface
 {
 
   private $container;
@@ -56,10 +54,4 @@ class LoadUser extends AbstractFixture implements FixtureInterface, ContainerAwa
 
   }
 
-  public function getDependencies()
-    {
-        return array(
-            LoadCategory::class,
-        );
-    }
 }

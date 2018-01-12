@@ -2,11 +2,12 @@
 
 namespace SnowTricks\HomeBundle\DataFixtures\ORM;
 
-use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use SnowTricks\HomeBundle\Entity\Category;
+use Doctrine\Common\DataFixtures\FixtureInterface;
 
-class LoadCategory extends Fixture
+class LoadCategory extends AbstractFixture 
 {
 
   public function load(ObjectManager $manager)
@@ -36,5 +37,6 @@ class LoadCategory extends Fixture
     $this->addReference('category4', $category4);
 
   }
+
 
 }

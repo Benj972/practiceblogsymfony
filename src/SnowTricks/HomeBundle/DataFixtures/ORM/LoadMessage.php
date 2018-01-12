@@ -2,12 +2,12 @@
 
 namespace SnowTricks\HomeBundle\DataFixtures\ORM;
 
-use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use SnowTricks\HomeBundle\Entity\Message;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
-class LoadMessage extends Fixture
+class LoadMessage extends AbstractFixture implements DependentFixtureInterface
 {
   public function load(ObjectManager $manager)
   {
@@ -81,11 +81,8 @@ class LoadMessage extends Fixture
   public function getDependencies()
   {
     return array(
-    	LoadCategory::class,
     	LoadUser::class,
     	LoadTrick::class,
-      	LoadImage::class,
-      	LoadVideo::class,
     );
   }
 }

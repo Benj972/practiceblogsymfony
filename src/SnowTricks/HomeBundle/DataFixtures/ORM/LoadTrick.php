@@ -2,12 +2,12 @@
 
 namespace SnowTricks\HomeBundle\DataFixtures\ORM;
 
-use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use SnowTricks\HomeBundle\Entity\Trick;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
-class LoadTrick extends Fixture
+class LoadTrick extends AbstractFixture implements DependentFixtureInterface
 {
   public function load(ObjectManager $manager)
   {
