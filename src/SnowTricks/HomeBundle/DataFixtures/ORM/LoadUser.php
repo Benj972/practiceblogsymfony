@@ -26,7 +26,7 @@ class LoadUser extends AbstractFixture implements FixtureInterface, ContainerAwa
   {
 
   	$user1 = new User;
-    $user1->setPseudo('titou');
+    $user1->setPseudo('titeuf');
   	$user1->setEmail('titounet@gmail.fr');
   	$user1->setPassword($this->container->get('security.password_encoder')->encodePassword($user1, 'titounet64'));
   	$user1->setAvatar('https://upload.wikimedia.org/wikipedia/commons/5/5f/Rilley_elf_south_park_avatar.png');
