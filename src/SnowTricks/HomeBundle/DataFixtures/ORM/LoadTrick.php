@@ -15,8 +15,7 @@ class LoadTrick extends Fixture
   	$trick1->setName('Mute');
   	$trick1->setCategory($this->getReference('category1'));
   	$trick1->setUser($this->getReference('user1'));
-  	$trick1->setContent('Saisie de la carre frontside de la planche 
-      entre les deux pieds avec la main avant.');
+  	$trick1->setContent('Saisie de la carre frontside de la planche entre les deux pieds avec la main avant.');
     $trick1->setDate(new \DateTime('2018-01-09 16:10:36'));
   	$manager->persist($trick1);
 
