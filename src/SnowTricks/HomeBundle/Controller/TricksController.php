@@ -109,7 +109,9 @@ class TricksController extends Controller
       $form = $this->get('form.factory')->create(TrickType::class, $trick);
 
       if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+        
         $trick->setUser($user = $this->getUser());
+        $trick->setDate(new \DateTime('now'));
         $em = $this->getDoctrine()->getManager();
         $em->persist($trick);
         $em->flush();
@@ -118,7 +120,10 @@ class TricksController extends Controller
         return $this->redirectToRoute('snow_tricks_home_homepage');
       }
         // Si on n'est pas en POST, alors on affiche le formulaire
-        return $this->render('SnowTricksHomeBundle:Tricks:add.html.twig', array('form' => $form->createView(), ));
+        return $this->render('SnowTricksHomeBundle:Tricks:add.html.twig', array(
+          'trick' => $trick,
+          'form' => $form->createView(),
+          ));
     }
 
 
