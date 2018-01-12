@@ -40,14 +40,6 @@ class Trick
     private $content;
 
     /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="date", type="datetime")
-     * @Assert\DateTime()
-     */
-    private $date;
-
-    /**
     * @ORM\OneToMany(targetEntity="SnowTricks\HomeBundle\Entity\Image", mappedBy="trick", cascade={"persist"})
     * @Assert\Valid()
     */
@@ -64,6 +56,14 @@ class Trick
     * @Assert\Valid()
     */
     private $messages;
+
+    /**
+    * @var \DateTime
+    *
+    * @ORM\Column(name="date", type="datetime")
+    * @Assert\DateTime()
+    */
+    private $date;
 
     /**
     * @ORM\ManyToOne(targetEntity="SnowTricks\HomeBundle\Entity\Category", inversedBy="tricks", cascade={"persist"})
@@ -83,7 +83,7 @@ class Trick
         $this->images = new ArrayCollection();
         $this->videos = new ArrayCollection();
         $this->messages = new ArrayCollection();
-        $this->date = new \Datetime();
+        $this->date = new \Datetime();    
     }
 
 
@@ -146,32 +146,32 @@ class Trick
     }
 
     /**
-    * @param \DateTime $date
-    */
+     * @param \DateTime $date
+     */
     public function setDate($date)
     {
         $this->date = $date;
     }
 
     /**
-    * @return \DateTime
-    */
+     * @return \DateTime
+     */
     public function getDate()
     {
         return $this->date;
     }
 
-   /**
-    * @param Category $category
-    */
+    /**
+     * @param Category $category
+     */
     public function setCategory(Category $category)
     {
         $this->category = $category;
     }
 
     /**
-    * @return Category
-    */
+     * @return Category
+     */
     public function getCategory()
     {
         return $this->category;
