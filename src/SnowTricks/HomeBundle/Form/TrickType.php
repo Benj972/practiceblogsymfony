@@ -11,6 +11,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -29,7 +30,7 @@ class TrickType extends AbstractType
         ->add('category', EntityType::class, array(
         'class'         => 'SnowTricksHomeBundle:Category',
         'choice_label'  => 'name',
-        'multiple'      => false,
+        'multiple'      => false
          ))
         ->add('images', CollectionType::class, array(
         'entry_type'   => ImageType::class,
@@ -43,7 +44,7 @@ class TrickType extends AbstractType
         'allow_delete' => true,
         'by_reference' => false
          ))
-        ->add('save',  SubmitType::class);
+        ->add('save', SubmitType::class);
     }
     
     /**
