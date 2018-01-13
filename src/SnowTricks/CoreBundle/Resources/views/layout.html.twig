@@ -65,32 +65,15 @@
         </div>
       </div>
     </header>
-
+        {% if is_granted('ROLE_USER') %}
+            <li><a href="{{ path('snow_tricks_home_logout') }}">Logout</a></li>
+        {% else %}
+            <li><a href="{{ path('snow_tricks_home_login') }}">Login</a></li>
+        {% endif %}
     <!-- Main Content -->
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 col-md-10 mx-auto">
-          <div class="post-preview">
-              {% if is_granted('ROLE_USER') %}
-                    <li><a href="{{ path('snow_tricks_home_logout') }}">Logout</a></li>
-              {% else %}
-                    <li><a href="{{ path('snow_tricks_home_login') }}">Login</a></li>
-                {% endif %}
-              {% block body %}
-                {% endblock %}
-          </div>
-          <hr>
-         
-          <!-- Pager -->
-          <div class="clearfix">
-            <a class="btn btn-primary float-right" href="#">Older Posts &rarr;</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <hr>
-
+        {% block body %}
+        {% endblock %}
+  
     <!-- Footer -->
     <footer>
       <div class="container">
@@ -138,4 +121,3 @@
   </body>
 
 </html>
-"{{asset("bootstrap/css/clean-blog.min.css")}}"
