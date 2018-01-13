@@ -15,21 +15,25 @@
       {% endfor %}
   </div>
 
-<h2 class="post-title">Liste des figures</h2>
 
-  <ul>
+
+<div class="container text-center">
+  <h1>Liste Figures</h1>
     {% for trick in listTricks %}
-      <li>
-        <h3 class="post-subtitle"><a href="{{ path('snow_tricks_home_view', {'id': trick.id}) }}">
-          {{ trick.name }} 
-          {% if trick.user is not null %} par {{ trick.user.email }} <img src= "{{ trick.user.avatar }}" height="40"/> {% else %} vide {% endif %}
-        </a></h3>
-      </li>
-    {% else %}
-      <li>Pas (encore !) de figures</li>
+    <div class="row test">
+        <div class="col-xs-12 col-sm-6 col-md-3 listimg">
+          <img src="http://dummyimage.com/250x250" class="img-responsive">
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-8 list">
+            <h3 class="post-subtitle"><a href="{{ path('snow_tricks_home_view', {'id': trick.id}) }}">{{ trick.name }}</a>
+              <a href="{{ path('snow_tricks_home_edit', {'id': trick.id}) }}"><span class="fa fa-pencil-square-o" aria-hidden="true"> </span></a>
+              <a href="{{ path('snow_tricks_home_delete', {'id': trick.id}) }}"><span class="fa fa-trash" aria-hidden="true"></span></a></h3>
+        </div>   
+    </div>
     {% endfor %}
-    <hr>
-  </ul>
+</div>
+
+ <hr>
 
   <ul class="pagination">
     {# On utilise la fonction range(a, b) qui crée un tableau de valeurs entre a et b #}
