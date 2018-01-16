@@ -9,21 +9,37 @@
 {% block snow_tricks_body %}
 
 
-<div class="container">
-  <div class="row justify-content-center">
+<a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Voir Images et Videos</a>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> 
+<script type="text/javascript">
+if (window.matchMedia("(min-width: 600px)").matches) {
+$('#collapseExample').collapse({
+  show: true
+})
+} else {
+$('#collapseExample').collapse({
+  show: false
+})
+}
+</script>
 
-    <div class="col-6">
+<div class="collapse" id="collapseExample">
+
+<div class="container media">
+<div class="row justify-content-between">
+<div class="col-lg-8 col-md-10 mx-auto>
+    <div class="col-6 col-sm-4 col-md-3"">
       <div id="carouselExampleControls1" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner" role="listbox">
           {% for image in trick.images[:1] %}
             <div class="carousel-item active">
-              <img class="d-block img-fluid" src="{{ image.url }}" hight="300" width="300" alt="{{ image.alt }}">
+              <img src="{{ image.url }}" alt="{{ image.alt }}" height="400" width="400">
             </div> 
           {% endfor %}
 
           {% for image in trick.images[1:] %}
             <div class="carousel-item ">
-              <img class="d-block img-fluid" src="{{ image.url }}" hight="300" width="300" alt="{{ image.alt }}">
+              <img  src="{{ image.url }}" alt="{{ image.alt }}" height="400" width="400">
             </div>
           {% endfor %}
         </div>
@@ -39,18 +55,18 @@
       </div>
     </div>    
 
-    <div class="col-6">
+    <div class="col-6 col-sm-4 col-md-3"">
       <div id="carouselExampleControls2" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner" role="listbox">
           {% for video in trick.videos[:1] %}
             <div class="carousel-item active">
-              <a class="thumbnail" href="#"><embed src="{{ video.url }}" allowfullscreen="true" width="300" height="300"></a>
+              <a class="thumbnail" href="#"><embed src="{{ video.url }}" allowfullscreen="true"  height="400" width="400"></a>
             </div> 
           {% endfor %}
 
           {% for video in trick.videos[1:] %}
             <div class="carousel-item ">
-              <a class="thumbnail" href="#"><embed src="{{ video.url }}" allowfullscreen="true" width="300" height="300"></a> 
+              <a class="thumbnail" href="#"><embed src="{{ video.url }}" allowfullscreen="true"  height="400" width="400"></a> 
             </div>
           {% endfor %}
         </div>
@@ -65,86 +81,80 @@
         </a>
       </div>
     </div>
-
+</div>
   </div>
 </div>
 
- <article>
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-8 col-md-10 mx-auto">
-
-  			   <h2 class="section-heading">
-      		   {{ trick.name }} 
-  			   </h2>
-
-  			   <p>
-    			   {{ trick.content }}  
-  			   </p>
-
-           {% if trick.category is null %}
-              Il n'y a pas de catégories définies
-           {% else %}
-  			     <p><em>
-  			       Dans la catégorie {{ trick.category.name }}
-  			     </em></p>
-           {% endif %}
-  </article>
-
-
-          {% if listMessages is defined %}
- 		      <blockquote class="blockquote">>
-      		    Espace de discussion:
-              {% if is_granted('ROLE_USER') %}
-              <div>
-                {{ include("SnowTricksHomeBundle:Tricks:messageform.html.twig") }}
-              </div>
-              {% endif %}
-
-
-                {% for message in listMessages %}
-                <div class="row test">
-                <div class="col-xs-12 col-sm-12 col-md-12">               
-                   <a class="pull-left">
-                    <img class="media-object" data-src="holder.js/64x64" alt="64x64" style="width: 50px; height: 50px;" src="{{ message.user.avatar }}">
-                  </a>
-                  <small class="pull-right time"><i class="fa fa-clock-o"></i> {{ message.date|date("d/m/Y H:i:s") }} </small>
-                   <h6> {{ message.title }} par {{ message.user.pseudo }} </h6>
-                   <p> {{ message.content }} </p>
-                {% else %}
-                    <li>Pas (encore !) de messages</li>
-                  </div>
-                  </div>
-                {% endfor %}
-                </hr>
-             
 </div>
-              <ul class="pagination">
-                  {# On utilise la fonction range(a, b) qui crée un tableau de valeurs entre a et b #}
-                {% for p in range(1, nbPages) %}
-                    <li{% if p == page %} class="active"{% endif %}>
-                    <a href="{{ path('snow_tricks_home_view', {'page': p, id:trick.id }) }}">{{ p }}</a> 
-                    </li>
-                {% endfor %} 
-              </ul>   
-		      </blockquote>
-          {% endif %}
+
+<div class="container article">
+  <div class="row justify-content-center">
+    <div class="col-lg-8 col-md-10 mx-auto">
+  		<h2 class="section-heading">{{ trick.name }} </h2>
+  			 <p>{{ trick.content }}</p>
+           {% if trick.category is null %}
+             <p>Il n'y a pas de catégories définies</p>
+           {% else %}
+  			     <p><em>Dans la catégorie {{ trick.category.name }}</em></p>
+           {% endif %}
+    </div>
+  </div>
+</div>
 
 
-          </div>
+<div class="container message">
+    <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+           <div class="panel panel-primary">
+             <h5> Espace de discussion:</h5>
+                  {% if is_granted('ROLE_USER') %}
+                    <div>
+                      {{ include("SnowTricksHomeBundle:Tricks:messageform.html.twig") }}
+                    </div>
+                  {% endif %}
+
+                  {% if listMessages is defined %}          
+                      {% for message in listMessages %}    
+                          <div class="panel-body">
+                            <ul class="chat">          
+                                <li class="left clearfix"><span class="chat-img pull-left">
+                                  <img src="{{ message.user.avatar }}" alt="User Avatar" height="30" width="30">
+                                  </span>
+                                    <div class="chat-body clearfix">
+                                        <div class="header">
+                                          <strong class="primary-font">{{ message.title }}</strong> <small class="pull-right text-muted"> <i class="fa fa-clock-o"></i>{{ message.date|date("d/m/Y H:i:s") }}</small>
+                                        </div>
+                                          <p> {{ message.content }} </p>
+                                    </div>
+                                </li>
+                            </ul>
+                          </div>    
+                      {% endfor %}
+                  {% else %}
+                      <li>Pas (encore !) de messages</li>
+                  {% endif %}   
+
+                    <ul class="pagination">
+                        {# On utilise la fonction range(a, b) qui crée un tableau de valeurs entre a et b #}
+                          {% for p in range(1, nbPages) %}
+                            <li{% if p == page %} class="active"{% endif %}>
+                              <a href="{{ path('snow_tricks_home_view', {'page': p, id:trick.id }) }}">{{ p }}</a> 
+                            </li>
+                          {% endfor %} 
+                    </ul>   
+
+            </div>
         </div>
-     </div>
+    </div>
+</div>
+        
 
-
-        <p>
-            <a href="{{ path('snow_tricks_home_homepage') }}" class="btn btn-default">
-            <i class="glyphicon glyphicon-chevron-left"></i>
-                Retour à la liste des figures
-            </a>
-        </p>
-
-
-
+<p>
+ <a href="{{ path('snow_tricks_home_homepage') }}" class="btn btn-default">
+    <i class="glyphicon glyphicon-chevron-left"></i>
+       Retour à la liste des figures
+  </a>
+</p>
 
 {% endblock %}
 
