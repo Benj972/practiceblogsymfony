@@ -4,8 +4,9 @@
     <div class="container">
         <div class="row">
             <div class="col-xs-12">
-                <h1>Register!</h1>
+                <h1>Inscrivez-Vous!</h1>
                 {{ form_start(form) }}
+                    {{ form_row(form.pseudo) }}
                     {{ form_row(form.email) }}
                     {{ form_row(form.plainPassword.first, {
                         'label': 'Mot de Passe'
@@ -16,7 +17,7 @@
                     {{ form_row(form.avatar, {
                         'label': 'Adresse url de l\'Avatar'
                     }) }}
-                    <button type="submit" class="btn btn-primary" formnovalidate>Register</button>
+                    <button type="submit" class="btn btn-primary" formnovalidate>S'inscrire</button>
                 {{ form_end(form) }}
             </div>
         </div>

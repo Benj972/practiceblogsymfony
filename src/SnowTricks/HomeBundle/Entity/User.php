@@ -26,6 +26,14 @@ class User implements UserInterface
     private $id;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="pseudo", type="string", length=255, unique=true)
+     * @Assert\Length(min=2)
+     */
+    private $pseudo;
+
+    /**
      * @Assert\NotBlank()
      * @Assert\Email()
      * @ORM\Column(type="string", unique=true)
@@ -100,6 +108,18 @@ class User implements UserInterface
     public function eraseCredentials()
     {
         $this->plainPassword = null;
+    }
+    
+    public function setPseudo($pseudo)
+    {
+        $this->pseudo = $pseudo;
+
+        return $this;
+    }
+
+    public function getPseudo()
+    {
+        return $this->pseudo;
     }
     
     public function getEmail()

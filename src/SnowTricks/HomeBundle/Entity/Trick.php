@@ -26,7 +26,7 @@ class Trick
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255)
+     * @ORM\Column(name="name", type="string", length=255, unique=true)
      * @Assert\Length(min=2)
      */
     private $name;
@@ -58,8 +58,15 @@ class Trick
     private $messages;
 
     /**
+    * @var \DateTime
+    *
+    * @ORM\Column(name="date", type="datetime")
+    * @Assert\DateTime()
+    */
+    private $date;
+
+    /**
     * @ORM\ManyToOne(targetEntity="SnowTricks\HomeBundle\Entity\Category", inversedBy="tricks", cascade={"persist"})
-    * @Assert\Valid()
     */
     private $category;
 
@@ -75,6 +82,7 @@ class Trick
         $this->images = new ArrayCollection();
         $this->videos = new ArrayCollection();
         $this->messages = new ArrayCollection();
+        $this->date = new \Datetime();    
     }
 
 
@@ -136,17 +144,33 @@ class Trick
         return $this->content;
     }
 
-   /**
-    * @param Category $category
-    */
+    /**
+     * @param \DateTime $date
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    /**
+     * @param Category $category
+     */
     public function setCategory(Category $category)
     {
         $this->category = $category;
     }
 
     /**
-    * @return Category
-    */
+     * @return Category
+     */
     public function getCategory()
     {
         return $this->category;
