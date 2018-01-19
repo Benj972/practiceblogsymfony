@@ -36,8 +36,11 @@
         "symfony/security-guard": "^3.4",
         "symfony/swiftmailer-bundle": "^2.3.10",
         "symfony/symfony": "3.3.*",
-        "symfony/templating": "^4.0",
-        "twig/twig": "^1.0||^2.0"
+        "symfony/templating": "v3.4.3",
+        "twig/twig": "^1.0||^2.0",
+        "doctrine/cache": "1.6.x",
+        "doctrine/annotations": "v1.4.0",
+        "phpunit/phpunit": "5.7.x"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
