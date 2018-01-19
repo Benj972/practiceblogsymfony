@@ -10,18 +10,7 @@
 
 
 <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Voir Images et Videos</a>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> 
-<script type="text/javascript">
-if (window.matchMedia("(min-width: 600px)").matches) {
-$('#collapseExample').collapse({
-  show: true
-})
-} else {
-$('#collapseExample').collapse({
-  show: false
-})
-}
-</script>
+
 
 <div class="collapse" id="collapseExample">
 
@@ -158,5 +147,23 @@ $('#collapseExample').collapse({
 
 {% endblock %}
 
+{% block javascripts %}
+ {{ parent() }}
+<script type="text/javascript">
+$(window).resize(function(){
+  collapse();
+})
 
+collapse();
+
+function collapse()
+{
+  if (window.matchMedia("(min-width: 600px)").matches) {
+    $('#collapseExample').collapse("show")
+  } else {
+    $('#collapseExample').collapse("hide")
+  }
+}
+</script>
+{% endblock %}
 
