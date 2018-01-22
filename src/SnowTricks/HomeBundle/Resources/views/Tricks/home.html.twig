@@ -23,7 +23,7 @@
     <div class="row test">
         <div class="col-xs-12 col-sm-6 col-md-3">
           {% for image in trick.images|slice(0, 1) %}
-           <img src= "{{ image.url }}" height="250", width="250" /> 
+           <img src= "{{ asset(image.webPath) }}" height="250", width="250" /> 
           {% endfor %}
         </div>
         <div class="col-xs-12 col-sm-6 col-md-8 list">
