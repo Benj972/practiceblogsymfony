@@ -40,13 +40,13 @@ class Trick
     private $content;
 
     /**
-    * @ORM\OneToMany(targetEntity="SnowTricks\HomeBundle\Entity\Image", mappedBy="trick", cascade={"persist"})
+    * @ORM\OneToMany(targetEntity="SnowTricks\HomeBundle\Entity\Image", mappedBy="trick", cascade={"persist", "remove"})
     * @Assert\Valid()
     */
     private $images;
 
     /**
-    * @ORM\OneToMany(targetEntity="SnowTricks\HomeBundle\Entity\Video", mappedBy="trick", cascade={"persist"})
+    * @ORM\OneToMany(targetEntity="SnowTricks\HomeBundle\Entity\Video", mappedBy="trick", cascade={"persist", "remove"})
     * @Assert\Valid()
     */
     private $videos;
