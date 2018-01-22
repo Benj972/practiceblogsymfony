@@ -22,13 +22,13 @@
         <div class="carousel-inner" role="listbox">
           {% for image in trick.images[:1] %}
             <div class="carousel-item active">
-              <img src="{{ image.url }}" alt="{{ image.alt }}" height="400" width="400">
+              <img src="{{ asset(image.webPath) }}" alt="{{ image.alt }}" height="400" width="400">
             </div> 
           {% endfor %}
 
           {% for image in trick.images[1:] %}
             <div class="carousel-item ">
-              <img  src="{{ image.url }}" alt="{{ image.alt }}" height="400" width="400">
+              <img  src="{{ asset(image.webPath) }}" alt="{{ image.alt }}" height="400" width="400">
             </div>
           {% endfor %}
         </div>
