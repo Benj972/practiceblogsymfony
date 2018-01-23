@@ -50,11 +50,10 @@ class Image
 
     /**
     * @ORM\ManyToOne(targetEntity="SnowTricks\HomeBundle\Entity\Trick", inversedBy="images")
-    * @ORM\JoinColumn(nullable=false)
     * @Assert\Valid()
     */
     private $trick;
-
+ 
     /**
      * @ORM\PrePersist()
      * @ORM\PreUpdate()
