@@ -49,7 +49,8 @@ class Image
     private $tempFilename;
 
     /**
-    * @ORM\ManyToOne(targetEntity="SnowTricks\HomeBundle\Entity\Trick", inversedBy="images")
+    * @ORM\ManyToOne(targetEntity="SnowTricks\HomeBundle\Entity\Trick", inversedBy="images", cascade={"persist"})
+    * @ORM\JoinColumn(name="trick_id", referencedColumnName="id", nullable=true, onDelete="CASCADE")
     * @Assert\Valid()
     */
     private $trick;
