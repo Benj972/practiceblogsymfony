@@ -7,10 +7,10 @@ use Doctrine\Common\Persistence\ObjectManager;
 use SnowTricks\HomeBundle\Entity\User;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
 
-
-class LoadUser extends AbstractFixture implements ContainerAwareInterface
+class LoadUser extends AbstractFixture implements ContainerAwareInterface, DependentFixtureInterface
 {
 
   private $container;
@@ -29,21 +29,21 @@ class LoadUser extends AbstractFixture implements ContainerAwareInterface
     $user1->setPseudo('titeuf');
   	$user1->setEmail('titounet@gmail.fr');
   	$user1->setPassword($this->container->get('security.password_encoder')->encodePassword($user1, 'titounet64'));
-  	$user1->setAvatar('https://upload.wikimedia.org/wikipedia/commons/5/5f/Rilley_elf_south_park_avatar.png');
+  	$user1->setAvatar($this->getReference('image16'));
 	  $manager->persist($user1);
 
 	  $user2 = new User;
     $user2->setPseudo('dede');
   	$user2->setEmail('dede@gmail.fr');
   	$user2->setPassword($this->container->get('security.password_encoder')->encodePassword($user2, 'dede2017'));
-  	$user2->setAvatar('https://vignette.wikia.nocookie.net/adventuretimewithfinnandjake/images/3/35/South_Park_Avatar_Wallpaper1600x1200.png/revision/latest?cb=20140424015749');
+  	$user2->setAvatar($this->getReference('image17'));
 	  $manager->persist($user2);
 
 	  $user3 = new User;
     $user3->setPseudo('ben');
   	$user3->setEmail('ben.gallot972@gmail.fr');
   	$user3->setPassword($this->container->get('security.password_encoder')->encodePassword($user3, 'benjamin2017'));
-  	$user3->setAvatar('https://vignette1.wikia.nocookie.net/southpark/images/3/3f/South_Park_Avatar_Wallpaper800x600.png/revision/latest?cb=20111107043648');
+  	$user3->setAvatar($this->getReference('image18'));
 	  $manager->persist($user3);
 
 	  $manager->flush();
@@ -54,4 +54,10 @@ class LoadUser extends AbstractFixture implements ContainerAwareInterface
 
   }
 
+  public function getDependencies()
+  {
+    return array(
+      LoadAvatar::class,
+    );
+  }
 }
