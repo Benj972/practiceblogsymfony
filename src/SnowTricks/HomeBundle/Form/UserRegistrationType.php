@@ -4,10 +4,12 @@ namespace SnowTricks\HomeBundle\Form;
 
 use SnowTricks\HomeBundle\Entity\User;
 use Symfony\Component\Form\AbstractType;
+use SnowTricks\HomeBundle\Repository\ImageRepository;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -21,7 +23,7 @@ class UserRegistrationType extends AbstractType
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class
             ])
-            ->add('avatar', TextType::class);
+            ->add('avatar', ImageType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)
