@@ -7,6 +7,7 @@
                 <h1>Inscrivez-Vous!</h1>
                 {{ form_start(form) }}
                     {{ form_row(form.pseudo) }}
+                    {{ form_row(form.avatar) }} 
                     {{ form_row(form.email) }}
                     {{ form_row(form.plainPassword.first, {
                         'label': 'Mot de Passe'
@@ -14,12 +15,11 @@
                     {{ form_row(form.plainPassword.second, {
                         'label': 'Confirmez Mot de Passe'
                     }) }}
-                    {{ form_row(form.avatar, {
-                        'label': 'Adresse url de l\'Avatar'
-                    }) }}
+                    {{ form_rest(form) }}
                     <button type="submit" class="btn btn-primary" formnovalidate>S'inscrire</button>
                 {{ form_end(form) }}
             </div>
         </div>
     </div>
+
 {% endblock %}
