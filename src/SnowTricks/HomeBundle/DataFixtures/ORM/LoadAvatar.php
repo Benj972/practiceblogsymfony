@@ -8,6 +8,7 @@ use SnowTricks\HomeBundle\Entity\Image;
 
 class LoadAvatar extends AbstractFixture 
 {
+	
   public function load(ObjectManager $manager)
   {
 
@@ -31,6 +32,7 @@ class LoadAvatar extends AbstractFixture
 	$this->addReference('image16', $image16);
     $this->addReference('image17', $image17);
     $this->addReference('image18', $image18);
+    
   }
 
 }

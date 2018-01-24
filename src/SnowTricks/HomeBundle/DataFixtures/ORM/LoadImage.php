@@ -9,6 +9,7 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
 class LoadImage extends AbstractFixture implements DependentFixtureInterface
 {
+
   public function load(ObjectManager $manager)
   {
 
@@ -103,6 +104,7 @@ class LoadImage extends AbstractFixture implements DependentFixtureInterface
 	$manager->persist($image15);
 
 	$manager->flush();
+
   }
 
   public function getDependencies()
@@ -111,4 +113,5 @@ class LoadImage extends AbstractFixture implements DependentFixtureInterface
     	LoadTrick::class,
     );
   }
+  
 }
