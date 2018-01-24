@@ -10,7 +10,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 
 
-class LoadUser extends AbstractFixture implements ContainerAwareInterface
+class LoadUser extends AbstractFixture implements FixtureInterface, ContainerAwareInterface
 {
 
   private $container;
