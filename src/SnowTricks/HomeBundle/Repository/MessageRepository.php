@@ -24,6 +24,7 @@ class MessageRepository extends \Doctrine\ORM\EntityRepository
       ->addSelect('t')
       ->where('m.trick = :trick')
       ->setParameter('trick', $trick)
+      ->addOrderBy('m.date', 'DESC')
       ->getQuery()
     ;
 
