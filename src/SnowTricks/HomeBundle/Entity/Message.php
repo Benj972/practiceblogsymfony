@@ -48,7 +48,7 @@ class Message
 
     /**
     * @ORM\ManyToOne(targetEntity="SnowTricks\HomeBundle\Entity\Trick", inversedBy="messages")
-    * @ORM\JoinColumn(nullable=false)
+    * @ORM\JoinColumn(name="trick_id", referencedColumnName="id", nullable=true, onDelete="CASCADE")
     * @Assert\Valid()
     */
     private $trick;

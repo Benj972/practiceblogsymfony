@@ -22,13 +22,13 @@
         <div class="carousel-inner" role="listbox">
           {% for image in trick.images[:1] %}
             <div class="carousel-item active">
-              <img src="{{ image.url }}" alt="{{ image.alt }}" height="400" width="400">
+              <img src="{{ asset(image.webPath) }}" alt="{{ image.alt }}" height="400" width="400">
             </div> 
           {% endfor %}
 
           {% for image in trick.images[1:] %}
             <div class="carousel-item ">
-              <img  src="{{ image.url }}" alt="{{ image.alt }}" height="400" width="400">
+              <img  src="{{ asset(image.webPath) }}" alt="{{ image.alt }}" height="400" width="400">
             </div>
           {% endfor %}
         </div>
@@ -107,7 +107,7 @@
                           <div class="panel-body">
                             <ul class="chat">          
                                 <li class="left clearfix"><span class="chat-img pull-left">
-                                  <img src="{{ message.user.avatar }}" alt="User Avatar" height="30" width="30">
+                                  <img src="{{ asset(message.user.avatar.webPath) }}" alt="{{ message.user.avatar.alt }}" height="30" width="30">
                                   </span>
                                     <div class="chat-body clearfix">
                                         <div class="header">

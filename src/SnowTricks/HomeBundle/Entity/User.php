@@ -60,11 +60,9 @@ class User implements UserInterface
      */
     private $roles = [];
 
-
-     /**
-     * @ORM\Column(name="avatar", type="string", length=255)
-     * @Assert\URL()
-     */
+    /**
+    * @ORM\OneToOne(targetEntity="SnowTricks\HomeBundle\Entity\Image", cascade={"persist"})
+    */
     private $avatar;
 
     /**
@@ -148,16 +146,6 @@ class User implements UserInterface
         $this->password = null;
     }
 
-    public function setAvatar($avatar)
-    {
-        $this->avatar = $avatar;
-    }
-
-    public function getAvatar()
-    {
-        return $this->avatar;
-    }
-
     public function getToken()
     {
         return $this->token;
@@ -168,5 +156,15 @@ class User implements UserInterface
         $this->token = $token;
 
         return $this;
+    }
+
+    public function setAvatar($avatar)
+    {
+        $this->avatar = $avatar;
+    }
+
+    public function getAvatar()
+    {
+        return $this->avatar;
     }
 }
