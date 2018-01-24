@@ -49,9 +49,15 @@
               <a class="nav-link" href="{{ path('snow_tricks_home_login') }}">Se connecter</a>
             </li>
             {% endif %}
+            {% if is_granted('ROLE_USER') %}
+            <li class="nav-item">
+              <a class="nav-link" href="{{ path('snow_tricks_home_change_password') }}">Changer Mot de Passe</a>
+            </li>
+            {% else %}
             <li class="nav-item">
               <a class="nav-link" href="{{ path('snow_tricks_home_register') }}">S'inscrire</a>
             </li>
+            {% endif %} 
           </ul>
         </div>
       </div>
