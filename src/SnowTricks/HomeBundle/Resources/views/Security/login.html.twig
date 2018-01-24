@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row">
         <div class="col-xs-12">
-            <h3>Se Connecter</h3>
+            <h2 class="post-title">Se Connecter</h2>
 
 			{% if error %}
 				<div class="alert alert-danger">
@@ -12,11 +12,15 @@
             {% endif %}
 
          	{{ form_start(form) }}
-                {{ form_row(form._username) }}
-                {{ form_row(form._password) }}
+                {{ form_row(form._username, {
+                        'label': 'Identifiant(email)'
+                    }) }}
+                {{ form_row(form._password, {
+                        'label': 'Mot de Passe'
+                    }) }}
                 <button type="submit" class="btn btn-success">Se connecter <span class="fa fa-lock"></span></button>
                 &nbsp;
-                <a href="{{ path('snow_tricks_home_register') }}">S'inscrire</a>
+                <a href="{{ path('snow_tricks_home_request_password') }}">Mot de Passe oublié?</a>
             {{ form_end(form) }}
         </div>
     </div>
