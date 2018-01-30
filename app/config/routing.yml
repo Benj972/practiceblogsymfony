@@ -1,7 +1,6 @@
 
-now_tricks_home:
+snow_tricks_home:
     resource: "@SnowTricksHomeBundle/Resources/config/routing.yml"
-    prefix:   /home
 
 
 
