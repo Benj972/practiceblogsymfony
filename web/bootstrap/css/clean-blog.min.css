@@ -77,20 +77,20 @@
     margin-right: 60px;
 }
 
-
 .chat li .chat-body p
 {
     margin: 0;
     color: #777777;
+    overflow: hidden;
+	width: auto;
+    height: auto;
+    text-align: justify;
+    text-justify: inter-word;
+    word-wrap: break-word;
 }
 
 .panel .slidedown .glyphicon, .chat .glyphicon
 {
     margin-right: 5px;
-}
-
-.panel-body
-{
-  
 }
 
