@@ -79,7 +79,13 @@
 <div class="container article">
   <div class="row justify-content-center">
     <div class="col-lg-8 col-md-10 mx-auto">
-  		<h2 class="section-heading">{{ trick.name }} </h2>
+  		<h2 class="section-heading">{{ trick.name }} 
+        {% if is_granted('ROLE_USER') %}
+              <a href="{{ path('snow_tricks_home_edit', {'id': trick.id}) }}"><span class="fa fa-pencil-square-o" aria-hidden="true"> </span></a>
+              <a href="{{ path('snow_tricks_home_delete', {'id': trick.id}) }}"><span class="fa fa-trash" aria-hidden="true"></span></a>
+        {% endif %}     
+      </h2>
+        <p>Mis à jour le {{ trick.date|date("d/m/Y H:i:s") }} </p>
   			 <p>{{ trick.content }}</p>
            {% if trick.category is null %}
              <p>Il n'y a pas de catégories définies</p>
