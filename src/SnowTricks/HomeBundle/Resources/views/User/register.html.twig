@@ -1,11 +1,11 @@
 {% extends "SnowTricksHomeBundle::layout.html.twig" %}
 
 {% block body %}
-    <div class="container">
+   <div class="container" id="two">
         <div class="row">
-            <div class="col-xs-12">
+            <div class="col-lg-8 col-md-10 mx-auto">
                 <h2 class="post-title"> Inscrivez-vous </h2>
-                 <div class="post-preview">
+                <div class="post-preview">
                 {{ form_start(form) }}
                     {{ form_row(form.pseudo) }}
                     {{ form_row(form.avatar) }} 
