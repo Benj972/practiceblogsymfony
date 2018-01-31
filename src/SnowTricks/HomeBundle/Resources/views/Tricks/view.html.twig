@@ -8,16 +8,23 @@
 
 {% block snow_tricks_body %}
 
-
-<a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Voir Images et Videos</a>
+<div class="container">
+<div class="row">
+<div class="col-lg-8 col-md-10 mx-auto">
+ <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Voir Images et Videos</a>
+</div>
+</div>
+</div>
 
 
 <div class="collapse" id="collapseExample">
 
-<div class="container media">
-<div class="row justify-content-between">
-<div class="col-lg-8 col-md-10 mx-auto>
-    <div class="col-6 col-sm-4 col-md-3"">
+<div class="grid-container">
+<div class="row">
+<div class="col-lg-12 col-md-10 mx-auto">
+   
+      
+    <div class="col-lg-6 col-md-5 mx-auto">
       <div id="carouselExampleControls1" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner" role="listbox">
           {% for image in trick.images[:1] %}
@@ -42,9 +49,9 @@
           <span class="sr-only">Next</span>
         </a>
       </div>
-    </div>    
+     </div>  
 
-    <div class="col-6 col-sm-4 col-md-3"">
+    <div class="col-lg-6 col-md-5 mx-auto">
       <div id="carouselExampleControls2" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner" role="listbox">
           {% for video in trick.videos[:1] %}
@@ -70,10 +77,10 @@
         </a>
       </div>
     </div>
-</div>
-  </div>
-</div>
 
+</div>
+</div>
+</div>
 </div>
 
 <div class="container article">
@@ -150,6 +157,7 @@
        Retour à la liste des figures
   </a>
 </p>
+
 
 {% endblock %}
 
