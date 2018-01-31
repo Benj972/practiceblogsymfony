@@ -4,20 +4,26 @@
 
 {% block body %}
 
-  <h2>Modifier une figure</h2>
+<div class="container" id="two">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+              <h2 class="post-title">Modifier une figure</h2>
 
-  {{ include("SnowTricksHomeBundle:Tricks:form.html.twig") }}
+                {{ include("SnowTricksHomeBundle:Tricks:form.html.twig") }}
 
-  <p>
-    Vous éditez une figure déjà existante, merci de ne pas changer
-    l'esprit générale de la figure déjà publiée.
-  </p>
+                <p>
+                Vous éditez une figure déjà existante, merci de ne pas changer
+                l'esprit générale de la figure déjà publiée.
+                </p>
 
-  <p>
-    <a href="{{ path('snow_tricks_home_view', {'id': trick.id}) }}" class="btn btn-default">
-      <i class="glyphicon glyphicon-chevron-left"></i>
-      Retour à la figure
-    </a>
-  </p>
+                <p>
+                <a href="{{ path('snow_tricks_home_view', {'id': trick.id}) }}" class="btn btn-default">
+                <i class="glyphicon glyphicon-chevron-left"></i>
+                  Retour à la figure
+                </a>
+                </p>
+            </div>
+        </div>
+</div>
 
 {% endblock %}
