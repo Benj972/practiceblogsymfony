@@ -2,7 +2,7 @@ snow_tricks_home_homepage:
     path:     /{page}
     defaults: { _controller: SnowTricksHomeBundle:Tricks:home, page: 1 }
     requirements:
-          page: \d*
+          page: \d+
 
 snow_tricks_home_view:
     path:     /tricks/{id}/{page}
@@ -27,10 +27,6 @@ snow_tricks_home_delete:
     requirements:
            id: \d+
 
-snow_tricks_home_addmessage:
-    path:     /addmessage
-    defaults: { _controller: SnowTricksHomeBundle:Tricks:addmessage }
-
 snow_tricks_home_login:
     path:     /login
     defaults: { _controller: SnowTricksHomeBundle:Security:login }
@@ -38,10 +34,6 @@ snow_tricks_home_login:
 snow_tricks_home_logout:
     path:     /logout
     defaults: { _controller: SnowTricksHomeBundle:Security:logout }
-
-snow_tricks_home_admin:
-    path:     /admin
-    defaults: { _controller: SnowTricksHomeBundle:Admin/GenusAdmin:index }
 
 snow_tricks_home_register:
     path:     /register
