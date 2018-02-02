@@ -140,7 +140,26 @@ class TricksController extends Controller
 
       $form = $this->get('form.factory')->create(TrickEditType::class, $trick);
 
+      
       if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+          
+         /*$image = $em->getRepository('SnowTricksHomeBundle:Image')->find($trick);
+         $image->upload();*/
+
+          /*$files = $request->files;
+          $uploadedFile = $files->get('images')['file'];
+          if(count($uploadedFile)==0)
+            $trick->addImage($imageOriginal);
+          else
+          {
+            $image = new Image();
+            $image->setFile($uploadedFile);
+
+            $trick->addImage($image);
+          }
+
+          $em->persist($trick);*/
+
           $em->flush();
           $request->getSession()->getFlashBag()->add('info', 'Figure bien modifiée.');
           return $this->redirectToRoute('snow_tricks_home_homepage');

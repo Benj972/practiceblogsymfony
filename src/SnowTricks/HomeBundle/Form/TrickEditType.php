@@ -13,7 +13,7 @@ class TrickEditType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-   
+        $builder->remove('date');
     }
     
     public function getParent()
