@@ -6,8 +6,6 @@ use SnowTricks\HomeBundle\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use SnowTricks\HomeBundle\Form\LoginType;
 use Symfony\Component\HttpFoundation\Request;
-//use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-
 
 class SecurityController extends Controller
 {
@@ -42,7 +40,7 @@ class SecurityController extends Controller
     }
 
     public function logoutAction()
-    {
+    {     
         throw new \Exception('this should not be reached!');
     }
 

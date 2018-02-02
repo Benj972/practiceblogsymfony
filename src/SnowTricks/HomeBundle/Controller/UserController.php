@@ -53,26 +53,27 @@ class UserController extends Controller
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
-        $passwordEncoder = $this->container->get('security.password_encoder');
-        $oldplainPassword = $changePasswordModel->getOldPassword();
-        $newplainPassword = $changePasswordModel->getNewPassword();
-		if (!$passwordEncoder->isPasswordValid($user, $oldplainPassword)) {
-            $this->addFlash('info', "Wrong old password!");
-          } else {
+            $passwordEncoder = $this->container->get('security.password_encoder');
+            $oldplainPassword = $changePasswordModel->getOldPassword();
+            $newplainPassword = $changePasswordModel->getNewPassword();
+
+		      if (!$passwordEncoder->isPasswordValid($user, $oldplainPassword)) {
+                    $this->addFlash('info', "Wrong old password!");
+                } 
+
             $encoded = $passwordEncoder->encodePassword($user, $newplainPassword);
             $user->setPassword($encoded);
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
-            $this->addFlash('info', "Le mot de passe est changé avec succès!");
+
+            $this->addFlash('info', "Le mot de passe est changé avec succès!");    
+            return $this->redirectToRoute('snow_tricks_home_homepage');
         }
 
-          return $this->redirectToRoute('snow_tricks_home_homepage');
-      }
-
-      return $this->render('SnowTricksHomeBundle:User:changePassword.html.twig', array(
+        return $this->render('SnowTricksHomeBundle:User:changePassword.html.twig', array(
           'form' => $form->createView(),
-      ));      
+        ));      
     }
 
     public function resetPasswordAction(Request $request, $token)

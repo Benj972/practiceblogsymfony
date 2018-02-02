@@ -50,13 +50,13 @@ class TricksController extends Controller
 
  	  public function viewAction(Trick $trick, $page=1, Request $request)
   	{
-      
+      $user = $this->getUser();
       $message = new Message();
 
       $form = $this->get('form.factory')->create(MessageType::class, $message);
 
       if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
-        $message->setUser($user = $this->getUser());
+        $message->setUser($user);
         $message->setTrick($trick);
         $message->setDate(new \DateTime('now'));
         $em = $this->getDoctrine()->getManager();
@@ -98,8 +98,9 @@ class TricksController extends Controller
     */
     public function addAction(Request $request)
     {
-    
+      $user = $this->getUser();
       $trick = new Trick();
+
       //second method form nested
       //$video = new Video();
       //$image = new Image();
@@ -110,7 +111,7 @@ class TricksController extends Controller
 
       if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
         
-        $trick->setUser($user = $this->getUser());
+        $trick->setUser($user);
         $trick->setDate(new \DateTime('now'));
         $em = $this->getDoctrine()->getManager();
         $em->persist($trick);
@@ -139,7 +140,26 @@ class TricksController extends Controller
 
       $form = $this->get('form.factory')->create(TrickEditType::class, $trick);
 
+      
       if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+          
+         /*$image = $em->getRepository('SnowTricksHomeBundle:Image')->find($trick);
+         $image->upload();*/
+
+          /*$files = $request->files;
+          $uploadedFile = $files->get('images')['file'];
+          if(count($uploadedFile)==0)
+            $trick->addImage($imageOriginal);
+          else
+          {
+            $image = new Image();
+            $image->setFile($uploadedFile);
+
+            $trick->addImage($image);
+          }
+
+          $em->persist($trick);*/
+
           $em->flush();
           $request->getSession()->getFlashBag()->add('info', 'Figure bien modifiée.');
           return $this->redirectToRoute('snow_tricks_home_homepage');

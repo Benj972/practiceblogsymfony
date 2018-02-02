@@ -13,13 +13,13 @@
 
 
 /* CSS caroussel for view */
-.justify-content-between{
+/*.justify-content-between{
 
 	width:auto!important;
 	margin-left: auto!important;
 	margin-right: auto!important;
 }
-
+*/
 
 .carousel.slide
 {
@@ -43,14 +43,14 @@
 	display: block!important;
 }
 
-.container.media
+/*.carousel
 {
 	width: 60%!important;
 	padding: 15px!important;
 	margin: 15px!important;
-	position: 
+	display: block!important;
 }
-
+*/
 
 /* CSS Space of Discussion*/
 .chat
@@ -77,20 +77,20 @@
     margin-right: 60px;
 }
 
-
 .chat li .chat-body p
 {
     margin: 0;
     color: #777777;
+    overflow: hidden;
+	width: auto;
+    height: auto;
+    text-align: justify;
+    text-justify: inter-word;
+    word-wrap: break-word;
 }
 
 .panel .slidedown .glyphicon, .chat .glyphicon
 {
     margin-right: 5px;
-}
-
-.panel-body
-{
-  
 }
 

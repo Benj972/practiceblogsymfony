@@ -15,25 +15,25 @@ class LoadImage extends AbstractFixture implements DependentFixtureInterface
 
 	$image1 = new Image;
 	$image1->setUrl('jpeg');
-	$image1->setAlt('Mute.jpg');
+	$image1->setAlt('Mute');
 	$image1->setTrick($this->getReference('trick1'));
 	$manager->persist($image1);
 
 	$image2 = new Image;
 	$image2->setUrl('jpeg');
-	$image2->setAlt('Mute.jpg');
+	$image2->setAlt('Mute');
 	$image2->setTrick($this->getReference('trick1'));
 	$manager->persist($image2);
 
 	$image3 = new Image;
 	$image3->setUrl('jpeg');
-	$image3->setAlt('Sad.jpg');
+	$image3->setAlt('Sad');
 	$image3->setTrick($this->getReference('trick2'));
 	$manager->persist($image3);
 
 	$image4 = new Image;
 	$image4->setUrl('jpeg');
-	$image4->setAlt('Sad.jpg');
+	$image4->setAlt('Sad');
 	$image4->setTrick($this->getReference('trick2'));
 	$manager->persist($image4);
 

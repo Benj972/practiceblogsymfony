@@ -33,7 +33,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 
 	public function getCredentials(Request $request)
     {
-    	$isLoginSubmit = $request->getPathInfo() == '/home/login' && $request->isMethod('POST');
+    	$isLoginSubmit = $request->getPathInfo() == '/login' && $request->isMethod('POST');
     	if (!$isLoginSubmit) {
             // skip authentication
             return;
