@@ -14,3 +14,18 @@ web_profiler:
 
 swiftmailer:
     disable_delivery: true
+
+doctrine:
+    dbal:
+      driver: pdo_mysql
+      host: '%database_host%'
+      port: '%database_port%'
+      dbname: 'snow_test'
+      user: '%database_user%'
+      password: '%database_password%'
+      charset: UTF8
+
+    orm:
+        auto_generate_proxy_classes: false #%kernel.debug%
+        naming_strategy: doctrine.orm.naming_strategy.underscore
+        auto_mapping: true
