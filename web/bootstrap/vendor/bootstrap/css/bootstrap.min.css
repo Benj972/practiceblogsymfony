@@ -1,4 +1,4 @@
-/*!
+/*!#3368FF
  * Bootstrap v4.0.0-beta.2 (https://getbootstrap.com)
  * Copyright 2011-2017 The Bootstrap Authors
  * Copyright 2011-2017 Twitter, Inc.
@@ -12,15 +12,5 @@
 	justify-content: space-around;
 }
 
-.col-lg-6{
-	display: inline;
-	margin-left: 0px;
-}
-
 .grid-container {
-  display: grid;
-  grid-template-columns: auto auto auto auto;
-  grid-gap: 10px;
-  background-color: #2196F3;
-  padding: 10px;
-}
+  background-color: #40A494; 
