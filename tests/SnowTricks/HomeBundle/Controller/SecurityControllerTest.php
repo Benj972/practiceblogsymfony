@@ -26,7 +26,7 @@ class SecurityControllerTest extends WebTestCase
         $form['login[_password]'] = 'dede2017';
         $crawler = $client->submit($form);
 		
-        $crawler = $client->followRedirect(); // Attention à bien récupérer le crawler mis à jour
+        $crawler = $client->followRedirect(); 
         $this->assertEquals(1, $crawler->filter('html:contains("Vous êtes bien enregistré")')->count());
     }
 
