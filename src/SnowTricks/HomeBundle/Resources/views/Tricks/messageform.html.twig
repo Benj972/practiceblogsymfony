@@ -1,3 +1,8 @@
-<div class="well">
-  {{ form(form) }}
+<div class="discussion">
+  {{ form_start(form) }}
+    {{ form_errors(form) }}
+    {{ form_row(form.title,{ 'label': 'Titre Message' }) }}
+    {{ form_row(form.content, { 'label': 'Contenu' }) }}
+    {{ form_row(form.save, { 'label': 'Envoyez' }) }}
+  {{ form_end(form) }}
 </div>
