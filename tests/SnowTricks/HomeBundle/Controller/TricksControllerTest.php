@@ -30,12 +30,13 @@ class TricksControllerTest extends WebTestCase
         $this->secondClient = static::createClient();
     }
 
-    /*public function testHomepageIsUp()
+    public function testHomepageIsUp()
     {   
         $crawler = $this->secondClient->request('GET', '/');
         
         $this->assertSame(200, $this->secondClient->getResponse()->getStatusCode());
         $this->assertSame(2, $crawler->filter('h1')->count());
+
         $kernel = self::bootKernel();
         $this->em = $kernel->getContainer()
             ->get('doctrine')
@@ -47,20 +48,16 @@ class TricksControllerTest extends WebTestCase
             ->getRepository(Trick::class)
             ->getTricks($page, $nbPerPage)
         ;
+        
         $tricks = $this->em
             ->getRepository(Trick::class)
             ->findAll()
         ;
-        $this->assertSame(count($tricks), count($listTricks));
-    }*/
 
-    /*public function testTrickLink()
-    {
-        $client = static::createClient();
-        $crawler = $client->request('GET', '/home');
-        $linksCrawler = $crawler->selectLink('Sad');
-        $link = $linksCrawler->link();
-    }*/
+        $this->assertSame(count($tricks), count($listTricks));
+
+        $this->assertEquals($nbPerPage, $crawler->filter('h3')->count());
+    }
 
     /*public function testAddTrickWithLogin()
     {
@@ -113,16 +110,16 @@ class TricksControllerTest extends WebTestCase
         $this->assertEquals(1, $crawler->filter('html:contains("Se Connecter")')->count());
     }
 
-   /* public function testViewTrick()
+    public function testViewTrick()
     {
-        $crawler = $this->secondClient->request('GET', '/tricks/1');
+        $crawler = $this->secondClient->request('GET', '/tricks/3');
 
         $this->assertSame(200, $this->secondClient->getResponse()->getStatusCode());
     }
-    */
-    /*public function testViewTrickWithLogin()
+    
+    public function testViewTrickWithLogin()
     {
-        $crawler = $this->client->request('GET', '/tricks/1', array(), array(), array(
+        $crawler = $this->client->request('GET', '/tricks/3', array(), array(), array(
         'PHP_AUTH_USER' => 'dede@gmail.fr',
         'PHP_AUTH_PW'   => 'dede2017',
         ));
@@ -144,7 +141,24 @@ class TricksControllerTest extends WebTestCase
             );
         }
     }
-    */
+    
+    public function testTricksDeleted()
+    {
+        $crawler = $this->client->request('GET', '/delete/3', array(), array(), array(
+        'PHP_AUTH_USER' => 'dede@gmail.fr',
+        'PHP_AUTH_PW'   => 'dede2017',
+        ));
 
+        $this->assertSame(200, $this->client->getResponse()->getStatusCode());
+   
+        $this->assertEquals(1, $crawler->filter('html:contains("Supprimer une annonce")')->count());
+
+        $form = $crawler->selectButton('Supprimer')->form();
+        $this->client->submit($form);
+
+        $crawler = $this->client->followRedirect();
+        $this->assertEquals(1, $crawler->filter('html:contains("La figure a bien été supprimée.")')->count());
+    }
+    
 }
 ?>
