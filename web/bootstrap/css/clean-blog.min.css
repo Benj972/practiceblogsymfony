@@ -6,6 +6,7 @@
 
 /*CSS for view home*/
 .test{display: inline-block!important;}
+
 .list h3{
 	font-size: 1em;
 	font-style: italic;
@@ -13,45 +14,24 @@
 
 
 /* CSS caroussel for view */
-/*.justify-content-between{
-
-	width:auto!important;
-	margin-left: auto!important;
-	margin-right: auto!important;
-}
-*/
-
-.carousel.slide
-{
-	display: inline-block!important;
-	
+.carousel-control.prev,
+.carousel-control.next {
+  background-image: none;
 }
 
-.carousel-inner
-{
-	display: inline-block!important;    
-	border-radius: 15px;
+.carousel-inner {
+  border-radius: 15px;
 }
 
-.caroussel-item
-{
-	display: block!important;
+.img-responsive,
+.thumbnail > img,
+.thumbnail a > img,
+.carousel-inner > .item > img,
+.carousel-inner > .item > a > img {
+  display: block;
+  width: 80%;
+  height: 80%;
 }
-
-.caroussel-item.active
-{
-	display: block!important;
-}
-
-/*.carousel
-{
-	width: 60%!important;
-	padding: 15px!important;
-	margin: 15px!important;
-	display: block!important;
-}
-*/
-
 /* CSS Space of Discussion*/
 .chat
 {

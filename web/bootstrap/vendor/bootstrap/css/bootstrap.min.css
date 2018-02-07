@@ -12,7 +12,7 @@
 	justify-content: space-around;
 }
 
-.col-lg-6{
+.col-lg-6.col-md-5.mx-auto{
 	display: inline;
 	margin-left: 0px;
 }
@@ -23,4 +23,4 @@
   grid-gap: 10px;
   background-color: #2196F3;
   padding: 10px;
-}
+ }
