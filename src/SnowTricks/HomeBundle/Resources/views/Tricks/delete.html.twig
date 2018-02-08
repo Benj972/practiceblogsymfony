@@ -5,13 +5,13 @@
 <div class="container" id="two">
         <div class="row">
             <div class="col-lg-8 col-md-10 mx-auto">
-              <h2 class="post-title>Supprimer une annonce</h2>
+              <h2 class="post-title">Supprimer une annonce</h2>
                   <p>
                     Etes-vous certain de vouloir supprimer la figure "{{ trick.name }}" ?
                   </p>
 
-                  <form action="{{ path('snow_tricks_home_delete', {'id': trick.id}) }}" method="post">
-                    <a href="{{ path('snow_tricks_home_view', {'id': trick.id}) }}" class="btn btn-default">
+                  <form action="{{ path('snow_tricks_home_delete', {'trick_id': trick.id}) }}" method="post">
+                    <a href="{{ path('snow_tricks_home_view', {'trick_id': trick.id}) }}" class="btn btn-default">
                       <i class="glyphicon glyphicon-chevron-left"></i>
                       Retour à la figure
                     </a>
