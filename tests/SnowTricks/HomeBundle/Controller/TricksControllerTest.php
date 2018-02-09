@@ -42,21 +42,14 @@ class TricksControllerTest extends WebTestCase
             ->get('doctrine')
             ->getManager();
   
-        $page = 2;
+        $page = 1;
         $nbPerPage = 10;
         $listTricks = $this->em
             ->getRepository(Trick::class)
             ->getTricks($page, $nbPerPage)
         ;
         
-        $tricks = $this->em
-            ->getRepository(Trick::class)
-            ->findAll()
-        ;
-
-        $this->assertSame(count($tricks), count($listTricks));
-
-        $this->assertEquals($nbPerPage, $crawler->filter('h3')->count());
+        $this->assertEquals(count($listTricks), $crawler->filter('h3')->count());
     }
 
     /*public function testAddTrickWithLogin()
@@ -92,8 +85,6 @@ class TricksControllerTest extends WebTestCase
         $values['snowtricks_homebundle_trick']['videos'][0]['alt'] = 'Test';
 
         $crawler = $this->client->request($form->getMethod(), $form->getUri(), $values, $form->getPhpFiles());
-
-        $this->client->submit($form);
 
         $crawler = $this->client->followRedirect();
 
