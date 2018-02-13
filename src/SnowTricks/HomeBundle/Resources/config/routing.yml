@@ -7,8 +7,7 @@ snow_tricks_home_homepage:
 snow_tricks_home_view:
     path:     /tricks/{slug}/{page}
     defaults: { _controller: SnowTricksHomeBundle:Tricks:view, page: 1 }
-    requirements:
-          
+    requirements: 
           page: \d*
 
 snow_tricks_home_add:
@@ -16,17 +15,13 @@ snow_tricks_home_add:
     defaults: { _controller: SnowTricksHomeBundle:Tricks:add }
 
 snow_tricks_home_edit:
-    path:     /edit/{trick_id}
+    path:     /edit/{slug}
     defaults: { _controller: SnowTricksHomeBundle:Tricks:edit }
-    requirements: 
-           trick_id: \d+
 
 snow_tricks_home_delete:
-    path:     /delete/{trick_id}
+    path:     /delete/{slug}
     defaults: { _controller: SnowTricksHomeBundle:Tricks:delete }
-    requirements:
-           trick_id: \d+
-
+          
 snow_tricks_home_login:
     path:     /login
     defaults: { _controller: SnowTricksHomeBundle:Security:login }

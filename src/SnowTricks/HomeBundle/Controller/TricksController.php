@@ -131,7 +131,7 @@ class TricksController extends Controller
     }
 
     /**
-     * @ParamConverter("trick", options={"mapping": {"trick_id":"id"}})
+     * @ParamConverter("trick", options={"mapping": {"slug":"slug"}})
      */
     public function editAction(Trick $trick, Request $request) 
     {
@@ -160,7 +160,7 @@ class TricksController extends Controller
     }
 
     /**
-     * @ParamConverter("trick", options={"mapping": {"trick_id":"id"}})
+     * @ParamConverter("trick", options={"mapping": {"slug":"slug"}})
      */
     public function deleteAction(Request $request, Trick $trick)
     {
