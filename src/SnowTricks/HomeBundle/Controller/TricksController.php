@@ -49,7 +49,7 @@ class TricksController extends Controller
     }
 
     /**
-     * @ParamConverter("trick", options={"mapping": {"trick_id":"id"}})
+     * @ParamConverter("trick", options={"mapping": {"slug":"slug"}})
      */
  	  public function viewAction(Trick $trick, $page=1, Request $request)
   	{
