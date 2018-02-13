@@ -10,8 +10,8 @@
                     Etes-vous certain de vouloir supprimer la figure "{{ trick.name }}" ?
                   </p>
 
-                  <form action="{{ path('snow_tricks_home_delete', {'trick_id': trick.id}) }}" method="post">
-                    <a href="{{ path('snow_tricks_home_view', {'trick_id': trick.id}) }}" class="btn btn-default">
+                  <form action="{{ path('snow_tricks_home_delete', {'slug': trick.slug}) }}" method="post">
+                    <a href="{{ path('snow_tricks_home_view', {'slug': trick.slug}) }}" class="btn btn-default">
                       <i class="glyphicon glyphicon-chevron-left"></i>
                       Retour à la figure
                     </a>

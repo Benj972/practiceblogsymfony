@@ -29,8 +29,8 @@
             <div class="col-xs-12 col-sm-6 col-md-8 list">
               <h3 class="post-subtitle"><a href="{{ path('snow_tricks_home_view', {'slug': trick.slug}) }}">{{ trick.name }}</a>
                 {% if is_granted('ROLE_USER') %}
-                <a href="{{ path('snow_tricks_home_edit', {'trick_id': trick.id}) }}#two"><span class="fa fa-pencil-square-o" aria-hidden="true"> </span></a>
-                <a href="{{ path('snow_tricks_home_delete', {'trick_id': trick.id}) }}#two"><span class="fa fa-trash" aria-hidden="true"></span></a>
+                <a href="{{ path('snow_tricks_home_edit', {'slug': trick.slug}) }}#two"><span class="fa fa-pencil-square-o" aria-hidden="true"> </span></a>
+                <a href="{{ path('snow_tricks_home_delete', {'slug': trick.slug}) }}#two"><span class="fa fa-trash" aria-hidden="true"></span></a>
                 {% endif %}
               </h3>             
             </div>   

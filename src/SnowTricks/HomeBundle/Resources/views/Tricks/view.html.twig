@@ -91,8 +91,8 @@
              <h6>
                 <em> Catégorie {{ trick.category.name }}/Mis à jour le {{ trick.date|date("d/m/Y H:i:s") }}</em>
                 {% if is_granted('ROLE_USER') %}
-                  <a href="{{ path('snow_tricks_home_edit', {'trick_id': trick.id}) }}#two"><span class="fa fa-pencil-square-o" aria-hidden="true"> </span></a>
-                  <a href="{{ path('snow_tricks_home_delete', {'trick_id': trick.id}) }}#two"><span class="fa fa-trash" aria-hidden="true"></span></a>
+                  <a href="{{ path('snow_tricks_home_edit', {'slug': trick.slug}) }}#two"><span class="fa fa-pencil-square-o" aria-hidden="true"> </span></a>
+                  <a href="{{ path('snow_tricks_home_delete', {'slug': trick.slug}) }}#two"><span class="fa fa-trash" aria-hidden="true"></span></a>
                 {% endif %} 
              </h6>
         {% endif %}
