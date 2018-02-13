@@ -5,6 +5,7 @@ namespace SnowTricks\HomeBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class TrickEditType extends AbstractType
 {
@@ -13,7 +14,8 @@ class TrickEditType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->remove('date');
+        $builder
+        ->remove('date')
     }
     
     public function getParent()
