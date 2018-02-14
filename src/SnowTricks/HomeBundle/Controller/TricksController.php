@@ -146,25 +146,28 @@ class TricksController extends Controller
         $originalImages->add($image);
       }
 
+    $editForm = $this->createForm(TrickType::class, $trick);
 
-      $form = $this->get('form.factory')->create(TrickEditType::class, $trick);
-
+    $editForm->handleRequest($request);
       
-      if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+      if ($editForm->isValid()) {
           
           foreach ($originalImages as $image) {
-        
-              
-             
+                if (false === $trick->getImages()->contains($image)) {
+                 
+                  $em->persist($image);
+             }
           }
+
+          $em->persist($trick);
           $em->flush();
-          $request->getSession()->getFlashBag()->add('info', 'Figure bien modifiée.');
+
           return $this->redirectToRoute('snow_tricks_home_homepage');
       }
 
       return $this->render('SnowTricksHomeBundle:Tricks:edit.html.twig', array(
       'trick' => $trick,
-      'form'   => $form->createView(),
+      'form'   => $editForm->createView(),
       ));
     }
 

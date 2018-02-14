@@ -27,13 +27,12 @@
   </div>
 
 {% block _snowtricks_homebundle_trick_images_entry_widget %}
-    <tr>
+      <tr>
         <td>{{ form_widget(form.images) }}</td>
+        <td><a href="#" id="add_image" class="btn btn-outline-primary">Ajouter une image</a></td>
     </tr>
-    <a href="#" id="add_image" class="btn btn-outline-primary">Ajouter une image</a>
-{% endblock %}
-
-  
+{% endblock _snowtricks_homebundle_trick_images_entry_widget %}
+ 
   <div class="form-group"> 
     {{ form_widget(form.videos) }} 
     <a href="#" id="add_video" class="btn btn-outline-primary">Ajouter une video</a>

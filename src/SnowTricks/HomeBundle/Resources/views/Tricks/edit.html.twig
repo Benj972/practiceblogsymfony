@@ -44,7 +44,7 @@
       e.preventDefault(); // évite qu'un # apparaisse dans l'URL
       return false;
     });
-    // On ajoute un premier champ automatiquement s'il n'en existe pas déjà un (cas d'une nouvelle annonce par exemple).
+    
     if (index == 0) {
       addImage($container);
     } else {
@@ -53,7 +53,7 @@
         addDeleteLink($(this));
       });
     }
-    // La fonction qui ajoute un formulaire CategoryType
+    
     function addImage($container) {
       // Dans le contenu de l'attribut « data-prototype », on remplace :
       // - le texte "__name__label__" qu'il contient par le label du champ
