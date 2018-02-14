@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class UserControllerTest extends WebTestCase
 {
-/*
+
 	public function testContact()
 	{	
         $client = static::createClient();
@@ -33,6 +33,7 @@ class UserControllerTest extends WebTestCase
 
         $client->submit($form);
 
+        $client->enableProfiler();
     	   // On vérifie que l'email a bien été envoyé
             if ($profile = $client->getProfile())
             {
@@ -45,15 +46,13 @@ class UserControllerTest extends WebTestCase
                 $messages = $swiftMailerProfiler->getMessages();
                 $message  = array_shift($messages);
 
-                 $symblogEmail = $client->getContainer()->getParameter('snow_tricks_home.request_password_mail');
-                // On vérifie que le message a été envoyé à la bonne adresse
-                $this->assertArrayHasKey($symblogEmail, $message->getTo());
+                $this->assertSame('SnowTricks : Récupération de votre mot de passe', $message->getSubject());
+                $this->assertSame('dede@gmail.fr', key($message->getTo()));
             }
 
 	    $crawler = $client->followRedirect();
         $this->assertEquals(1, $crawler->filter('html:contains("Un email a été envoyé à votre boîte aux lettres pour réinitialiser votre mot de passe.")')->count());
 	}
-
 
     public function testRegister()
     {
@@ -65,7 +64,7 @@ class UserControllerTest extends WebTestCase
         $form = $crawler->selectButton("S'inscrire")->form();
 
             $form['user_registration[pseudo]'] = 'test';
-            $form['user_registration[avatar][file]']->upload('C:/Users/laure.l/Desktop/avatartest.jpg');
+            $form['user_registration[avatar][file]']->upload('../../Path/vador.png');
             $form['user_registration[email]'] = 'test@gmail.fr';
             $form['user_registration[plainPassword][first]'] = 'Symfony';
             $form['user_registration[plainPassword][second]'] = 'Symfony';
@@ -101,9 +100,9 @@ class UserControllerTest extends WebTestCase
             $crawler = $client->followRedirect();
             $this->assertEquals(1, $crawler->filter('html:contains("Le mot de passe est changé avec succès!")')->count());
     }
-*/
-    public function testResetPassword()
+
+   /* public function testResetPassword()
     {
 
-    }
+    }*/
 }
