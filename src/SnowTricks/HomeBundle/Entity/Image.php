@@ -196,7 +196,7 @@ class Image
     /**
     * @param Trick $trick
     */
-    public function setTrick(Trick $trick)
+    public function setTrick(?Trick $trick)
     {
         $this->trick = $trick;
 

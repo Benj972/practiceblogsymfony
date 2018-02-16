@@ -57,13 +57,4 @@ class TrickType extends AbstractType
         ));
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockPrefix()
-    {
-        return 'snowtricks_homebundle_trick';
-    }
-
-
 }

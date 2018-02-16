@@ -129,16 +129,9 @@ class TricksController extends Controller
     }
 
 
-    public function editAction($id, Request $request) 
+    public function editAction(Trick $trick, Request $request) 
     {
       $em = $this->getDoctrine()->getManager();
-
-      $trick = $em->getRepository('SnowTricksHomeBundle:Trick')->find($id);
-      
-
-      if (null === $trick) {
-        throw new NotFoundHttpException("La figure ".$id." n'existe pas.");
-      }
 
       $originalImages = new ArrayCollection();
 
@@ -146,28 +139,28 @@ class TricksController extends Controller
         $originalImages->add($image);
       }
 
-    $editForm = $this->createForm(TrickType::class, $trick);
+      $editForm = $this->createForm(TrickType::class, $trick);
 
-    $editForm->handleRequest($request);
+      $editForm->handleRequest($request);
       
-      if ($editForm->isValid()) {
-          
-          foreach ($originalImages as $image) {
+      if ($editForm->isSubmitted() && $editForm->isValid()) {
+
+            foreach ($originalImages as $image) {
                 if (false === $trick->getImages()->contains($image)) {
-                 
-                  $em->persist($image);
-             }
-          }
+                    $image->setTrick(null);
+                    $em->remove($image);
+                }
+            }
 
-          $em->persist($trick);
-          $em->flush();
+            $em->persist($trick);
+            $em->flush();
 
-          return $this->redirectToRoute('snow_tricks_home_homepage');
+            return $this->redirectToRoute('snow_tricks_home_homepage');
       }
 
       return $this->render('SnowTricksHomeBundle:Tricks:edit.html.twig', array(
-      'trick' => $trick,
-      'form'   => $editForm->createView(),
+        'trick' => $trick,
+        'form'   => $editForm->createView(),
       ));
     }
 
