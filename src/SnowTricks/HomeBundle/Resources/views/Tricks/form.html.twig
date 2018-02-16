@@ -26,12 +26,19 @@
     {{ form_row(form.category) }}
   </div>
 
-{% block _snowtricks_homebundle_trick_images_entry_widget %}
-      <tr>
-        <td>{{ form_widget(form.images) }}</td>
-        <td><a href="#" id="add_image" class="btn btn-outline-primary">Ajouter une image</a></td>
-    </tr>
-{% endblock _snowtricks_homebundle_trick_images_entry_widget %}
+
+  <a href="#" id="add_image" class="btn btn-outline-primary">Ajouter une image</a>
+
+  <div
+          id="trick_images"
+          class="row"
+          data-index="{{ form.images|length == 0 ? 0 : form.images|last.vars.name }}"
+          data-prototype="{{ include("SnowTricksHomeBundle:Tricks:image_prototype.html.twig", { form: form.images.vars.prototype })|e("html_attr") }}"
+  >
+      {% for image in form.images %}
+          {{ include("SnowTricksHomeBundle:Tricks:image_prototype.html.twig", { form: image }) }}
+      {% endfor %}
+  </div>
  
   <div class="form-group"> 
     {{ form_widget(form.videos) }} 
