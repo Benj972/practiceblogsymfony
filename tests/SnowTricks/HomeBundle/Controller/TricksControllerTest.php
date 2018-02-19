@@ -64,39 +64,74 @@ class TricksControllerTest extends WebTestCase
             $this->client->getResponse()->getStatusCode()
         );
 
-         $img = new UploadedFile(
-                '../../Path/vador.png',
-                'vador.png',
-                'image/png',
+        $formData = [
+            "trick" => [
+                "name" => "nom du trick",
+                "content" => " ",
+                "category" => "",
+                "videos" => [
+                    [
+                        "alt" => "",
+                        "url" => ""
+                    ],
+                    [
+                        "alt" => "altdsovjwxcv",
+                        "url" =>
+                    ]
+                ]
+            ]
+        ];
+
+        $img1 = new UploadedFile(
+                'C:\Users\laure.l\Desktop\avatartest.jpg',
+                'avartest.jpg',
+                'image/jpeg',
                 123
             );
 
-        if ($this->client->getResponse()->getStatusCode() === Response::HTTP_OK) {
+       $image2 = new UploadedFile(
+            '/path/to/photo.jpg',
+            'photo.jpg',
+            'image/jpeg',
+            123
+        );
+
+       $filesData = [
+            "trick" => [
+                "images" => [
+                    ["file" => $image1],
+                    ["file" => $image2]
+                ]
+            ]
+        ];
+
+        $client->request("POST", "/add", $formData, $filesData);
+
+
+        /*if ($this->client->getResponse()->getStatusCode() === Response::HTTP_OK) {
           
-        $form = $crawler->selectButton('Save')->form();
-        
-       
+            $form = $crawler->selectButton('Save')->form();
 
-        $values = $form->getPhpValues();
+            $values = $form->getPhpValues();
 
-        $form['snowtricks_homebundle_trick[name]'] = 'test';
-        $form['snowtricks_homebundle_trick[content]'] = 'Hello';
-        $form['snowtricks_homebundle_trick[category]'] ->select(1);
-        
-        $values['snowtricks_homebundle_trick']['videos'][15]['url'] = 'https://www.youtube.com/embed/70g_LGD6Oro';
-        $values['snowtricks_homebundle_trick']['videos'][15]['alt'] = 'Test';
+            $form['snowtricks_homebundle_trick[name]'] = 'test';
+            $form['snowtricks_homebundle_trick[content]'] = 'Hello';
+            $form['snowtricks_homebundle_trick[category]'] ->select(1);
+            $values['snowtricks_homebundle_trick']['images'][14]->upload($img);
+            $values['snowtricks_homebundle_trick']['videos'][14]['url'] = 'https://www.youtube.com/embed/70g_LGD6Oro';
+            $values['snowtricks_homebundle_trick']['videos'][14]['alt'] = 'Test';
 
-        $this->client->request($form->getMethod(), $form->getUri(), $values, $form->getPhpFiles());
+            $this->client->request($form->getMethod(), $form->getUri(), $values, $form->getPhpFiles());
 
-        $this->assertEquals(
+            $this->assertEquals(
                 Response::HTTP_OK,
                 $this->client->getResponse()->getStatusCode()
-            );
+            );*/
 
-        /*$crawler = $this->client->followRedirect();
+            /*$crawler = $this->client->followRedirect();
 
-        $this->assertEquals(1, $crawler->filter('html:contains("Figure bien enregistrée.")')->count());*/
-        }
+            $this->assertEquals(1, $crawler->filter('html:contains("Figure bien enregistrée.")')->count());
+        }*/
 
     }
 
