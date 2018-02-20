@@ -30,13 +30,4 @@ class VideoType extends AbstractType
         ));
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockPrefix()
-    {
-        return 'snowtricks_homebundle_video';
-    }
-
-
 }
