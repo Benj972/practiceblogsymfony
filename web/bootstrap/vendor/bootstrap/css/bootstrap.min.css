@@ -14,4 +14,27 @@
 
 .grid-container {
   background-color: #40A494; 
+}
 
+/*editForm*/
+
+.my-4
+{
+	border: none;
+}
+
+.upload-image
+{
+	opacity: 0;
+	position: absolute;
+	right:0px;
+	left: 0px;
+	bottom: 70px;
+	overflow: hidden;
+}
+
+.card-footer
+{
+	background-color: rgba(0,0,0,0);
+	border-top: rgba(0,0,0,0);
+}
