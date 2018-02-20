@@ -155,6 +155,7 @@ class TricksController extends Controller
             $em->persist($trick);
             $em->flush();
 
+            $request->getSession()->getFlashBag()->add('info', 'Figure bien modifiée.');
             return $this->redirectToRoute('snow_tricks_home_homepage');
       }
 

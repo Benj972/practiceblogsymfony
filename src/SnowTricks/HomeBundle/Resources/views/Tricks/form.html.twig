@@ -1,55 +1,63 @@
 <div class="well">
 
-  {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+    {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
 
-  {# Les erreurs générales du formulaire. #}
+    {# Les erreurs générales du formulaire. #}
  
-  {{ form_errors(form) }} 
+    {{ form_errors(form) }} 
  
-  {# Génération manuelle et éclatée : #}
-  <div class="form-group">
-    {# Génération du label. #}
-    {{ form_label(form.name, "Nom") }}
-    {# Affichage des erreurs pour ce champ précis. #}
-    {{ form_errors(form.name) }}
-    {{ form_widget(form.name) }}    
-  </div>
+    {# Génération manuelle et éclatée : #}
+    <div class="form-group">
+        {# Génération du label. #}
+        {{ form_label(form.name, "Nom") }}
+        {# Affichage des erreurs pour ce champ précis. #}
+        {{ form_errors(form.name) }}
+        {{ form_widget(form.name) }}    
+    </div>
 
-  {# Idem pour un autre champ. #}
-  <div class="form-group">
-    {{ form_label(form.content, "Contenu") }}
-    {{ form_errors(form.content) }}
-    {{ form_widget(form.content) }}
-  </div>
+    {# Idem pour un autre champ. #}
+    <div class="form-group">
+        {{ form_label(form.content, "Contenu") }}
+        {{ form_errors(form.content) }}
+        {{ form_widget(form.content) }}
+    </div>
 
-  <div class="form-group">
-    {{ form_row(form.category) }}
-  </div>
+    <div class="form-group">
+        {{ form_row(form.category) }}
+    </div>
 
+    <a href="#" id="add_image" class="btn btn-outline-primary">Ajouter une image</a>
 
-  <a href="#" id="add_image" class="btn btn-outline-primary">Ajouter une image</a>
-
-  <div
-          id="trick_images"
-          class="row"
-          data-index="{{ form.images|length == 0 ? 0 : form.images|last.vars.name }}"
-          data-prototype="{{ include("SnowTricksHomeBundle:Tricks:image_prototype.html.twig", { form: form.images.vars.prototype })|e("html_attr") }}"
-  >
-      {% for image in form.images %}
-          {{ include("SnowTricksHomeBundle:Tricks:image_prototype.html.twig", { form: image }) }}
-      {% endfor %}
-  </div>
+    <div
+            id="trick_images"
+            class="row"
+            data-index="{{ form.images|length == 0 ? 0 : form.images|last.vars.name }}"
+            data-prototype="{{ include("SnowTricksHomeBundle:Tricks:image_prototype.html.twig", { form: form.images.vars.prototype })|e("html_attr") }}"
+    >
+        {% for image in form.images %}
+            {{ include("SnowTricksHomeBundle:Tricks:image_prototype.html.twig", { form: image }) }}
+        {% endfor %}
+    </div>
  
-  <div class="form-group"> 
-    {{ form_widget(form.videos) }} 
-    <a href="#" id="add_video" class="btn btn-outline-primary">Ajouter une video</a>
-  </div> 
 
-  {{ form_rest(form) }}
+    <a href="#" id="add_video" class="btn btn-outline-primary">Partager une video</a>
 
-  {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
+    <div
+            id="trick_videos"
+            class="row"
+            data-index="{{ form.videos|length == 0 ? 0 : form.videos|last.vars.name }}"
+            data-prototype="{{ include("SnowTricksHomeBundle:Tricks:video_prototype.html.twig", { form: form.videos.vars.prototype })|e("html_attr") }}"
+    >
+        {% for video in form.videos %}
+            {{ include("SnowTricksHomeBundle:Tricks:video_prototype.html.twig", { form: video }) }}
+        {% endfor %}
+    </div>
 
-  {{ form_end(form) }}
+    {{ form_rest(form) }}
+
+    {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
+
+    {{ form_end(form) }}
 
 </div>
 
