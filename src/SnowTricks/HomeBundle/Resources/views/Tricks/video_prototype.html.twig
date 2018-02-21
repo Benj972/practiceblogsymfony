@@ -1,7 +1,7 @@
 <div class="col-sm-6 col-md-4" id="video-{{ form.vars.name }}">
     <div class="card my-4">
         {% if form.vars.data is not null %}
-           <embed src="{{ form.vars.data.url }}" allowfullscreen="true"  height="150" width="150">
+           <embed class="card-video-top" src="{{ form.vars.data.url }}" allowfullscreen="true"  height="150" width="150">
         {% endif %}
         
         <div class="card-body">
