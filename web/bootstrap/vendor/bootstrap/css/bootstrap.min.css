@@ -29,7 +29,7 @@
 	position: absolute;
 	right:0px;
 	left: 0px;
-	bottom: 70px;
+	bottom: 50px;
 	overflow: hidden;
 }
 
@@ -37,4 +37,19 @@
 {
 	background-color: rgba(0,0,0,0);
 	border-top: rgba(0,0,0,0);
+}
+
+.card-video-top
+{
+	width: 100%;
+}
+
+.card-img-top
+{
+	height:150px;
+}
+
+.card-body
+{
+	padding: 0;
 }
