@@ -134,9 +134,14 @@ class TricksController extends Controller
       $em = $this->getDoctrine()->getManager();
 
       $originalImages = new ArrayCollection();
+      $originalVideos = new ArrayCollection();
 
       foreach ($trick->getImages() as $image) {
         $originalImages->add($image);
+      }
+
+      foreach ($trick->getVideos() as $video) {
+        $originalVideos->add($video);
       }
 
       $editForm = $this->createForm(TrickType::class, $trick);
@@ -149,6 +154,13 @@ class TricksController extends Controller
                 if (false === $trick->getImages()->contains($image)) {
                     $image->setTrick(null);
                     $em->remove($image);
+                }
+            }
+
+            foreach ($originalVideos as $video) {
+                if (false === $trick->getVideos()->contains($video)) {
+                    $video->setTrick(null);
+                    $em->remove($video);
                 }
             }
 

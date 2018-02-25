@@ -208,11 +208,13 @@ class Trick
 
     public function addVideo(Video $video)
     {
+        if($video->getUrl() !== null) {
         $this->videos[] = $video;
         // We link the video to the figure
         $video->setTrick($this);
         //return $this;
         ////second method form nested
+        }
     }
 
     public function removeVideo(Video $video)
