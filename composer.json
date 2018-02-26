@@ -20,7 +20,7 @@
         ]
     },
     "require": {
-        "php": ">=7.0.13",
+        "php": ">=5.5.9",
         "doctrine/annotations": "v1.4.0",
         "doctrine/cache": "1.6.x",
         "doctrine/common": "v2.7.3",
@@ -67,10 +67,7 @@
         ]
     },
     "config": {
-        "sort-packages": true,
-        "platform": {
-            "php": "7.0.13"
-        }
+        "sort-packages": true
     },
     "extra": {
         "symfony-app-dir": "app",
