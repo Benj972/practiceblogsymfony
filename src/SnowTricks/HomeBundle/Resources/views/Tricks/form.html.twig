@@ -52,11 +52,11 @@
         {% endfor %}
     </div>
 
-    {{ form_rest(form) }}
+    {{ form_widget(form._token)}}
 
     {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
 
-    {{ form_end(form) }}
+    {{ form_end(form, {"render_rest": false}) }}
 
 </div>
 
