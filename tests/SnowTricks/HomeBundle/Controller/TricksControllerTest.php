@@ -63,8 +63,8 @@ class TricksControllerTest extends WebTestCase
             Response::HTTP_OK,
             $this->client->getResponse()->getStatusCode()
         );
-
-        if ($this->client->getResponse()->getStatusCode() === Response::HTTP_OK) {
+    
+       if ($this->client->getResponse()->getStatusCode() === Response::HTTP_OK) {
             
             $form = $crawler->selectButton('Save')->form();
 
@@ -74,7 +74,7 @@ class TricksControllerTest extends WebTestCase
                 "snowtricks_homebundle_trick" => [
                     "name" => "nom du trick",
                     "content" => "Hello world ",
-                    "category" => " 1 ",
+                    "category" => 1,
                     "videos" => [
                         [
                             "alt" => "top",
@@ -113,15 +113,19 @@ class TricksControllerTest extends WebTestCase
                 ]
             ];
 
-            $this->client->request('POST', '/submit', $formData, $filesData);
 
-            $this->assertTrue($this->client->getResponse()->isRedirect());
+            $this->client->request('POST', '/add', $formData, $filesData);
+
+            $this->assertEquals(
+            Response::HTTP_FOUND,
+            $this->client->getResponse()->getStatusCode()
+            );
 
             $crawler = $this->client->followRedirect();
 
             $this->assertEquals(1, $crawler->filter('html:contains("Figure bien enregistrée.")')->count());
 
-        }   
+        } 
     }
 
     /*public function testAddTrickWithoutLogin()
