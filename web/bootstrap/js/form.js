@@ -57,7 +57,7 @@ $(document).ready(function() {
         $(rel).remove();
     });
     
-    $("body").on("change", ".form-control", function() {
+    $("body").on("change", ".upload-video.form-control", function() {
         var card = $(this).closest(".card");
         card.find(".card-video-top").remove();
         var url = this.value;

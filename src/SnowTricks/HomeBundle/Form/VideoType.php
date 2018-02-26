@@ -17,9 +17,14 @@ class VideoType extends AbstractType
     {
         $builder
         ->add('url', TextType::class,[
-            "required" => false])
+            "required" => false,
+            "attr" => [
+                "class" => "upload-video"
+            ]
+        ])
         ->add('alt', TextType::class,[
-            "required" => false,]);
+            "required" => false,
+        ]);
     }
     
     /**
