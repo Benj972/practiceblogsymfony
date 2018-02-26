@@ -89,15 +89,15 @@ class TricksControllerTest extends WebTestCase
             ];
 
             $image1 = new UploadedFile(
-                        'C:\Users\Benjamin\Desktop\vador.png',
-                        'vador.png',
-                        'image/png',
+                        'C:\Users\laure.l\Desktop\imagetest.jpg',
+                        'imagetest.jpeg',
+                        'image/jpeg',
                         123
                     );
 
              $image2 = new UploadedFile(
-                        'C:\Users\Benjamin\Desktop\mataiea-steff-chantal-alexandre.jpeg',
-                        'mataiea-steff-chantal-alexandre.jpeg',
+                        'C:\Users\laure.l\Desktop\avatartest.jpg',
+                        'avatartest.jpeg',
                         'image/jpeg',
                         123
                     );
@@ -122,14 +122,6 @@ class TricksControllerTest extends WebTestCase
             $this->assertEquals(1, $crawler->filter('html:contains("Figure bien enregistrée.")')->count());
 
         }   
-            /* Test
-            $form['snowtricks_homebundle_trick[name]'] = 'test';
-            $form['snowtricks_homebundle_trick[content]'] = 'Hello';
-            $form['snowtricks_homebundle_trick[category]'] ->select(1);
-            $values['snowtricks_homebundle_trick']['images'][14]->upload($img);
-            $values['snowtricks_homebundle_trick']['videos'][14]['url'] = 'https://www.youtube.com/embed/70g_LGD6Oro';
-            $values['snowtricks_homebundle_trick']['videos'][14]['alt'] = 'Test';
-            */
     }
 
     /*public function testAddTrickWithoutLogin()
