@@ -187,7 +187,7 @@ class Trick
 
     public function addImage(Image $image)
     {
-        if($image->getUrl() !== null) {
+        if($image->getFile() !== null) {
             $this->images[] = $image;
             // We link the image to the figure
             $image->setTrick($this);
@@ -209,11 +209,11 @@ class Trick
     public function addVideo(Video $video)
     {
         if($video->getUrl() !== null) {
-        $this->videos[] = $video;
-        // We link the video to the figure
-        $video->setTrick($this);
-        //return $this;
-        ////second method form nested
+            $this->videos[] = $video;
+            // We link the video to the figure
+            $video->setTrick($this);
+            //return $this;
+            ////second method form nested
         }
     }
 
