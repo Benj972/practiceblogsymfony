@@ -20,7 +20,10 @@ $(document).ready(function() {
             card.find(".card-img-top").remove();
         var file = URL.createObjectURL(this.files[0]);
             card.prepend('<img class="card-img-top" src="'+file+'"/>');
+        var text = this.value.replace(/C:\\fakepath\\/i, ''); 
+            card.find(".inputText").val(text);
     });
+
 
     function addImage($container) {
     // Dans le contenu de l'attribut « data-prototype », on remplace :
