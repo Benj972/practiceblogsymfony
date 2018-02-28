@@ -17,10 +17,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Doctrine\Common\Collections\ArrayCollection;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class TricksController extends Controller
 {
-
     public function homeAction($page)
     {
         if ($page < 1) {
@@ -48,7 +48,9 @@ class TricksController extends Controller
         )); 
     }
 
-
+    /**
+     * @ParamConverter("trick", options={"mapping": {"slug":"slug"}})
+     */
  	  public function viewAction(Trick $trick, $page=1, Request $request)
   	{
         $user = $this->getUser();
@@ -126,10 +128,13 @@ class TricksController extends Controller
         ));
     }
 
+    /**
+     * @ParamConverter("trick", options={"mapping": {"slug":"slug"}})
+     */
     public function editAction(Trick $trick, Request $request) 
     {
-        $em = $this->getDoctrine()->getManager();
 
+        $em = $this->getDoctrine()->getManager();
         $originalImages = new ArrayCollection();
         $originalVideos = new ArrayCollection();
 
@@ -140,6 +145,7 @@ class TricksController extends Controller
         foreach ($trick->getVideos() as $video) {
             $originalVideos->add($video);
         }
+
 
         $editForm = $this->createForm(TrickType::class, $trick);
 
@@ -174,30 +180,32 @@ class TricksController extends Controller
             'form'   => $editForm->createView(),
         ));
     }
+  
+    /**
+     * @ParamConverter("trick", options={"mapping": {"slug":"slug"}})
+     */
+    public function deleteAction(Request $request, Trick $trick)
+    {
+         
+      $em = $this->getDoctrine()->getManager();
 
-    public function deleteAction(Request $request, $id)
-    {   
-        $em = $this->getDoctrine()->getManager();
+      if (null === $trick) {
+        throw new NotFoundHttpException("La figure n'existe pas.");
+      }
 
-        $trick = $em->getRepository('SnowTricksHomeBundle:Trick')->find($id);
+      $form = $this->get('form.factory')->create();
 
-        if (null === $trick) {
-            throw new NotFoundHttpException("La figure ".$id." n'existe pas.");
-        }
+      if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+           $em->remove($trick);
+           $em->flush();
+           $request->getSession()->getFlashBag()->add('info', 'La figure a bien été supprimée.');
+           return $this->redirectToRoute('snow_tricks_home_homepage');
+      }
 
-        $form = $this->get('form.factory')->create();
-
-        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
-            $em->remove($trick);
-            $em->flush();
-            $request->getSession()->getFlashBag()->add('info', 'La figure a bien été supprimée.');
-            return $this->redirectToRoute('snow_tricks_home_homepage');
-        }
-
-        return $this->render('SnowTricksHomeBundle:Tricks:delete.html.twig', array(
-            'trick' => $trick,
-            'form'   => $form->createView(),
-        ));
+      return $this->render('SnowTricksHomeBundle:Tricks:delete.html.twig', array(
+           'trick' => $trick,
+           'form'   => $form->createView(),
+      ));
     }
     
 }

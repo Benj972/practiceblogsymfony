@@ -5,6 +5,7 @@ namespace SnowTricks\HomeBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Trick
@@ -75,6 +76,11 @@ class Trick
     */
     private $user;
 
+    /**
+     * @ORM\Column(type="string", unique=true)
+     * @Gedmo\Slug(fields={"name"})
+     */
+    private $slug;
 
     public function __construct()
     {
@@ -243,5 +249,18 @@ class Trick
     {
         return $this->messages;
     }
+
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+    }
 }
+
+
+
 
