@@ -91,8 +91,8 @@
              <h6>
                 <em> Catégorie {{ trick.category.name }}/Mis à jour le {{ trick.date|date("d/m/Y H:i:s") }}</em>
                 {% if is_granted('ROLE_USER') %}
-                  <a href="{{ path('snow_tricks_home_edit', {'id': trick.id}) }}#two"><span class="fa fa-pencil-square-o" aria-hidden="true"> </span></a>
-                  <a href="{{ path('snow_tricks_home_delete', {'id': trick.id}) }}#two"><span class="fa fa-trash" aria-hidden="true"></span></a>
+                  <a href="{{ path('snow_tricks_home_edit', {'slug': trick.slug}) }}#two"><span class="fa fa-pencil-square-o" aria-hidden="true"> </span></a>
+                  <a href="{{ path('snow_tricks_home_delete', {'slug': trick.slug}) }}#two"><span class="fa fa-trash" aria-hidden="true"></span></a>
                 {% endif %} 
              </h6>
         {% endif %}
@@ -138,7 +138,7 @@
                         {# On utilise la fonction range(a, b) qui crée un tableau de valeurs entre a et b #}
                           {% for p in range(1, nbPages) %}
                             <li{% if p == page %} class="active"{% endif %}>
-                              <a href="{{ path('snow_tricks_home_view', {'page': p, id:trick.id }) }}">{{ p }}</a> 
+                              <a href="{{ path('snow_tricks_home_view', {'page': p, slug:trick.slug }) }}">{{ p }}</a> 
                             </li>
                           {% endfor %} 
                     </ul>   

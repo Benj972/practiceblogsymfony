@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class TricksController extends Controller
 {
@@ -47,7 +48,9 @@ class TricksController extends Controller
         )); 
     }
 
-
+    /**
+     * @ParamConverter("trick", options={"mapping": {"slug":"slug"}})
+     */
  	  public function viewAction(Trick $trick, $page=1, Request $request)
   	{
       $user = $this->getUser();
@@ -127,15 +130,16 @@ class TricksController extends Controller
           ));
     }
 
-
-    public function editAction($id, Request $request) 
+    /**
+     * @ParamConverter("trick", options={"mapping": {"slug":"slug"}})
+     */
+    public function editAction(Trick $trick, Request $request) 
     {
+
       $em = $this->getDoctrine()->getManager();
 
-      $trick = $em->getRepository('SnowTricksHomeBundle:Trick')->find($id);
-
       if (null === $trick) {
-        throw new NotFoundHttpException("La figure ".$id." n'existe pas.");
+        throw new NotFoundHttpException("La figure n'existe pas.");
       }
 
       $form = $this->get('form.factory')->create(TrickEditType::class, $trick);
@@ -143,22 +147,6 @@ class TricksController extends Controller
       
       if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
           
-         /*$image = $em->getRepository('SnowTricksHomeBundle:Image')->find($trick);
-         $image->upload();*/
-
-          /*$files = $request->files;
-          $uploadedFile = $files->get('images')['file'];
-          if(count($uploadedFile)==0)
-            $trick->addImage($imageOriginal);
-          else
-          {
-            $image = new Image();
-            $image->setFile($uploadedFile);
-
-            $trick->addImage($image);
-          }
-
-          $em->persist($trick);*/
 
           $em->flush();
           $request->getSession()->getFlashBag()->add('info', 'Figure bien modifiée.');
@@ -171,16 +159,16 @@ class TricksController extends Controller
       ));
     }
 
-
-    public function deleteAction(Request $request, $id)
+    /**
+     * @ParamConverter("trick", options={"mapping": {"slug":"slug"}})
+     */
+    public function deleteAction(Request $request, Trick $trick)
     {
          
       $em = $this->getDoctrine()->getManager();
 
-      $trick = $em->getRepository('SnowTricksHomeBundle:Trick')->find($id);
-
       if (null === $trick) {
-        throw new NotFoundHttpException("La figure ".$id." n'existe pas.");
+        throw new NotFoundHttpException("La figure n'existe pas.");
       }
 
       $form = $this->get('form.factory')->create();
