@@ -160,7 +160,8 @@ class TricksController extends Controller
                     $em->remove($video);
                 }
             }
-
+            
+            $trick->setDate(new \DateTime('now'));
             $em->persist($trick);
             $em->flush();
 
