@@ -1,4 +1,3 @@
-
 {% extends "SnowTricksHomeBundle::layout.html.twig" %}
 
 
@@ -84,7 +83,7 @@
 <div class="container article">
   <div class="row justify-content-center">
     <div class="col-lg-8 col-md-10 mx-auto">
-  		<h1 class="section-heading">{{ trick.name }} </h1>
+      <h1 class="section-heading">{{ trick.name }} </h1>
       <br/>
         {% if trick.category is null %}
              <h6>Il n'y a pas de catégories définies</h6>
@@ -92,12 +91,12 @@
              <h6>
                 <em> Catégorie {{ trick.category.name }}/Mis à jour le {{ trick.date|date("d/m/Y H:i:s") }}</em>
                 {% if is_granted('ROLE_USER') %}
-                  <a href="{{ path('snow_tricks_home_edit', {'id': trick.id}) }}#two"><span class="fa fa-pencil-square-o" aria-hidden="true"> </span></a>
-                  <a href="{{ path('snow_tricks_home_delete', {'id': trick.id}) }}#two"><span class="fa fa-trash" aria-hidden="true"></span></a>
+                  <a href="{{ path('snow_tricks_home_edit', {'slug': trick.slug}) }}#two"><span class="fa fa-pencil-square-o" aria-hidden="true"> </span></a>
+                  <a href="{{ path('snow_tricks_home_delete', {'slug': trick.slug}) }}#two"><span class="fa fa-trash" aria-hidden="true"></span></a>
                 {% endif %} 
              </h6>
         {% endif %}
-  		<p>{{ trick.content }}</p> 
+      <p>{{ trick.content }}</p> 
     </div>
   </div>
 </div>
@@ -139,7 +138,7 @@
                         {# On utilise la fonction range(a, b) qui crée un tableau de valeurs entre a et b #}
                           {% for p in range(1, nbPages) %}
                             <li{% if p == page %} class="active"{% endif %}>
-                              <a href="{{ path('snow_tricks_home_view', {'page': p, id:trick.id }) }}">{{ p }}</a> 
+                              <a href="{{ path('snow_tricks_home_view', {'page': p, slug:trick.slug }) }}">{{ p }}</a> 
                             </li>
                           {% endfor %} 
                     </ul>   
@@ -167,9 +166,7 @@
   $(window).resize(function(){
     collapse();
   })
-
 collapse();
-
 function collapse()
 {
   if (window.matchMedia("(min-width: 600px)").matches) {
@@ -181,4 +178,3 @@ function collapse()
 </script>
 
 {% endblock %}
-
