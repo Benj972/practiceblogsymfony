@@ -1,0 +1,18 @@
+<div class="col-sm-6 col-md-4" id="image-{{ form.vars.name }}">
+    <div class="card my-4">
+        {% if form.vars.data is not null %}
+            <img class="card-img-top" src="{{ asset(form.vars.data.webPath) }}" height="150" width="150">
+        {% endif %}
+        <div class="card-body-img">
+            {{ form_widget(form.file) }} 
+            <input type="text" id="input_text_file" value="" class="inputText" readonly="readonly"/>  
+            <span class="fa fa-search"></span>         
+        </div>
+            
+        <div class="card-footer p-0">
+            <button type="button" class="btn btn-danger btn-xs btn-remove" data-rel="#image-{{ form.vars.name }}">
+                <span class="fa fa-trash" aria-hidden="true">Supprimer</span>
+            </button> 
+        </div>   
+    </div>
+</div>

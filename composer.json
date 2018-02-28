@@ -23,6 +23,7 @@
         "php": ">=5.5.9",
         "doctrine/annotations": "v1.4.0",
         "doctrine/cache": "1.6.x",
+        "doctrine/common": "v2.7.3",
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/doctrine-fixtures-bundle": "v2.4.1",
         "doctrine/doctrine-migrations-bundle": "^1.0",

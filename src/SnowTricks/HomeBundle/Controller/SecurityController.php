@@ -12,7 +12,7 @@ class SecurityController extends Controller
     
     public function loginAction(Request $request)
     {
-    	$authenticationUtils = $this->get('security.authentication_utils');
+        $authenticationUtils = $this->get('security.authentication_utils');
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
         // last username entered by the user
@@ -23,11 +23,9 @@ class SecurityController extends Controller
         ]);
 
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
-    
-        $request->getSession()->getFlashBag()->add('info', 'Vous êtes bien enregistré');
-        return $this->redirectToRoute('snow_tricks_home_homepage');
+            $request->getSession()->getFlashBag()->add('info', 'Vous êtes bien enregistré');
+            return $this->redirectToRoute('snow_tricks_home_homepage');
         }
-
 
         return $this->render(
             'SnowTricksHomeBundle:Security:login.html.twig',

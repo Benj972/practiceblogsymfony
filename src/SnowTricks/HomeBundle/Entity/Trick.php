@@ -191,14 +191,15 @@ class Trick
         return $this->user;
     }
 
-    
     public function addImage(Image $image)
     {
-        $this->images[] = $image;
-        // We link the image to the figure
-        $image->setTrick($this);
-        //return $this->images; 
-        //second method form nested
+        if($image->getFile() !== null) {
+            $this->images[] = $image;
+            // We link the image to the figure
+            $image->setTrick($this);
+            //return $this->images; 
+            //second method form nested
+        }
     }
 
     public function removeImage(Image $image)
@@ -211,13 +212,15 @@ class Trick
         return $this->images;
     }
 
-     public function addVideo(Video $video)
+    public function addVideo(Video $video)
     {
-        $this->videos[] = $video;
-        // We link the video to the figure
-        $video->setTrick($this);
-        //return $this;
-        ////second method form nested
+        if($video->getUrl() !== null) {
+            $this->videos[] = $video;
+            // We link the video to the figure
+            $video->setTrick($this);
+            //return $this;
+            ////second method form nested
+        }
     }
 
     public function removeVideo(Video $video)

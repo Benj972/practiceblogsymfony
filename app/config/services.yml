@@ -10,13 +10,4 @@ services:
         autoconfigure: true
         public: false
 
-    #SnowTricks\HomeBundle\:
-       # resource: '../../src/SnowTricks/HomeBundle/*'
-       # exclude: '../../src/SnowTricks/HomeBundle/{Entity,Repository}'
-
-    #SnowTricks\HomeBundle\Controller\:
-        #resource: '../../src/SnowTricks/HomeBundle/Controller'
-        #public: true
-       #tags: ['controller.service_arguments']
     
-   
