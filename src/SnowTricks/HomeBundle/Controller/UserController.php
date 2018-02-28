@@ -28,6 +28,7 @@ class UserController extends Controller
     {
     	$form = $this->createForm(UserRegistrationType::class);
     	$form->handleRequest($request);
+
         if ($form->isValid()) {
             /** @var User $user */
             $user = $form->getData();
@@ -51,6 +52,7 @@ class UserController extends Controller
         $user = $this->getUser();
         $form = $this->createForm(ChangePasswordType::class, $changePasswordModel);
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
 
             $passwordEncoder = $this->container->get('security.password_encoder');
@@ -78,51 +80,52 @@ class UserController extends Controller
 
     public function resetPasswordAction(Request $request, $token)
     {
-            $resetpassword = new ResetPassword;
-            
+            $resetpassword = new ResetPassword;    
             $user = $this->getDoctrine()->getManager()->getRepository('SnowTricksHomeBundle:User')->findOneByToken($token);
                     
             if($user !== null) {
-            $form = $this->createForm(ResetPasswordType::class, $resetpassword);
-            $form->handleRequest($request);
-            $newpassword = $resetpassword->getPlainPassword();
-            if ($form->isSubmitted() && $form->isValid()) {  	
-                $user->setToken(null);
-                $passwordEncoder = $this->container->get('security.password_encoder');
-                $encoded = $passwordEncoder->encodePassword($user, $newpassword);
-                $user->setPassword($encoded);
-                $em = $this->getDoctrine()->getManager();
-                $em->flush();
-                $this->addFlash('info', "Votre mot de passe a été réinitialisé. Vous pouvez vous connecter.");  
-                return $this->redirectToRoute('snow_tricks_home_homepage');
-            }
+                    $form = $this->createForm(ResetPasswordType::class, $resetpassword);
+                    $form->handleRequest($request);
+                    $newpassword = $resetpassword->getPlainPassword();
+
+                    if ($form->isSubmitted() && $form->isValid()) {  	
+                        $user->setToken(null);
+                        $passwordEncoder = $this->container->get('security.password_encoder');
+                        $encoded = $passwordEncoder->encodePassword($user, $newpassword);
+                        $user->setPassword($encoded);
+                        $em = $this->getDoctrine()->getManager();
+                        $em->flush();
+                        $this->addFlash('info', "Votre mot de passe a été réinitialisé. Vous pouvez vous connecter.");  
+                        return $this->redirectToRoute('snow_tricks_home_homepage');
+                    }
             }
             return $this->render('SnowTricksHomeBundle:User:resetPassword.html.twig', array(
-            'form' => $form->createView(),
+                    'form' => $form->createView(),
             ));      
     }
 
     public function requestPasswordAction(Request $request)
     {
         $requestpassword = new RequestPassword;
-
         $form = $this->createForm(RequestPasswordType::class, $requestpassword);
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) { 
-        $user = $this->getDoctrine()
-          ->getManager()
-          ->getRepository('SnowTricksHomeBundle:User')
-          ->findOneByEmail($requestpassword->getEmail());
 
-        if($user !== null) {
-                $confirmationtoken = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
-                $user->setToken($confirmationtoken);
-                $em = $this->getDoctrine()->getManager();
-                $em->flush();
-                $email = $this->container->get('snow_tricks_home.request_password_mail');
-                $message='...';
-                $email->notifyByEmail($message, $user);
-        }
+        if ($form->isSubmitted() && $form->isValid()) { 
+                $user = $this->getDoctrine()
+                    ->getManager()
+                    ->getRepository('SnowTricksHomeBundle:User')
+                    ->findOneByEmail($requestpassword->getEmail());
+
+                if($user !== null) {
+                        $confirmationtoken = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
+                        $user->setToken($confirmationtoken);
+                        $em = $this->getDoctrine()->getManager();
+                        $em->flush();
+                        $email = $this->container->get('snow_tricks_home.request_password_mail');
+                        $message='...';
+                        $email->notifyByEmail($message, $user);
+                }
+                
                 $this->addFlash('info', "Un email a été envoyé à votre boîte aux lettres pour réinitialiser votre mot de passe.");  
                 return $this->redirectToRoute('snow_tricks_home_homepage');
         }
