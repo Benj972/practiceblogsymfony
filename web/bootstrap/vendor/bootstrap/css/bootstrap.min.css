@@ -116,3 +116,19 @@ button.btn.btn-danger.btn-xs.btn-remove
 	padding-top: 10px;
 	padding-left: 5px;
 }
+
+button.btn.btn-primary.btn-xs.btn-add
+{
+	padding: 10px;
+}
+
+.modal-header
+{
+	background-color: #40A494;
+}
+
+input#user_registration_avatar_file.upload-image
+{
+	position: absolute;
+	bottom: 0px;
+}
