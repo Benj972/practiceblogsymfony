@@ -3,9 +3,14 @@
         {% if form.vars.data is not null %}
             <img class="card-img-top" src="{{ asset(form.vars.data.webPath) }}" height="150" width="150">
         {% endif %}
+
         <div class="card-body-img">
             {{ form_widget(form.file) }} 
-            <input type="text" id="input_text_file" value="" class="inputText" readonly="readonly"/>  
+            {% if form.vars.data is not null %}
+                    <input type="text" id="input_text_file" value=" {{ form.vars.data.alt }}.{{ form.vars.data.url }} " class="inputText" readonly="readonly"/>  
+            {% else%}
+                    <input type="text" id="input_text_file" value="Choisir..." class="inputText" readonly="readonly"/> 
+            {% endif %}            
             <span class="fa fa-search"></span>         
         </div>
             
