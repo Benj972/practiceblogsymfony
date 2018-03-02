@@ -30,7 +30,7 @@ class TricksControllerTest extends WebTestCase
         $this->secondClient = static::createClient();
     }
 
-    /*public function testHomepageIsUp()
+    public function testHomepageIsUp()
     {   
         $crawler = $this->secondClient->request('GET', '/');
         
@@ -50,9 +50,9 @@ class TricksControllerTest extends WebTestCase
         ;
         
         $this->assertEquals(count($listTricks), $crawler->filter('h3')->count());
-    }*/
+    }
 
-    public function testAddTrickWithLogin()
+    /*public function testAddTrickWithLogin()
     {
         
         $crawler = $this->client->request('GET', '/add', array(), array(), array(
@@ -65,15 +65,15 @@ class TricksControllerTest extends WebTestCase
             $this->client->getResponse()->getStatusCode()
         );
     
-       if ($this->client->getResponse()->getStatusCode() === Response::HTTP_OK) {
+        if ($this->client->getResponse()->getStatusCode() === Response::HTTP_OK) {
             
             $form = $crawler->selectButton('Enregistrez')->form();
 
             $formData = $form->getPhpValues();
 
             $formData = [
-                "snowtricks_homebundle_trick" => [
-                    "name" => "nom du trick",
+                "trick" => [
+                    "name" => "nom du trick2",
                     "content" => "Hello world ",
                     "category" => 1,
                     "videos" => [
@@ -90,15 +90,15 @@ class TricksControllerTest extends WebTestCase
             ];
 
             $image1 = new UploadedFile(
-                        'C:\Users\laure.l\Desktop\avatartest.jpg',
-                        'avatartest.jpg',
+                        'C:\Users\laure.l\Desktop\img\1.jpeg',
+                        '1.jpeg',
                         'image/jpeg',
                         123
                     );
 
             $image2 = new UploadedFile(
-                        'C:\Users\laure.l\Desktop\imagetest.jpg',
-                        'imagetest.jpg',
+                        'C:\Users\laure.l\Desktop\img\2.jpeg',
+                        '2.jpeg',
                         'image/jpeg',
                         123
                     );
@@ -106,7 +106,7 @@ class TricksControllerTest extends WebTestCase
             $filesData = $form->getPhpFiles();
 
             $filesData = [
-                "snowtricks_homebundle_trick" => [
+                "trick" => [
                     "images" => [
                         ["file" => $image1],
                         ["file" => $image2]
@@ -115,20 +115,20 @@ class TricksControllerTest extends WebTestCase
             ];
 
 
-            $crawler = $this->client->request('POST', '/add', $formData, array());
-
-            /*$this->assertEquals(1, $crawler->filter('html:contains("Ajouter une figure")')->count());*/
+            $crawler = $this->client->request('POST', '/add', $formData, $filesData);
+            echo $this->client->getResponse()->getContent();
+            $this->assertEquals(1, $crawler->filter('html:contains("Ajouter une figure")')->count());
             $this->assertEquals(
             Response::HTTP_FOUND,
             $this->client->getResponse()->getStatusCode()
             );
 
-            /*$crawler = $this->client->followRedirect();*/
+            $crawler = $this->client->followRedirect();
 
             $this->assertEquals(1, $crawler->filter('html:contains("Figure bien enregistrée.")')->count());
-        } 
+        }
          
-    }
+    }*/
 
     /*public function testAddTrickWithoutLogin()
     {
@@ -141,24 +141,24 @@ class TricksControllerTest extends WebTestCase
 
     public function testViewTrick()
     {
-        $crawler = $this->secondClient->request('GET', '/tricks/3');
+        $crawler = $this->secondClient->request('GET', '/tricks/indy');
 
         $this->assertSame(200, $this->secondClient->getResponse()->getStatusCode());
     }
     
     public function testViewTrickWithLogin()
     {
-        $crawler = $this->client->request('GET', '/tricks/3', array(), array(), array(
+        $crawler = $this->client->request('GET', '/tricks/indy', array(), array(), array(
         'PHP_AUTH_USER' => 'dede@gmail.fr',
         'PHP_AUTH_PW'   => 'dede2017',
         ));
 
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
 
-        $this->assertSame(1, $crawler->filter('html:contains("Title")')->count());
+        $this->assertSame(1, $crawler->filter('html:contains("Titre Message")')->count());
 
         if ($this->client->getResponse()->getStatusCode() === Response::HTTP_OK) {
-            $form = $crawler->selectButton('Save')->form();
+            $form = $crawler->selectButton('Envoyez')->form();
 
             $form['snowtricks_homebundle_message[title]'] = 'test';
             $form['snowtricks_homebundle_message[content]'] = 'Symfony';
@@ -170,10 +170,10 @@ class TricksControllerTest extends WebTestCase
             );
         }
     }
-    
-    public function testTricksDeleted()
+    */
+    /*public function testTricksDeleted()
     {
-        $crawler = $this->client->request('GET', '/delete/3', array(), array(), array(
+        $crawler = $this->client->request('GET', '/delete/indy', array(), array(), array(
         'PHP_AUTH_USER' => 'dede@gmail.fr',
         'PHP_AUTH_PW'   => 'dede2017',
         ));
