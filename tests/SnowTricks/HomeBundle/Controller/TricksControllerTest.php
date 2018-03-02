@@ -67,7 +67,7 @@ class TricksControllerTest extends WebTestCase
     
        if ($this->client->getResponse()->getStatusCode() === Response::HTTP_OK) {
             
-            $form = $crawler->selectButton('Save')->form();
+            $form = $crawler->selectButton('Enregistrez')->form();
 
             $formData = $form->getPhpValues();
 
