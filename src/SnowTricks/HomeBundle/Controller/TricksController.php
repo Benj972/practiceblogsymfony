@@ -146,7 +146,6 @@ class TricksController extends Controller
             $originalVideos->add($video);
         }
 
-
         $editForm = $this->createForm(TrickType::class, $trick);
 
         $editForm->handleRequest($request);
