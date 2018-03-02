@@ -90,16 +90,16 @@ class TricksControllerTest extends WebTestCase
             ];
 
             $image1 = new UploadedFile(
-                        'C:\Users\Benjamin\Desktop\mataiea.jpeg',
-                        'mataiea.jpeg',
+                        'C:\Users\laure.l\Desktop\avatartest.jpg',
+                        'avatartest.jpg',
                         'image/jpeg',
                         123
                     );
 
             $image2 = new UploadedFile(
-                        'C:\Users\Benjamin\Desktop\vador.png',
-                        'vador.png',
-                        'image/png',
+                        'C:\Users\laure.l\Desktop\imagetest.jpg',
+                        'imagetest.jpg',
+                        'image/jpeg',
                         123
                     );
 
@@ -118,10 +118,10 @@ class TricksControllerTest extends WebTestCase
             $crawler = $this->client->request('POST', '/add', $formData, array());
 
             /*$this->assertEquals(1, $crawler->filter('html:contains("Ajouter une figure")')->count());*/
-            /*$this->assertEquals(
+            $this->assertEquals(
             Response::HTTP_FOUND,
             $this->client->getResponse()->getStatusCode()
-            );*/
+            );
 
             /*$crawler = $this->client->followRedirect();*/
 
