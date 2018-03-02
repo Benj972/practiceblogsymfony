@@ -1,51 +1,49 @@
-
 {% extends "SnowTricksHomeBundle::layout.html.twig" %}
 
-
 {% block title %}
-  {{ parent() }}
+    {{ parent() }}
 {% endblock %}
 
 {% block snow_tricks_body %}
 
-  <div>
-      {# On affiche tous les messages flash dont le nom est « info » #}
-      {% for message in app.session.flashbag.get('info') %}
-        <p>Message flash : {{ message }}</p>
-      {% endfor %}
-  </div>
-
-  <div class="collapse" id="collapseOne">
-    <div class="container text-center">
-      <h1>Liste Figures</h1>
-        {% for trick in listTricks %}
-          <div class="row test">
-            <div class="col-xs-12 col-sm-6 col-md-3">
-              {% for image in trick.images|slice(0, 1) %}
-              <img src= "{{ asset(image.webPath) }}" height="250", width="250" /> 
-              {% endfor %}
-            </div>
-
-            <div class="col-xs-12 col-sm-6 col-md-8 list">
-              <h3 class="post-subtitle"><a href="{{ path('snow_tricks_home_view', {'id': trick.id}) }}">{{ trick.name }}</a>
-                {% if is_granted('ROLE_USER') %}
-                <a href="{{ path('snow_tricks_home_edit', {'id': trick.id}) }}#two"><span class="fa fa-pencil-square-o" aria-hidden="true"> </span></a>
-                <a href="{{ path('snow_tricks_home_delete', {'id': trick.id}) }}#two"><span class="fa fa-trash" aria-hidden="true"></span></a>
-                {% endif %}
-              </h3>             
-            </div>   
-          </div>
+    <div>
+        {# On affiche tous les messages flash dont le nom est « info » #}
+        {% for message in app.session.flashbag.get('info') %}
+            <p>Message flash : {{ message }}</p>
         {% endfor %}
-
-        <ul class="pagination">
-          {# On utilise la fonction range(a, b) qui crée un tableau de valeurs entre a et b #}
-          {% for p in range(1, nbPages) %}
-            <li{% if p == page %} class="active"{% endif %}>
-            <a href="{{ path('snow_tricks_home_homepage', {'page': p}) }}">{{ p }}</a>
-            </li>
-          {% endfor %}
-        </ul>
     </div>
-  </div>
+
+    <div class="collapse" id="collapseOne">
+        <div class="container text-center">
+            <h1>Liste Figures</h1>
+                {% for trick in listTricks %}
+                    <div class="row test">
+                        <div class="col-xs-12 col-sm-6 col-md-3">
+                            {% for image in trick.images|slice(0, 1) %}
+                                <img src= "{{ asset(image.webPath) }}" height="250", width="250" /> 
+                            {% endfor %}
+                        </div>
+
+                        <div class="col-xs-12 col-sm-6 col-md-8 list">
+                            <h3 class="post-subtitle"><a href="{{ path('snow_tricks_home_view', {'slug': trick.slug}) }}#two">{{ trick.name }}</a>
+                            {% if is_granted('ROLE_USER') %}
+                                <a href="{{ path('snow_tricks_home_edit', {'slug': trick.slug}) }}#two"><span class="fa fa-pencil-square-o" aria-hidden="true"> </span></a>
+                                <a href="{{ path('snow_tricks_home_delete', {'slug': trick.slug}) }}#two"><span class="fa fa-trash" aria-hidden="true"></span></a>
+                            {% endif %}
+                            </h3>             
+                        </div>   
+                    </div>
+                {% endfor %}
+
+            <ul class="pagination">
+                {# On utilise la fonction range(a, b) qui crée un tableau de valeurs entre a et b #}
+                {% for p in range(1, nbPages) %}
+                    <li{% if p == page %} class="active"{% endif %}>
+                        <a href="{{ path('snow_tricks_home_homepage', {'page': p}) }}">{{ p }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
   
 {% endblock %}
