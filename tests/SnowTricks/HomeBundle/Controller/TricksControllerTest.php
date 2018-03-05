@@ -30,7 +30,7 @@ class TricksControllerTest extends WebTestCase
         $this->secondClient = static::createClient();
     }
 
-    public function testHomepageIsUp()
+    /*public function testHomepageIsUp()
     {   
         $crawler = $this->secondClient->request('GET', '/');
         
@@ -63,7 +63,7 @@ class TricksControllerTest extends WebTestCase
 
         $this->assertEquals($trickspage2, $crawler->filter('h3')->count());
 
-    }
+    }*/
 
     /*public function testAddTrickWithLogin()
     {
@@ -77,7 +77,8 @@ class TricksControllerTest extends WebTestCase
             Response::HTTP_OK,
             $this->client->getResponse()->getStatusCode()
         );
-    
+        $this->assertEquals(1, $crawler->filter('html:contains("Ajouter une figure")')->count());
+
         if ($this->client->getResponse()->getStatusCode() === Response::HTTP_OK) {
             
             $form = $crawler->selectButton('Enregistrez')->form();
@@ -86,7 +87,7 @@ class TricksControllerTest extends WebTestCase
 
             $formData = [
                 "trick" => [
-                    "name" => "nom du trick2",
+                    "name" => "nom du trick3",
                     "content" => "Hello world ",
                     "category" => 1,
                     "videos" => [
@@ -103,15 +104,15 @@ class TricksControllerTest extends WebTestCase
             ];
 
             $image1 = new UploadedFile(
-                        'C:\Users\laure.l\Desktop\img\1.jpeg',
-                        '1.jpeg',
-                        'image/jpeg',
+                        'C:\Users\Benjamin\Desktop\vador.png',
+                        'vador.png',
+                        'image/png',
                         123
                     );
 
             $image2 = new UploadedFile(
-                        'C:\Users\laure.l\Desktop\img\2.jpeg',
-                        '2.jpeg',
+                        'C:\Users\Benjamin\Desktop\mataiea.jpeg',
+                        'mataiea.jpeg',
                         'image/jpeg',
                         123
                     );
@@ -127,10 +128,8 @@ class TricksControllerTest extends WebTestCase
                 ]
             ];
 
-
             $crawler = $this->client->request('POST', '/add', $formData, $filesData);
-            echo $this->client->getResponse()->getContent();
-            $this->assertEquals(1, $crawler->filter('html:contains("Ajouter une figure")')->count());
+            
             $this->assertEquals(
             Response::HTTP_FOUND,
             $this->client->getResponse()->getStatusCode()
@@ -202,5 +201,93 @@ class TricksControllerTest extends WebTestCase
         $this->assertEquals(1, $crawler->filter('html:contains("La figure a bien été supprimée.")')->count());
     }*/
     
+    public function testEditTrickWithLogin()
+    {
+         $crawler = $this->client->request('GET', '/edit/nom-du-trick3', array(), array(), array(
+        'PHP_AUTH_USER' => 'dede@gmail.fr',
+        'PHP_AUTH_PW'   => 'dede2017',
+        ));
+
+        $this->assertEquals(
+            Response::HTTP_OK,
+            $this->client->getResponse()->getStatusCode()
+        );
+
+        $this->assertEquals(1, $crawler->filter('html:contains("Modifier une figure")')->count());
+
+        if ($this->client->getResponse()->getStatusCode() === Response::HTTP_OK) {
+            
+            $form = $crawler->selectButton('Enregistrez')->form();
+
+            $formData2 = $form->getPhpValues();
+
+            $formData2 = [
+                "trick" => [
+                    "name" => "nom du trick3",
+                    "content" => "Hello world ",
+                    "category" => 1,
+                    "videos" => [
+                        [
+                            "alt" => "top",
+                            "url" => "https://www.youtube.com/embed/n0F6hSpxaFc"
+                        ],
+                        [
+                            "alt" => "top",
+                            "url" => "https://www.youtube.com/embed/n0F6hSpxaFc"
+                        ],
+                        [
+                            "alt" => "topedit",
+                            "url" => "https://www.youtube.com/embed/7CjRlQuqGTQ"
+                        ]
+                    ]
+                ]
+            ];
+
+            $image1 = new UploadedFile(
+                        'C:\Users\Benjamin\Desktop\vador.png',
+                        'vador.png',
+                        'image/png',
+                        123
+                    );
+
+            $image2 = new UploadedFile(
+                        'C:\Users\Benjamin\Desktop\mataiea.jpeg',
+                        'mataiea.jpeg',
+                        'image/jpeg',
+                        123
+                    );
+
+            $image3 = new UploadedFile(
+                        'C:\Users\Benjamin\Desktop\ski.jpeg',
+                        'ski.jpeg',
+                        'image/jpeg',
+                        123
+                    );
+
+            $filesData2 = $form->getPhpFiles();
+
+            $filesData2 = [
+                "trick" => [
+                    "images" => [
+                        ["file" => $image1],
+                        ["file" => $image2],
+                        ["file" => $image3],
+                    ]
+                ]
+            ];
+
+            $crawler = $this->client->request('POST', '/edit/nom-du-trick3', $formData2, $filesData2);
+
+            $this->assertEquals(
+            Response::HTTP_FOUND,
+            $this->client->getResponse()->getStatusCode()
+            );
+
+            $crawler = $this->client->followRedirect();
+
+            $this->assertEquals(1, $crawler->filter('html:contains("Figure bien modifiée.")')->count());
+        }
+
+    }
 }
 ?>
