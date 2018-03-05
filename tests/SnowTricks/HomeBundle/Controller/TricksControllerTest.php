@@ -42,14 +42,27 @@ class TricksControllerTest extends WebTestCase
             ->get('doctrine')
             ->getManager();
   
-        $page = 1;
+
+        $page = 2;
         $nbPerPage = 10;
+
+        $this->assertEquals($nbPerPage, $crawler->filter('h3')->count());
+
         $listTricks = $this->em
             ->getRepository(Trick::class)
             ->getTricks($page, $nbPerPage)
         ;
-        
-        $this->assertEquals(count($listTricks), $crawler->filter('h3')->count());
+
+        $nbPages = ceil(count($listTricks) / $nbPerPage);
+
+        $this->assertEquals($nbPages, $page);
+
+        $crawler = $this->secondClient->request('GET', '/2');
+
+        $trickspage2 = ceil(count($listTricks) - $nbPerPage);
+
+        $this->assertEquals($trickspage2, $crawler->filter('h3')->count());
+
     }
 
     /*public function testAddTrickWithLogin()
