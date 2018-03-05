@@ -13,7 +13,8 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
  * @ORM\Entity
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="SnowTricks\HomeBundle\Repository\UserRepository")
- * @UniqueEntity(fields={"email"}, message="It looks like your already have an account!")
+ * @UniqueEntity(fields={"email"}, message="On dirait que vous avez déjà un compte!")
+ * @UniqueEntity(fields={"pseudo"}, message="Ce pseudo est déjà pris!")
  */
 class User implements UserInterface
 {
@@ -42,15 +43,14 @@ class User implements UserInterface
 
     /**
      * The encoded password
-     *
      * @ORM\Column(type="string")
      */
     private $password;
 
     /**
      * A non-persisted field that's used to create the encoded password.
-     * 
-     *
+     * @Assert\NotBlank()
+     * @Assert\Length(min=8)
      * @var string
      */
     private $plainPassword;
