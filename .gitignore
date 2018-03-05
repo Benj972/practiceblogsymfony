@@ -26,4 +26,4 @@
 /web/bootstrap/vendor/bootstrap/css/bootstrap.min.css
 /web/uploads
 /web/uploads/img
-/composer.lock
+composer.lock
