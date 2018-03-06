@@ -19,7 +19,7 @@
 /* CSS Space of Discussion*/
 .panel-body
 {
-	background-color:#40A494;
+	border-width: 0.1em;
 }
 
 .chat
@@ -102,6 +102,7 @@
 {
 	text-align: center;
 	text-decoration-line:underline overline;
+	padding-top: 0;
 }
 
 .container.article p
@@ -111,20 +112,20 @@
 	border-top: solid;
 }
 
+.container.article 
+{
+	margin-top: 30px;
+}
+
 /* CSS caroussel for view */
 .split 
 {
- 	display: inline-block!important; 
+ 	/*display: inline-block!important; */
 }
 
 .split.right
 {
-	padding: 20px;
-}
-
-.split.left
-{
-	padding: 20px;
+	padding-top: 10px;
 }
 
 /*body*/
@@ -146,3 +147,17 @@ h2
     background-color: #40A494;
 }
 
+@media all and (max-device-width: 600px)
+{
+	.chat li .chat-body p
+	{
+		font-size: 0.8em!important;
+		line-height: 1.2;
+	}
+
+	.split.left.carousel.slide
+	{
+		width: 200px;
+		height:200px;
+	}
+}
