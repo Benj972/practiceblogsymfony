@@ -13,7 +13,8 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
  * @ORM\Entity
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="SnowTricks\HomeBundle\Repository\UserRepository")
- * @UniqueEntity(fields={"email"}, message="It looks like your already have an account!")
+ * @UniqueEntity(fields={"email"}, message="On dirait que vous avez déjà un compte!")
+ * @UniqueEntity(fields={"pseudo"}, message="Ce pseudo est déjà pris!")
  */
 class User implements UserInterface
 {
@@ -29,13 +30,20 @@ class User implements UserInterface
      * @var string
      *
      * @ORM\Column(name="pseudo", type="string", length=255, unique=true)
-     * @Assert\Length(min=2)
+     * @Assert\Length(
+     *      min=2,
+     *      max=16,
+     *      minMessage = "Votre pseudo doit comporter au moins 2 caractères",
+     *      maxMessage = "Votre pseudo ne peut pas dépasser 16 caractères"
+     * )
      */
     private $pseudo;
 
     /**
      * @Assert\NotBlank()
-     * @Assert\Email()
+     * @Assert\Email(
+     *      message = "Cet email '{{ value }}' n'est pas valide."
+     * )
      * @ORM\Column(type="string", unique=true)
      */
     private $email;
@@ -49,9 +57,14 @@ class User implements UserInterface
 
     /**
      * A non-persisted field that's used to create the encoded password.
-     * 
-     *
      * @var string
+     *
+     * @Assert\Length(
+     *      min=8,
+     *      max=16,
+     *      minMessage = "Votre mot de passe doit comporter au moins 8 caractères",
+     *      maxMessage = "Votre mot de passe ne peut pas dépasser 16 caractères"
+     * )
      */
     private $plainPassword;
 
