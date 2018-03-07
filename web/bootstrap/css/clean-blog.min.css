@@ -16,7 +16,19 @@
 	font-style: italic;
 }
 
+.test img
+{
+    -moz-box-shadow: 5px 5px 12px #aaa;
+    -o-box-shadow: 5px 5px 12px #aaa;
+    -webkit-box-shadow: 5px 5px 12px #aaa;
+}
+
 /* CSS Space of Discussion*/
+.panel.panel-primary h5
+{
+	border-bottom: solid;
+}
+
 .panel-body
 {
 	border-width: 0.1em;
@@ -118,11 +130,6 @@
 }
 
 /* CSS caroussel for view */
-.split 
-{
- 	/*display: inline-block!important; */
-}
-
 .split.right
 {
 	padding-top: 10px;
@@ -140,6 +147,11 @@ h2
 	text-decoration-line:underline overline;
 }
 
+.pagination
+{
+	margin-top: 10px; 
+}
+
 .pagination a 
 {
     border: 1px solid #ddd;
@@ -153,11 +165,5 @@ h2
 	{
 		font-size: 0.8em!important;
 		line-height: 1.2;
-	}
-
-	.split.left.carousel.slide
-	{
-		width: 200px;
-		height:200px;
 	}
 }
