@@ -28,7 +28,7 @@ class Image
      * @var string
      *
      * @ORM\Column(name="url", type="string", length=255)
-     * @Assert\Url()
+     * @Assert\URL()
      */
     private $url;
 
@@ -41,6 +41,7 @@ class Image
 
     /**
      * @var UploadedFile
+     *
      * @Assert\File()
      */
     private $file;
