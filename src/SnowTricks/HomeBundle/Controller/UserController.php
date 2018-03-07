@@ -35,8 +35,8 @@ class UserController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
-            $this->addFlash('info', 'Welcome '.$user->getEmail());
-            return $this->redirectToRoute('snow_tricks_home_homepage');
+            $this->addFlash('info', 'Bienvenue '.$user->getEmail());
+            return $this->redirectToRoute('snow_tricks_home_login');
         }
         return $this->render('SnowTricksHomeBundle:User:register.html.twig', [
             'form' => $form->createView()

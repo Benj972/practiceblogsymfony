@@ -1,6 +1,13 @@
 {% extends "SnowTricksHomeBundle::layout.html.twig" %}
 
 {% block body %}
+<div>
+        {# On affiche tous les messages flash dont le nom est « info » #}
+        {% for message in app.session.flashbag.get('info') %}
+            <p>{{ message }}</p>
+        {% endfor %}
+</div>
+
 <div class="container" id="two">
     <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
