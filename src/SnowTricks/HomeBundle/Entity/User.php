@@ -30,6 +30,8 @@ class User implements UserInterface
      * @var string
      *
      * @ORM\Column(name="pseudo", type="string", length=255, unique=true)
+     * @Assert\NotBlank(
+     *      message = "Le champ ne peut pas être vide")
      * @Assert\Length(
      *      min=2,
      *      max=16,
@@ -40,7 +42,8 @@ class User implements UserInterface
     private $pseudo;
 
     /**
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(
+     *      message = "Le champ ne peut pas être vide")
      * @Assert\Email(
      *      message = "Cet email '{{ value }}' n'est pas valide."
      * )

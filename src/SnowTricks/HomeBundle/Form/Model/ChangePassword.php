@@ -17,7 +17,8 @@ class ChangePassword
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank(
+     *      message = "Le champ ne peut pas être vide")
      * @Assert\Length(
      *      min=8,
      *      max=16,

@@ -63,14 +63,13 @@
 {
     margin: 0px;
     margin-right: 5px;
-    color: #40A494; /*#777777;*/
+    color: #666666; 
     overflow: hidden;
 	width: auto;
     height: auto;
     text-align: justify;
     text-justify: inter-word;
     word-wrap: break-word;
-	background-color: ;
 	padding-left:15px;	
 	padding-right:15px;
 	font-style: oblique;
