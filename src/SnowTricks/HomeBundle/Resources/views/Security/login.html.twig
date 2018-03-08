@@ -1,10 +1,17 @@
 {% extends "SnowTricksHomeBundle::layout.html.twig" %}
 
 {% block body %}
-<div class="container">
+<div>
+        {# On affiche tous les messages flash dont le nom est « info » #}
+        {% for message in app.session.flashbag.get('info') %}
+            <p>{{ message }}</p>
+        {% endfor %}
+</div>
+
+<div class="container" id="two">
     <div class="row">
-        <div class="col-xs-12">
-            <h1>Login!</h1>
+        <div class="col-lg-8 col-md-10 mx-auto">
+            <h2 class="post-title">Se Connecter</h2>
 
 			{% if error %}
 				<div class="alert alert-danger">
@@ -12,11 +19,17 @@
             {% endif %}
 
          	{{ form_start(form) }}
-                {{ form_row(form._username) }}
-                {{ form_row(form._password) }}
-                <button type="submit" class="btn btn-success">Login <span class="fa fa-lock"></span></button>
+                {{ form_row(form._username, {
+                        'label': 'Identifiant(email)'
+                }) }}
+
+                {{ form_row(form._password, {
+                        'label': 'Mot de Passe'
+                }) }}
+                
+                <button type="submit" class="btn btn-success">Se connecter <span class="fa fa-lock"></span></button>
                 &nbsp;
-                <a href="{{ path('snow_tricks_home_register') }}">Register</a>
+                <a href="{{ path('snow_tricks_home_request_password') }}">Mot de Passe oublié?</a>
             {{ form_end(form) }}
         </div>
     </div>

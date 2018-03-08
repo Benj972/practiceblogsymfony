@@ -5,6 +5,7 @@ namespace SnowTricks\HomeBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Trick
@@ -26,7 +27,7 @@ class Trick
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255, unique=true)
+     * @ORM\Column(name="name", type="string", length=255)
      * @Assert\Length(min=2)
      */
     private $name;
@@ -40,19 +41,18 @@ class Trick
     private $content;
 
     /**
-    * @ORM\OneToMany(targetEntity="SnowTricks\HomeBundle\Entity\Image", mappedBy="trick", cascade={"persist"})
-    * @Assert\Valid()
+    * @ORM\OneToMany(targetEntity="SnowTricks\HomeBundle\Entity\Image", mappedBy="trick",  cascade={"persist", "remove"}, orphanRemoval=true)
     */
     private $images;
 
     /**
-    * @ORM\OneToMany(targetEntity="SnowTricks\HomeBundle\Entity\Video", mappedBy="trick", cascade={"persist"})
+    * @ORM\OneToMany(targetEntity="SnowTricks\HomeBundle\Entity\Video", mappedBy="trick", cascade={"persist", "remove"})
     * @Assert\Valid()
     */
     private $videos;
 
     /**
-    * @ORM\OneToMany(targetEntity="SnowTricks\HomeBundle\Entity\Message", mappedBy="trick")
+    * @ORM\OneToMany(targetEntity="SnowTricks\HomeBundle\Entity\Message", mappedBy="trick", cascade={"persist", "remove"}, orphanRemoval=true)
     * @Assert\Valid()
     */
     private $messages;
@@ -76,6 +76,11 @@ class Trick
     */
     private $user;
 
+    /**
+     * @ORM\Column(type="string", unique=true)
+     * @Gedmo\Slug(fields={"name"})
+     */
+    private $slug;
 
     public function __construct()
     {
@@ -186,14 +191,15 @@ class Trick
         return $this->user;
     }
 
-    
     public function addImage(Image $image)
     {
-        $this->images[] = $image;
-        // We link the image to the figure
-        $image->setTrick($this);
-        //return $this->images; 
-        //second method form nested
+        if($image->getFile() !== null) {
+            $this->images[] = $image;
+            // We link the image to the figure
+            $image->setTrick($this);
+            //return $this->images; 
+            //second method form nested
+        }
     }
 
     public function removeImage(Image $image)
@@ -206,13 +212,15 @@ class Trick
         return $this->images;
     }
 
-     public function addVideo(Video $video)
+    public function addVideo(Video $video)
     {
-        $this->videos[] = $video;
-        // We link the video to the figure
-        $video->setTrick($this);
-        //return $this;
-        ////second method form nested
+        if($video->getUrl() !== null) {
+            $this->videos[] = $video;
+            // We link the video to the figure
+            $video->setTrick($this);
+            //return $this;
+            ////second method form nested
+        }
     }
 
     public function removeVideo(Video $video)
@@ -241,5 +249,18 @@ class Trick
     {
         return $this->messages;
     }
+
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+    }
 }
+
+
+
 

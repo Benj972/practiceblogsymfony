@@ -13,7 +13,8 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
  * @ORM\Entity
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="SnowTricks\HomeBundle\Repository\UserRepository")
- * @UniqueEntity(fields={"email"}, message="It looks like your already have an account!")
+ * @UniqueEntity(fields={"email"}, message="On dirait que vous avez déjà un compte!")
+ * @UniqueEntity(fields={"pseudo"}, message="Ce pseudo est déjà pris!")
  */
 class User implements UserInterface
 {
@@ -29,13 +30,23 @@ class User implements UserInterface
      * @var string
      *
      * @ORM\Column(name="pseudo", type="string", length=255, unique=true)
-     * @Assert\Length(min=2)
+     * @Assert\NotBlank(
+     *      message = "Le champ ne peut pas être vide")
+     * @Assert\Length(
+     *      min=2,
+     *      max=16,
+     *      minMessage = "Votre pseudo doit comporter au moins 2 caractères",
+     *      maxMessage = "Votre pseudo ne peut pas dépasser 16 caractères"
+     * )
      */
     private $pseudo;
 
     /**
-     * @Assert\NotBlank()
-     * @Assert\Email()
+     * @Assert\NotBlank(
+     *      message = "Le champ ne peut pas être vide")
+     * @Assert\Email(
+     *      message = "Cet email '{{ value }}' n'est pas valide."
+     * )
      * @ORM\Column(type="string", unique=true)
      */
     private $email;
@@ -49,27 +60,29 @@ class User implements UserInterface
 
     /**
      * A non-persisted field that's used to create the encoded password.
-     * @Assert\NotBlank()
-     *
      * @var string
+     *
+     * @Assert\Length(
+     *      min=8,
+     *      max=16,
+     *      minMessage = "Votre mot de passe doit comporter au moins 8 caractères",
+     *      maxMessage = "Votre mot de passe ne peut pas dépasser 16 caractères"
+     * )
      */
     private $plainPassword;
 
     /**
-     * @ORM\Column(type="json")
+     * @ORM\Column(type="json_array")
      */
     private $roles = [];
 
-
-     /**
-     * @ORM\Column(name="avatar", type="string", length=255)
-     * @Assert\URL()
-     */
+    /**
+    * @ORM\OneToOne(targetEntity="SnowTricks\HomeBundle\Entity\Image", cascade={"persist"})
+    */
     private $avatar;
 
     /**
      * @ORM\Column(name="token", type="string", length=255, nullable=true)
-     * @Assert\URL()
      */
     private $token;
 
@@ -148,16 +161,6 @@ class User implements UserInterface
         $this->password = null;
     }
 
-    public function setAvatar($avatar)
-    {
-        $this->avatar = $avatar;
-    }
-
-    public function getAvatar()
-    {
-        return $this->avatar;
-    }
-
     public function getToken()
     {
         return $this->token;
@@ -168,5 +171,15 @@ class User implements UserInterface
         $this->token = $token;
 
         return $this;
+    }
+
+    public function setAvatar($avatar)
+    {
+        $this->avatar = $avatar;
+    }
+
+    public function getAvatar()
+    {
+        return $this->avatar;
     }
 }

@@ -1,12 +1,26 @@
 {% extends "SnowTricksHomeBundle::layout.html.twig" %}
 
 {% block body %}
-    <div class="container">
+   <div class="container" id="two">
         <div class="row">
-            <div class="col-xs-12">
-                <h1>Inscrivez-Vous!</h1>
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <h2 class="post-title"> Inscrivez-vous </h2>
+                <div class="post-preview">
                 {{ form_start(form) }}
                     {{ form_row(form.pseudo) }}
+
+                    <div id="image-user_registration" class="row">
+                        <div class="col-sm-6 col-md-4">
+                            <div class="card my-4">
+                                <div class="card-body-img">
+                                    {{ form_widget(form.avatar.file) }}   
+                                    <input type="text" id="input_text_file" value="Choisir..." class="inputText" readonly="readonly"/>
+                                    <span class="fa fa-search"></span>
+                                </div>
+                            </div>
+                         </div>
+                    </div>
+
                     {{ form_row(form.email) }}
                     {{ form_row(form.plainPassword.first, {
                         'label': 'Mot de Passe'
@@ -14,12 +28,12 @@
                     {{ form_row(form.plainPassword.second, {
                         'label': 'Confirmez Mot de Passe'
                     }) }}
-                    {{ form_row(form.avatar, {
-                        'label': 'Adresse url de l\'Avatar'
-                    }) }}
+                    {{ form_rest(form) }}
                     <button type="submit" class="btn btn-primary" formnovalidate>S'inscrire</button>
                 {{ form_end(form) }}
+                </div>
             </div>
         </div>
     </div>
+
 {% endblock %}

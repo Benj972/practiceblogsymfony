@@ -5,15 +5,14 @@ namespace SnowTricks\HomeBundle\Controller;
 use SnowTricks\HomeBundle\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use SnowTricks\HomeBundle\Form\LoginType;
-//use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-
+use Symfony\Component\HttpFoundation\Request;
 
 class SecurityController extends Controller
 {
     
-    public function loginAction()
+    public function loginAction(Request $request)
     {
-    	$authenticationUtils = $this->get('security.authentication_utils');
+        $authenticationUtils = $this->get('security.authentication_utils');
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
         // last username entered by the user
@@ -22,6 +21,11 @@ class SecurityController extends Controller
         $form = $this->createForm(LoginType::class, [
         	'_username' => $lastUsername,
         ]);
+
+        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+            $request->getSession()->getFlashBag()->add('info', 'Vous êtes bien enregistré');
+            return $this->redirectToRoute('snow_tricks_home_homepage');
+        }
 
         return $this->render(
             'SnowTricksHomeBundle:Security:login.html.twig',
@@ -34,7 +38,7 @@ class SecurityController extends Controller
     }
 
     public function logoutAction()
-    {
+    {     
         throw new \Exception('this should not be reached!');
     }
 
