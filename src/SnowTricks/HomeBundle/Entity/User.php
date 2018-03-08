@@ -83,7 +83,6 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(name="token", type="string", length=255, nullable=true)
-     * @Assert\URL()
      */
     private $token;
 
