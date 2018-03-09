@@ -30,7 +30,7 @@ class TricksControllerTest extends WebTestCase
         $this->secondClient = static::createClient();
     }
 
-    /*public function testHomepageIsUp()
+    public function testHomepageIsUp()
     {   
         $crawler = $this->secondClient->request('GET', '/');
         
@@ -63,9 +63,9 @@ class TricksControllerTest extends WebTestCase
 
         $this->assertEquals($trickspage2, $crawler->filter('h3')->count());
 
-    }*/
+    }
 
-    /*public function testAddTrickWithLogin()
+    public function testAddTrickWithLogin()
     {
         
         $crawler = $this->client->request('GET', '/add', array(), array(), array(
@@ -87,7 +87,7 @@ class TricksControllerTest extends WebTestCase
 
             $formData = [
                 "trick" => [
-                    "name" => "nom du trick3",
+                    "name" => "testtrick",
                     "content" => "Hello world ",
                     "category" => 1,
                     "videos" => [
@@ -140,9 +140,9 @@ class TricksControllerTest extends WebTestCase
             $this->assertEquals(1, $crawler->filter('html:contains("Figure bien enregistrée.")')->count());
         }
          
-    }*/
+    }
 
-    /*public function testAddTrickWithoutLogin()
+    public function testAddTrickWithoutLogin()
     {
         $crawler = $this->secondClient->request('GET', '/add');
 
@@ -182,8 +182,8 @@ class TricksControllerTest extends WebTestCase
             );
         }
     }
-    */
-    /*public function testTricksDeleted()
+    
+    public function testTricksDeleted()
     {
         $crawler = $this->client->request('GET', '/delete/indy', array(), array(), array(
         'PHP_AUTH_USER' => 'dede@gmail.fr',
@@ -199,11 +199,11 @@ class TricksControllerTest extends WebTestCase
 
         $crawler = $this->client->followRedirect();
         $this->assertEquals(1, $crawler->filter('html:contains("La figure a bien été supprimée.")')->count());
-    }*/
+    }
     
-    public function testEditTrickWithLogin()
+    /*public function testEditTrickWithLogin()
     {
-         $crawler = $this->client->request('GET', '/edit/nom-du-trick3', array(), array(), array(
+        $crawler = $this->client->request('GET', '/edit/nom-du-trick3', array(), array(), array(
         'PHP_AUTH_USER' => 'dede@gmail.fr',
         'PHP_AUTH_PW'   => 'dede2017',
         ));
@@ -288,6 +288,6 @@ class TricksControllerTest extends WebTestCase
             $this->assertEquals(1, $crawler->filter('html:contains("Figure bien modifiée.")')->count());
         }
 
-    }
+    }*/
 }
 ?>

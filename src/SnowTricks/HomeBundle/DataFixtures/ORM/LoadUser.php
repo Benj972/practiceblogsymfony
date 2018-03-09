@@ -41,7 +41,7 @@ class LoadUser extends AbstractFixture implements ContainerAwareInterface, Depen
 
 	  $user3 = new User;
     $user3->setPseudo('ben');
-  	$user3->setEmail('ben.gallot972@gmail.fr');
+  	$user3->setEmail('ben.gallot@gmail.fr');
   	$user3->setPassword($this->container->get('security.password_encoder')->encodePassword($user3, 'benjamin2017'));
   	$user3->setAvatar($this->getReference('image18'));
 	  $manager->persist($user3);
