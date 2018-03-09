@@ -1,0 +1,18 @@
+<div class="col-sm-6 col-md-4" id="video-{{ form.vars.name }}">
+    <div class="card my-4">
+        {% if form.vars.data is not null %}
+           <embed class="card-video-top" src="{{ form.vars.data.url }}" allowfullscreen="true"  height="150" width="150">
+        {% endif %}
+        
+        <div class="card-body">
+             {{ form_widget(form.url, {'attr': { 'placeholder': 'https://www.youtube.com/embed/n0F6hSpxaF'} }) }}  
+             {{ form_widget(form.alt, { 'attr': { 'placeholder': 'Titre de la video'} }) }}  
+        </div>
+
+        <div class="card-footer p-0">
+            <button type="button" class="btn btn-danger btn-xs btn-remove" data-rel="#video-{{ form.vars.name }}">
+                <span class="fa fa-trash" aria-hidden="true">Supprimer</span>
+            </button>
+        </div>
+    </div>
+</div>
