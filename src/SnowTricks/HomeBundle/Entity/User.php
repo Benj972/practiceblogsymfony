@@ -30,13 +30,23 @@ class User implements UserInterface
      * @var string
      *
      * @ORM\Column(name="pseudo", type="string", length=255, unique=true)
-     * @Assert\Length(min=2)
+     * @Assert\NotBlank(
+     *      message = "Le champ ne peut pas être vide")
+     * @Assert\Length(
+     *      min=2,
+     *      max=16,
+     *      minMessage = "Votre pseudo doit comporter au moins 2 caractères",
+     *      maxMessage = "Votre pseudo ne peut pas dépasser 16 caractères"
+     * )
      */
     private $pseudo;
 
     /**
-     * @Assert\NotBlank()
-     * @Assert\Email()
+     * @Assert\NotBlank(
+     *      message = "Le champ ne peut pas être vide")
+     * @Assert\Email(
+     *      message = "Cet email '{{ value }}' n'est pas valide."
+     * )
      * @ORM\Column(type="string", unique=true)
      */
     private $email;
@@ -49,9 +59,14 @@ class User implements UserInterface
 
     /**
      * A non-persisted field that's used to create the encoded password.
-     * @Assert\NotBlank()
-     * @Assert\Length(min=8)
      * @var string
+     *
+     * @Assert\Length(
+     *      min=8,
+     *      max=16,
+     *      minMessage = "Votre mot de passe doit comporter au moins 8 caractères",
+     *      maxMessage = "Votre mot de passe ne peut pas dépasser 16 caractères"
+     * )
      */
     private $plainPassword;
 
@@ -67,7 +82,6 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(name="token", type="string", length=255, nullable=true)
-     * @Assert\URL()
      */
     private $token;
 

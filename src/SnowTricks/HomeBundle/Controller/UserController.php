@@ -35,8 +35,8 @@ class UserController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
-            $this->addFlash('info', 'Welcome '.$user->getEmail());
-            return $this->redirectToRoute('snow_tricks_home_homepage');
+            $this->addFlash('info', 'Bienvenue '.$user->getEmail());
+            return $this->redirectToRoute('snow_tricks_home_login');
         }
         return $this->render('SnowTricksHomeBundle:User:register.html.twig', [
             'form' => $form->createView()
@@ -124,10 +124,14 @@ class UserController extends Controller
                         $email = $this->container->get('snow_tricks_home.request_password_mail');
                         $message='...';
                         $email->notifyByEmail($message, $user);
+                        $this->addFlash('info', "Un email a été envoyé à votre boîte aux lettres pour réinitialiser votre mot de passe.");  
+                        return $this->redirectToRoute('snow_tricks_home_homepage');
                 }
-                
-                $this->addFlash('info', "Un email a été envoyé à votre boîte aux lettres pour réinitialiser votre mot de passe.");  
-                return $this->redirectToRoute('snow_tricks_home_homepage');
+
+                else {
+                        $this->addFlash('info', "Vous n'avez pas de compte!");  
+                        return $this->redirectToRoute('snow_tricks_home_homepage');
+                }      
         }
 
         return $this->render('SnowTricksHomeBundle:User:requestPassword.html.twig', [

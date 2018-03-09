@@ -9,7 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -23,7 +23,9 @@ class UserRegistrationType extends AbstractType
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class
             ])
-            ->add('avatar', ImageType::class);
+            ->add('avatar', ImageType::class,[
+                "required" => false,
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

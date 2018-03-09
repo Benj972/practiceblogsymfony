@@ -9,7 +9,7 @@
     <div>
         {# On affiche tous les messages flash dont le nom est « info » #}
         {% for message in app.session.flashbag.get('info') %}
-            <p>Message flash : {{ message }}</p>
+            <p>{{ message }}</p>
         {% endfor %}
     </div>
 
@@ -42,8 +42,9 @@
                         <a href="{{ path('snow_tricks_home_homepage', {'page': p}) }}">{{ p }}</a>
                     </li>
                 {% endfor %}
-            </ul>
+            </ul>    
         </div>
     </div>
   
 {% endblock %}
+
