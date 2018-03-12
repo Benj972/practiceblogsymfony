@@ -65,7 +65,7 @@ class UserControllerTest extends WebTestCase
         $form = $crawler->selectButton("S'inscrire")->form();
 
             $form['user_registration[pseudo]'] = 'test';
-            $form['user_registration[avatar][file]']->upload('C:\Users\Benjamin\Desktop\ski.jpeg');
+            $form['user_registration[avatar][file]']->upload(__DIR__."/ImgTests/avatar_snow.jpg");
             $form['user_registration[email]'] = 'test@gmail.fr';
             $form['user_registration[plainPassword][first]'] = 'Symfony2018';
             $form['user_registration[plainPassword][second]'] = 'Symfony2018';
@@ -76,7 +76,7 @@ class UserControllerTest extends WebTestCase
             $this->assertEquals(1, $crawler->filter('html:contains("Bienvenue")')->count());
     }
 
-   public function testChangePassword()
+    public function testChangePassword()
     {
         $client = static::createClient(array(), array(
         'PHP_AUTH_USER' => 'ben.gallot@gmail.fr',

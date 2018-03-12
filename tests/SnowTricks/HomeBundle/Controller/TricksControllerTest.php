@@ -1,5 +1,6 @@
 <?php
 namespace Tests\SnowTricks\HomeBundle\Controller;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -30,7 +31,7 @@ class TricksControllerTest extends WebTestCase
         $this->secondClient = static::createClient();
     }
 
-    /*public function testHomepageIsUp()
+    public function testHomepageIsUp()
     {   
         $crawler = $this->secondClient->request('GET', '/');
         
@@ -63,9 +64,9 @@ class TricksControllerTest extends WebTestCase
 
         $this->assertEquals($trickspage2, $crawler->filter('h3')->count());
 
-    }*/
+    }
 
-    /*public function testAddTrickWithLogin()
+    public function testAddTrickWithLogin()
     {
         
         $crawler = $this->client->request('GET', '/add', array(), array(), array(
@@ -104,14 +105,14 @@ class TricksControllerTest extends WebTestCase
             ];
 
             $image1 = new UploadedFile(
-                        'C:\Users\Benjamin\Desktop\vador.png',
+                        __DIR__."/ImgTests/vador.png",
                         'vador.png',
                         'image/png',
                         123
                     );
 
             $image2 = new UploadedFile(
-                        'C:\Users\Benjamin\Desktop\mataiea.jpeg',
+                        __DIR__."/ImgTests/mataiea.jpeg",
                         'mataiea.jpeg',
                         'image/jpeg',
                         123
@@ -140,9 +141,9 @@ class TricksControllerTest extends WebTestCase
             $this->assertEquals(1, $crawler->filter('html:contains("Figure bien enregistrée.")')->count());
         }
          
-    }*/
+    }
 
-    /*public function testAddTrickWithoutLogin()
+    public function testAddTrickWithoutLogin()
     {
         $crawler = $this->secondClient->request('GET', '/add');
 
@@ -181,8 +182,8 @@ class TricksControllerTest extends WebTestCase
                 $this->client->getResponse()->getStatusCode()
             );
         }
-    }*/
-    
+    }
+/*    
     public function testTricksDeleted()
     {
         $crawler = $this->client->request('GET', '/delete/indy', array(), array(), array(
@@ -200,9 +201,9 @@ class TricksControllerTest extends WebTestCase
         $this->assertEquals(1, $crawler->filter('html:contains("La figure a bien été supprimée.")')->count());
     }
     
-    /*public function testEditTrickWithLogin()
+    public function testEditTrickWithLogin()
     {
-        $crawler = $this->client->request('GET', '/edit/nom-du-trick3', array(), array(), array(
+        $crawler = $this->client->request('GET', '/edit/mute', array(), array(), array(
         'PHP_AUTH_USER' => 'dede@gmail.fr',
         'PHP_AUTH_PW'   => 'dede2017',
         ));
@@ -227,14 +228,6 @@ class TricksControllerTest extends WebTestCase
                     "category" => 1,
                     "videos" => [
                         [
-                            "alt" => "top",
-                            "url" => "https://www.youtube.com/embed/n0F6hSpxaFc"
-                        ],
-                        [
-                            "alt" => "top",
-                            "url" => "https://www.youtube.com/embed/n0F6hSpxaFc"
-                        ],
-                        [
                             "alt" => "topedit",
                             "url" => "https://www.youtube.com/embed/7CjRlQuqGTQ"
                         ]
@@ -242,22 +235,8 @@ class TricksControllerTest extends WebTestCase
                 ]
             ];
 
-            $image1 = new UploadedFile(
-                        'C:\Users\Benjamin\Desktop\vador.png',
-                        'vador.png',
-                        'image/png',
-                        123
-                    );
-
-            $image2 = new UploadedFile(
-                        'C:\Users\Benjamin\Desktop\mataiea.jpeg',
-                        'mataiea.jpeg',
-                        'image/jpeg',
-                        123
-                    );
-
             $image3 = new UploadedFile(
-                        'C:\Users\Benjamin\Desktop\ski.jpeg',
+                        __DIR__."/ImgTests/ski.jpeg",
                         'ski.jpeg',
                         'image/jpeg',
                         123
@@ -268,14 +247,12 @@ class TricksControllerTest extends WebTestCase
             $filesData2 = [
                 "trick" => [
                     "images" => [
-                        ["file" => $image1],
-                        ["file" => $image2],
                         ["file" => $image3],
                     ]
                 ]
             ];
 
-            $crawler = $this->client->request('POST', '/edit/nom-du-trick3', $formData2, $filesData2);
+            $crawler = $this->client->request('POST', '/edit/mute', $formData2, $filesData2);
 
             $this->assertEquals(
             Response::HTTP_FOUND,
