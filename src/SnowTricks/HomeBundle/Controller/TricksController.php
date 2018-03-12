@@ -9,7 +9,6 @@ use SnowTricks\HomeBundle\Entity\Trick;
 use SnowTricks\HomeBundle\Entity\Message;
 use SnowTricks\HomeBundle\Entity\Category;
 use SnowTricks\HomeBundle\Form\TrickType;
-use SnowTricks\HomeBundle\Form\TrickEditType;
 use SnowTricks\HomeBundle\Form\MessageType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;

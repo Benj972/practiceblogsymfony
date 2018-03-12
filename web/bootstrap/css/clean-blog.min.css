@@ -164,15 +164,28 @@ h2
 	text-decoration-line:underline overline;
 }
 
-.pagination
+.page
 {
-	margin-top: 10px; 
+	text-align: center;
 }
 
-.pagination a 
+.pagination
 {
-    border: 1px solid #ddd;
-    padding: 10px;
+	display: inline-block;
+}
+.pagination li
+{
+	color: black;
+    float: left;
+    padding: 8px 16px;
+	text-decoration: none;   
+}
+
+.pagination li.active 
+{
+    color: black;
+    float: left;
+    padding: 8px 16px;
     background-color: #40A494;
 }
 

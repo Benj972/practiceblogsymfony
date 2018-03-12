@@ -1,4 +1,5 @@
 <?php
+
 namespace Tests\SnowTricks\HomeBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -29,7 +30,7 @@ class UserControllerTest extends WebTestCase
 
         $form = $crawler->selectButton('Demandez un nouveau mot de passe')->form();
 
-        $form['request_password[email]'] = 'dede@gmail.fr';
+        $form['request_password[email]'] = 'ben.gallot@gmail.fr';
 
         $client->submit($form);
 
@@ -47,7 +48,7 @@ class UserControllerTest extends WebTestCase
                 $message  = array_shift($messages);
 
                 $this->assertSame('SnowTricks : Récupération de votre mot de passe', $message->getSubject());
-                $this->assertSame('dede@gmail.fr', key($message->getTo()));
+                $this->assertSame('ben.gallot@gmail.fr', key($message->getTo()));
             }
 
 	    $crawler = $client->followRedirect();
@@ -64,45 +65,40 @@ class UserControllerTest extends WebTestCase
         $form = $crawler->selectButton("S'inscrire")->form();
 
             $form['user_registration[pseudo]'] = 'test';
-            $form['user_registration[avatar][file]']->upload('../../Path/vador.png');
+            $form['user_registration[avatar][file]']->upload(__DIR__."/ImgTests/avatar_snow.jpg");
             $form['user_registration[email]'] = 'test@gmail.fr';
-            $form['user_registration[plainPassword][first]'] = 'Symfony';
-            $form['user_registration[plainPassword][second]'] = 'Symfony';
+            $form['user_registration[plainPassword][first]'] = 'Symfony2018';
+            $form['user_registration[plainPassword][second]'] = 'Symfony2018';
 
             $client->submit($form);
 
             $crawler = $client->followRedirect();
-            $this->assertEquals(1, $crawler->filter('html:contains("Welcome")')->count());
+            $this->assertEquals(1, $crawler->filter('html:contains("Bienvenue")')->count());
     }
 
     public function testChangePassword()
     {
         $client = static::createClient(array(), array(
-        'PHP_AUTH_USER' => 'dede@gmail.fr',
-        'PHP_AUTH_PW'   => 'dede2017',
+        'PHP_AUTH_USER' => 'ben.gallot@gmail.fr',
+        'PHP_AUTH_PW'   => 'benjamin2017',
         ));
 
         $crawler = $client->request('GET', '/change', array(), array(), array(
-        'PHP_AUTH_USER' => 'dede@gmail.fr',
-        'PHP_AUTH_PW'   => 'dede2017',
+        'PHP_AUTH_USER' => 'ben.gallot@gmail.fr',
+        'PHP_AUTH_PW'   => 'benjamin2017',
         ));
 
         $this->assertSame(200, $client->getResponse()->getStatusCode());
 
         $form = $crawler->selectButton("Validez")->form();
 
-            $form['change_password[oldPassword]'] = 'dede2017';
-            $form['change_password[newPassword][first]'] = 'dede2018';
-            $form['change_password[newPassword][second]'] = 'dede2018';
+            $form['change_password[oldPassword]'] = 'benjamin2017';
+            $form['change_password[newPassword][first]'] = 'benjamin2018';
+            $form['change_password[newPassword][second]'] = 'benjamin2018';
 
             $client->submit($form);
 
             $crawler = $client->followRedirect();
             $this->assertEquals(1, $crawler->filter('html:contains("Le mot de passe est changé avec succès!")')->count());
     }
-
-   /* public function testResetPassword()
-    {
-
-    }*/
 }

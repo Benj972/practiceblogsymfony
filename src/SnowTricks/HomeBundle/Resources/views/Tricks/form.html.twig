@@ -52,9 +52,9 @@
             {{ include("SnowTricksHomeBundle:Tricks:video_prototype.html.twig", { form: video }) }}
         {% endfor %}
     </div>
-
+    {% if form._token is defined  %}
     {{ form_widget(form._token)}}
-
+    {% endif %}
     {{ form_widget(form.save, { 'label': 'Enregistrez' }, {'attr': {'class': 'btn btn-primary'}}) }}
 
     {{ form_end(form, {"render_rest": false}) }}

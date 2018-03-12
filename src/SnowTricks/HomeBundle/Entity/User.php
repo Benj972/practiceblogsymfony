@@ -53,7 +53,6 @@ class User implements UserInterface
 
     /**
      * The encoded password
-     *
      * @ORM\Column(type="string")
      */
     private $password;
