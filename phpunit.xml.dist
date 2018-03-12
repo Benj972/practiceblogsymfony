@@ -11,9 +11,9 @@
 
     <testsuites>
         <testsuite name="snow_test"> 
-            <!--<file>tests/SnowTricks/HomeBundle/Controller/SecurityControllerTest.php</file> -->
-            <!--<file>tests/SnowTricks/HomeBundle/Controller/TricksControllerTest.php</file> -->
-            <file>tests/SnowTricks/HomeBundle/Controller/UserControllerTest.php</file> 
+            <!--<file>tests/SnowTricks/HomeBundle/Controller/SecurityControllerTest.php</file>-->
+            <file>tests/SnowTricks/HomeBundle/Controller/TricksControllerTest.php</file>
+            <!--<file>tests/SnowTricks/HomeBundle/Controller/UserControllerTest.php</file> --> 
         </testsuite>
     </testsuites>
 

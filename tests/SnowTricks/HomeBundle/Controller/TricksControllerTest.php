@@ -30,7 +30,7 @@ class TricksControllerTest extends WebTestCase
         $this->secondClient = static::createClient();
     }
 
-    public function testHomepageIsUp()
+    /*public function testHomepageIsUp()
     {   
         $crawler = $this->secondClient->request('GET', '/');
         
@@ -63,9 +63,9 @@ class TricksControllerTest extends WebTestCase
 
         $this->assertEquals($trickspage2, $crawler->filter('h3')->count());
 
-    }
+    }*/
 
-    public function testAddTrickWithLogin()
+    /*public function testAddTrickWithLogin()
     {
         
         $crawler = $this->client->request('GET', '/add', array(), array(), array(
@@ -140,9 +140,9 @@ class TricksControllerTest extends WebTestCase
             $this->assertEquals(1, $crawler->filter('html:contains("Figure bien enregistrée.")')->count());
         }
          
-    }
+    }*/
 
-    public function testAddTrickWithoutLogin()
+    /*public function testAddTrickWithoutLogin()
     {
         $crawler = $this->secondClient->request('GET', '/add');
 
@@ -181,7 +181,7 @@ class TricksControllerTest extends WebTestCase
                 $this->client->getResponse()->getStatusCode()
             );
         }
-    }
+    }*/
     
     public function testTricksDeleted()
     {
@@ -193,10 +193,9 @@ class TricksControllerTest extends WebTestCase
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
    
         $this->assertEquals(1, $crawler->filter('html:contains("Supprimer une annonce")')->count());
-
         $form = $crawler->selectButton('Supprimer')->form();
-        $this->client->submit($form);
-
+        
+        $crawler = $this->client->submit($form);
         $crawler = $this->client->followRedirect();
         $this->assertEquals(1, $crawler->filter('html:contains("La figure a bien été supprimée.")')->count());
     }
