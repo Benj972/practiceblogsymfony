@@ -15,7 +15,7 @@
         <div class="row">
             <div class="col-lg-8 col-md-10 mx-auto">
                 <h1 class="section-heading">{{ trick.name }} </h1>
-                <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Voir\Cacher Medias</a>
+                <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Photos\Videos</a>
             </div>
         </div>
     </div>
@@ -25,7 +25,7 @@
             <div class="row">
                 <div class="col-lg-12 col-md-12 mx-auto">
                     <div class="split left">
-                          <div id="carouselExampleControls1" class="carousel slide" data-ride="carousel">
+                          <div id="carouselExampleControls1" class="carousel slide" data-ride="carousel" data-interval="false">
                               <div class="carousel-inner" role="listbox">
                                   {% for image in trick.images[:1] %}
                                       <div class="carousel-item active">
@@ -53,7 +53,7 @@
                     </div>
 
                     <div class="split right">
-                        <div id="carouselExampleControls2" class="carousel slide" data-ride="carousel">
+                        <div id="carouselExampleControls2" class="carousel slide" data-ride="carousel" data-interval="false">
                             <div class="carousel-inner" role="listbox">
                                 {% for video in trick.videos[:1] %}
                                     <div class="carousel-item active">
@@ -89,17 +89,19 @@
             <div class="col-lg-8 col-md-10 mx-auto">
                 
                 {% if trick.category is null %}
-                    <h6>Il n'y a pas de catégories définies</h6>
+                    <h4>Il n'y a pas de catégories définies</h6>
                 {% else %}
                     <h6>
-                        <em> Catégorie {{ trick.category.name }}/Mis à jour le {{ trick.date|date("d/m/Y H:i:s") }}</em>
-                        {% if is_granted('ROLE_USER') %}
-                            <a href="{{ path('snow_tricks_home_edit', {'slug': trick.slug}) }}#two"><span class="fa fa-pencil-square-o" aria-hidden="true"> </span></a>
-                            <a href="{{ path('snow_tricks_home_delete', {'slug': trick.slug}) }}#two"><span class="fa fa-trash" aria-hidden="true"></span></a>
-                        {% endif %} 
+                         Catégorie: {{ trick.category.name }}                       
                     </h6>
                 {% endif %}
                     <p>{{ trick.content }}</p> 
+                    <h6>Figure mise à jour le {{ trick.date|date("d/m/Y à H:i:s") }} 
+                          {% if is_granted('ROLE_USER') %}
+                            <a href="{{ path('snow_tricks_home_edit', {'slug': trick.slug}) }}#two"><span class="fa fa-pencil-square-o" aria-hidden="true"> Modifier</span></a>
+                            <a href="{{ path('snow_tricks_home_delete', {'slug': trick.slug}) }}#two"><span class="fa fa-trash" aria-hidden="true"> Supprimer</span></a>
+                        {% endif %} 
+                    </h6>
             </div>
         </div>
     </div>
