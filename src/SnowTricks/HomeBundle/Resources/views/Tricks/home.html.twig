@@ -43,7 +43,7 @@
                         {# On utilise la fonction range(a, b) qui crée un tableau de valeurs entre a et b #}
                         {% for p in range(1, nbPages) %}
                             <li{% if p == page %} class="active"{% endif %}>
-                                <a href="{{ path('snow_tricks_home_homepage', {'page': p}) }}#title">{{ p }}</a>
+                                <a href="{{ path('snow_tricks_home_homepage', {'page': p}) }}#two">{{ p }}</a>
                             </li>
                         {% endfor %}
                     </ul> 

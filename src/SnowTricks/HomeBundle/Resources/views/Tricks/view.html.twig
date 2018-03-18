@@ -111,7 +111,7 @@
     <div class="container message">
         <div class="row">
             <div class="col-lg-8 col-md-10 mx-auto">
-                <div class="panel panel-primary">
+                <div class="panel panel-primary" id="discussion">
                     <h5> Espace de discussion:</h5>
                         {% if is_granted('ROLE_USER') %}
                             <div>
@@ -153,7 +153,7 @@
                             {# On utilise la fonction range(a, b) qui crée un tableau de valeurs entre a et b #}
                             {% for p in range(1, nbPages) %}
                                 <li{% if p == page %} class="active"{% endif %}>
-                                    <a href="{{ path('snow_tricks_home_view', {'page': p, slug:trick.slug }) }}">{{ p }}</a> 
+                                    <a href="{{ path('snow_tricks_home_view', {'page': p, slug:trick.slug }) }}#discussion">{{ p }}</a> 
                                 </li>
                             {% endfor %} 
                         </ul>   
