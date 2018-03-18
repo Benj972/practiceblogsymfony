@@ -82,6 +82,9 @@ class TricksControllerTest extends WebTestCase
 
         if ($this->client->getResponse()->getStatusCode() === Response::HTTP_OK) {
             
+            $extract = $crawler->filter('input[name="trick[_token]"]')
+                ->extract(array('value'));
+            $csrfToken = $extract[0];
             $form = $crawler->selectButton('Enregistrez')->form();
 
             $formData = $form->getPhpValues();
@@ -91,6 +94,7 @@ class TricksControllerTest extends WebTestCase
                     "name" => "testtrick",
                     "content" => "Hello world ",
                     "category" => 1,
+                    '_token' => $csrfToken,
                     "videos" => [
                         [
                             "alt" => "top",
@@ -183,10 +187,10 @@ class TricksControllerTest extends WebTestCase
             );
         }
     }
-/*    
+   
     public function testTricksDeleted()
     {
-        $crawler = $this->client->request('GET', '/delete/indy', array(), array(), array(
+        $crawler = $this->client->request('GET', '/delete/mute', array(), array(), array(
         'PHP_AUTH_USER' => 'dede@gmail.fr',
         'PHP_AUTH_PW'   => 'dede2017',
         ));
@@ -194,8 +198,13 @@ class TricksControllerTest extends WebTestCase
         $this->assertSame(200, $this->client->getResponse()->getStatusCode());
    
         $this->assertEquals(1, $crawler->filter('html:contains("Supprimer une annonce")')->count());
+        $extract = $crawler->filter('input[name="form[_token]"]')
+        ->extract(array('value'));
+        $csrfToken = $extract[0];
         $form = $crawler->selectButton('Supprimer')->form();
         
+        $form['form[_token]'] = $csrfToken;
+
         $crawler = $this->client->submit($form);
         $crawler = $this->client->followRedirect();
         $this->assertEquals(1, $crawler->filter('html:contains("La figure a bien été supprimée.")')->count());
@@ -203,7 +212,7 @@ class TricksControllerTest extends WebTestCase
     
     public function testEditTrickWithLogin()
     {
-        $crawler = $this->client->request('GET', '/edit/mute', array(), array(), array(
+        $crawler = $this->client->request('GET', '/edit/sad', array(), array(), array(
         'PHP_AUTH_USER' => 'dede@gmail.fr',
         'PHP_AUTH_PW'   => 'dede2017',
         ));
@@ -217,15 +226,20 @@ class TricksControllerTest extends WebTestCase
 
         if ($this->client->getResponse()->getStatusCode() === Response::HTTP_OK) {
             
+            $extract = $crawler->filter('input[name="trick[_token]"]')
+                ->extract(array('value'));
+            $csrfToken = $extract[0];    
+
             $form = $crawler->selectButton('Enregistrez')->form();
 
             $formData2 = $form->getPhpValues();
 
             $formData2 = [
                 "trick" => [
-                    "name" => "nom du trick3",
+                    "name" => "sadmodifié",
                     "content" => "Hello world ",
                     "category" => 1,
+                    '_token' => $csrfToken,
                     "videos" => [
                         [
                             "alt" => "topedit",
@@ -235,7 +249,7 @@ class TricksControllerTest extends WebTestCase
                 ]
             ];
 
-            $image3 = new UploadedFile(
+            $image = new UploadedFile(
                         __DIR__."/ImgTests/ski.jpeg",
                         'ski.jpeg',
                         'image/jpeg',
@@ -247,12 +261,12 @@ class TricksControllerTest extends WebTestCase
             $filesData2 = [
                 "trick" => [
                     "images" => [
-                        ["file" => $image3],
+                        ["file" => $image],
                     ]
                 ]
             ];
 
-            $crawler = $this->client->request('POST', '/edit/mute', $formData2, $filesData2);
+            $crawler = $this->client->request('POST', '/edit/sad', $formData2, $filesData2);
 
             $this->assertEquals(
             Response::HTTP_FOUND,
@@ -264,6 +278,6 @@ class TricksControllerTest extends WebTestCase
             $this->assertEquals(1, $crawler->filter('html:contains("Figure bien modifiée.")')->count());
         }
 
-    }*/
+    }
 }
 ?>
