@@ -50,7 +50,7 @@ class TricksController extends Controller
     /**
      * @ParamConverter("trick", options={"mapping": {"slug":"slug"}})
      */
- 	  public function viewAction(Trick $trick, $page=1, Request $request)
+ 	public function viewAction(Trick $trick, $page=1, Request $request)
   	{
         $user = $this->getUser();
         $message = new Message();
@@ -64,6 +64,8 @@ class TricksController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($message);
             $em->flush();
+
+            return $this->redirectToRoute('snow_tricks_home_view', array('slug' => $trick->getSlug(), '_fragment' => 'discussion'));
         }
 
         if ($page < 1) {
