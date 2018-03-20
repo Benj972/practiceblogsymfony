@@ -16,6 +16,8 @@ use SnowTricks\HomeBundle\Form\Model\ChangePassword;
 use SnowTricks\HomeBundle\Form\Model\ResetPassword;
 use SnowTricks\HomeBundle\Form\Model\RequestPassword;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use SnowTricks\HomeBundle\Entity\User;
+use Doctrine\ORM\Mapping as ORM;
 
 class UserControllerTest extends WebTestCase
 {
@@ -101,4 +103,22 @@ class UserControllerTest extends WebTestCase
             $crawler = $client->followRedirect();
             $this->assertEquals(1, $crawler->filter('html:contains("Le mot de passe est changé avec succès!")')->count());
     }
+
+    /*public function testResetPassword()
+    {
+        
+        $kernel = self::bootKernel();
+        $this->em = $kernel->getContainer()
+            ->get('doctrine')
+            ->getManager();
+
+        $user = $this->em->getRepository('SnowTricksHomeBundle:User')->findOneBy(array('email'=>'ben.gallot@gmail.fr'));
+        $token = $user->getToken();
+
+        $client = static::createClient();
+
+        $crawler = $client->request('GET', '/reset', ['token'=>$token], array(), array());
+
+        $this->assertSame(200, $client->getResponse()->getStatusCode());
+    }*/
 }
