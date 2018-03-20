@@ -21,7 +21,4 @@
 /composer.phar
 /sh.exe.stackdump
 /php
-/src/SnowTricks/HomeBundle/Resources/views/Tricks/view.html.twig
-/web/bootstrap/css/clean-blog.min.css
-/web/bootstrap/vendor/bootstrap/css/bootstrap.min.css
 composer.lock
