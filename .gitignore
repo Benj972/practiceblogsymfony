@@ -27,3 +27,4 @@
 /web/uploads
 /web/uploads/img
 composer.lock
+/var/cache/.gitkeep
