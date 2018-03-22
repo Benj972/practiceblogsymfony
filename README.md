@@ -1,6 +1,8 @@
 Symfony
 =======
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/1f3080fa9a1e424bbdd5251a7db53adc)](https://app.codacy.com/app/Benj972/practiceblogsymfony?utm_source=github.com&utm_medium=referral&utm_content=Benj972/practiceblogsymfony&utm_campaign=badger)
+
 This repository is the project 6 "Snowtricks" in course Php Symfony Web Developer.
 
 Context:
