@@ -31,7 +31,7 @@ Conclusion:
 -----------
 This web application is the basis of a community site that can receive several improvements.
 
-
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/3fa4ec643d274bb6b48f768ce49de717)](https://www.codacy.com/app/Benj972/practiceblogsymfony?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Benj972/practiceblogsymfony&amp;utm_campaign=Badge_Grade)
 
 
 
