@@ -23,7 +23,9 @@
     </div>
 
     <div class="form-group">
-        {{ form_row(form.category) }}
+        {{ form_label(form.category, "Catégorie") }}
+        {{ form_errors(form.category) }}
+        {{ form_widget(form.category) }}
     </div>
 
     <a href="#" id="add_image" class="btn btn-outline-primary">Ajouter une image</a>
