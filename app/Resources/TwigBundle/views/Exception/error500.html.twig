@@ -1,0 +1,12 @@
+{% extends "SnowTricksHomeBundle::layout.html.twig" %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto" id="two">
+                <h2 class="post-title">Ce lien doit être expiré!</h2>            
+                <p> Si vous avez oublié votre mot de passe <a href="{{ path('snow_tricks_home_request_password') }}">Cliquez ici!</a></p>   
+            </div>
+        </div>
+    </div>
+{% endblock %}
