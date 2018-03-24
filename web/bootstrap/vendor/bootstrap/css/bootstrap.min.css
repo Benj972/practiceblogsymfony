@@ -191,8 +191,25 @@ input#user_registration_avatar_file.upload-image
 		overflow-wrap: break-word;
 		width: 100%;
 	}
-}
 
+	.my-4
+	{
+		width: 80%;
+		float: none;
+    	display: block;
+    	margin: 0 auto;
+	}
+
+	.card-img-top
+	{
+		height: 200px;
+	}
+
+	.card-video-top
+	{
+		height: 200px;
+	}
+	
 @media only screen 
 and (min-device-width : 768px) 
 and (max-device-width : 1024px) 

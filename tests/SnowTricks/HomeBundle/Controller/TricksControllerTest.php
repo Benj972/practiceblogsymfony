@@ -178,16 +178,19 @@ class TricksControllerTest extends WebTestCase
             $form = $crawler->selectButton('Envoyez')->form();
 
             $form['snowtricks_homebundle_message[title]'] = 'test';
-            $form['snowtricks_homebundle_message[content]'] = 'Symfony';
+            $form['snowtricks_homebundle_message[content]'] = 'MessageTest';
             
             $crawler = $this->client->submit($form);
             $this->assertEquals(
-                Response::HTTP_OK,
-                $this->client->getResponse()->getStatusCode()
+            Response::HTTP_FOUND,
+            $this->client->getResponse()->getStatusCode()
             );
+            $crawler = $this->client->followRedirect();
+
+            $this->assertEquals(1, $crawler->filter('html:contains("MessageTest")')->count());
         }
     }
-   
+ 
     public function testTricksDeleted()
     {
         $crawler = $this->client->request('GET', '/delete/mute', array(), array(), array(
