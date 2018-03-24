@@ -16,45 +16,13 @@ use SnowTricks\HomeBundle\Form\Model\ChangePassword;
 use SnowTricks\HomeBundle\Form\Model\ResetPassword;
 use SnowTricks\HomeBundle\Form\Model\RequestPassword;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use SnowTricks\HomeBundle\Entity\User;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class UserControllerTest extends WebTestCase
 {
-
-	public function testContact()
-	{	
-        $client = static::createClient();
-
-        $crawler = $client->request('GET', '/request');
-
-        $this->assertEquals(1, $crawler->filter('h2:contains("Mot de passe oublié")')->count());
-
-        $form = $crawler->selectButton('Demandez un nouveau mot de passe')->form();
-
-        $form['request_password[email]'] = 'ben.gallot@gmail.fr';
-
-        $client->submit($form);
-
-        $client->enableProfiler();
-    	   // On vérifie que l'email a bien été envoyé
-            if ($profile = $client->getProfile())
-            {
-                $swiftMailerProfiler = $profile->getCollector('swiftmailer');
-
-                // Seul 1 message doit avoir été envoyé
-                $this->assertEquals(1, $swiftMailerProfiler->getMessageCount());
-
-                // On récupère le premier message
-                $messages = $swiftMailerProfiler->getMessages();
-                $message  = array_shift($messages);
-
-                $this->assertSame('SnowTricks : Récupération de votre mot de passe', $message->getSubject());
-                $this->assertSame('ben.gallot@gmail.fr', key($message->getTo()));
-            }
-
-	    $crawler = $client->followRedirect();
-        $this->assertEquals(1, $crawler->filter('html:contains("Un email a été envoyé à votre boîte aux lettres pour réinitialiser votre mot de passe.")')->count());
-	}
-
     public function testRegister()
     {
         $client = static::createClient();
@@ -100,5 +68,70 @@ class UserControllerTest extends WebTestCase
 
             $crawler = $client->followRedirect();
             $this->assertEquals(1, $crawler->filter('html:contains("Le mot de passe est changé avec succès!")')->count());
+    }
+
+    public function testContact()
+    {   
+        $client = static::createClient();
+
+        $crawler = $client->request('GET', '/request');
+
+        $this->assertEquals(1, $crawler->filter('h2:contains("Mot de passe oublié")')->count());
+
+        $form = $crawler->selectButton('Demandez un nouveau mot de passe')->form();
+
+        $form['request_password[email]'] = 'ben.gallot@gmail.fr';
+
+        $client->submit($form);
+
+        $client->enableProfiler();
+           // On vérifie que l'email a bien été envoyé
+            if ($profile = $client->getProfile())
+            {
+                $swiftMailerProfiler = $profile->getCollector('swiftmailer');
+
+                // Seul 1 message doit avoir été envoyé
+                $this->assertEquals(1, $swiftMailerProfiler->getMessageCount());
+
+                // On récupère le premier message
+                $messages = $swiftMailerProfiler->getMessages();
+                $message  = array_shift($messages);
+
+                $this->assertSame('SnowTricks : Récupération de votre mot de passe', $message->getSubject());
+                $this->assertSame('ben.gallot@gmail.fr', key($message->getTo()));
+            }
+
+        $crawler = $client->followRedirect();
+        $this->assertEquals(1, $crawler->filter('html:contains("Un email a été envoyé à votre boîte aux lettres pour réinitialiser votre mot de passe.")')->count());
+    }
+
+    public function testResetPassword()
+    {
+        $client = static::createClient();
+
+        $kernel = self::bootKernel();
+        $this->em = $kernel->getContainer()
+            ->get('doctrine')
+            ->getManager();
+
+        $user = $this->em->getRepository('SnowTricksHomeBundle:User')->findOneBy(array('email'=>'test@gmail.fr'));
+        $token = $user->setToken(3);
+        $this->em->persist($user);
+        $this->em->flush();
+        
+        $crawler = $client->request('GET', '/reset/3');
+        $this->assertSame(200, $client->getResponse()->getStatusCode());
+
+        $form = $crawler->selectButton("Validez")->form();
+            $form['reset_password[plainPassword][first]'] = 'reset2018';
+            $form['reset_password[plainPassword][second]'] = 'reset2018';
+
+        $client->submit($form);
+        $this->assertEquals(
+            Response::HTTP_FOUND,
+            $client->getResponse()->getStatusCode()
+            );
+        $crawler = $client->followRedirect();
+        $this->assertEquals(1, $crawler->filter('html:contains("Votre mot de passe a été réinitialisé. Vous pouvez vous connecter.")')->count());
     }
 }
