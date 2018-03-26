@@ -28,7 +28,12 @@ class Trick
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
-     * @Assert\Length(min=2)
+     * @Assert\Length(
+     *      min=2,
+     *      max=16,
+     *      minMessage = "Le titre doit comporter au moins 2 caractères",
+     *      maxMessage = "Le titre ne peut pas dépasser 16 caractères"
+     * )
      */
     private $name;
 
@@ -36,7 +41,8 @@ class Trick
      * @var string
      *
      * @ORM\Column(name="content", type="text")
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(
+     *      message = "Le champ ne peut pas être vide")
      */
     private $content;
 

@@ -26,7 +26,9 @@ class Video
      * @var string
      *
      * @ORM\Column(name="url", type="string", length=255)
-     * @Assert\Url()
+     * @Assert\Url(
+     *      message = "L'url '{{ value }}' n'est pas valide",
+     * )
      */
     private $url;
 
@@ -34,7 +36,8 @@ class Video
      * @var string
      *
      * @ORM\Column(name="alt", type="string", length=255)
-     * @Assert\Length(min=2)
+     * @Assert\NotBlank(
+     *      message = "Le champ ne peut pas être vide")
      */
     private $alt;
 

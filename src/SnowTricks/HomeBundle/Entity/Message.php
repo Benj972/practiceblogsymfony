@@ -26,7 +26,12 @@ class Message
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=255)
-     * @Assert\Length(min=2)
+     * @Assert\Length(
+     *      min=2,
+     *      max=10,
+     *      minMessage = "Le titre doit comporter au moins 2 caractères",
+     *      maxMessage = "Le titre ne peut pas dépasser 10 caractères"
+     * )
      */
     private $title;
 
