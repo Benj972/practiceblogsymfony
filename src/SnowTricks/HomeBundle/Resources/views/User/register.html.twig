@@ -12,9 +12,10 @@
                     <div id="image-user_registration" class="row">
                         <div class="col-sm-6 col-md-4">
                             <div class="card my-4">
+                                {{ form_label(form.avatar, "Avatar") }}
                                 <div class="card-body-img">
                                     {{ form_widget(form.avatar.file) }}   
-                                    <input type="text" id="input_text_file" value="Choisir..." class="inputText" readonly="readonly"/>
+                                    <input type="text" id="input_text_file" value="Choisir son image..." class="inputText" readonly="readonly"/>
                                     <span class="fa fa-search"></span>
                                 </div>
                             </div>
