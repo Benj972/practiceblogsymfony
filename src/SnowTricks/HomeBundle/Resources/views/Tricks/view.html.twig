@@ -29,8 +29,10 @@
                               <div class="carousel-inner" role="listbox">
                                   {% for image in trick.images[:1] %}
                                       <div class="carousel-item active">
-                                          <img src="{{ asset(image.webPath) }}" alt="{{ image.alt }}" height="400" width="600">
+                                          <img src="{{ asset(image.webPath) }}" alt="{{ image.alt }}" height="400" width="600">                            
                                       </div> 
+                                  {% else %}
+                                      <img src="{{asset("bootstrap/img/imgsnow.jpg")}}" alt="SnowTricks" height="400" width="600">
                                   {% endfor %}
 
                                   {% for image in trick.images[1:] %}
@@ -51,14 +53,16 @@
                               </a>
                           </div>
                     </div>
-
+                  
                     <div class="split right">
                         <div id="carouselExampleControls2" class="carousel slide" data-ride="carousel" data-interval="false">
                             <div class="carousel-inner" role="listbox">
                                 {% for video in trick.videos[:1] %}
                                     <div class="carousel-item active">
                                         <a class="thumbnail" href="#"><embed src="{{ video.url }}" allowfullscreen="true"  height="400" width="600"></a>
-                                    </div> 
+                                    </div>
+                                {% else %}
+                                      <img src="{{asset("bootstrap/img/videosnow.jpg")}}" alt="SnowTricks" height="400" width="600">     
                                 {% endfor %}
 
                                 {% for video in trick.videos[1:] %}

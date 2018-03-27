@@ -21,6 +21,8 @@
                     <div class="col-xs-12 col-sm-6 col-md-3">
                         {% for image in trick.images|slice(0, 1) %}
                              <a href="{{ path('snow_tricks_home_view', {'slug': trick.slug}) }}#two"> <img src= "{{ asset(image.webPath) }}" height="250", width="250" /> </a>
+                        {% else %}
+                             <a href="{{ path('snow_tricks_home_view', {'slug': trick.slug}) }}#two"> <img src="{{asset("bootstrap/img/imgsnow.jpg")}}" height="250" width="250"> </a>   
                         {% endfor %}
                     </div>
 
