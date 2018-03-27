@@ -45,6 +45,18 @@
 	margin-bottom: 10px;
 }
 
+.site-heading p
+{
+ 	background-color: rgba(212, 212, 212, 0.1);
+}
+
+div#info.container.text-center p
+{
+	color: white;
+	background-color: #0085a1;
+	text-align: center;
+}
+
 /* CSS Space of Discussion*/
 .panel.panel-primary h5
 {
