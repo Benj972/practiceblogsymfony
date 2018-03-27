@@ -6,13 +6,16 @@
 
 {% block snow_tricks_body %}
 
-    <div>
-        {# On affiche tous les messages flash dont le nom est « info » #}
-        {% for message in app.session.flashbag.get('info') %}
-            <p>{{ message }}</p>
-        {% endfor %}
+    <div class="container text-center" id="info">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                {# On affiche tous les messages flash dont le nom est « info » #}
+                {% for message in app.session.flashbag.get('info') %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+        </div>
     </div>
-
     
     <div class="container text-center" id="two">
         <h1>Les Figures</h1>
@@ -34,8 +37,6 @@
                                 <a href="{{ path('snow_tricks_home_delete', {'slug': trick.slug}) }}#two"><span class="fa fa-trash" aria-hidden="true"> Supprimer</span></a>
                             {% endif %}
                         </h3> 
-                        </h4>
-
                     </div>   
                 </div>
             {% endfor %}
