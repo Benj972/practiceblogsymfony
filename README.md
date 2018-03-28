@@ -2,6 +2,7 @@ Symfony
 =======
 
 This repository is the project 6 "Snowtricks" in course Php Symfony Web Developer.
+http://snowtricks.gallot-benjamin.info
 
 Context:
 --------
@@ -21,7 +22,7 @@ Installation:
 2. Recover Repository: git clone https://github.com/Benj972/practiceblogsymfony.git
 3. Install Composer: php -r "eval('?>'.file_get_contents('http://getcomposer.org/installer'));"
 4. Update Library : php composer.phar update
-5. Create database: php bin/console doctrine:database:create --force
+5. Create database: php bin/console doctrine:database:create 
 6. Update database: php bin/console doctrine:schema:update --force
 7. Load database: php bin/console doctrine:fixtures:load
 
