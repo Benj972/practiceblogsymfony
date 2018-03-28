@@ -24,7 +24,7 @@ class SecurityController extends Controller
 
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
             $request->getSession()->getFlashBag()->add('info', 'Vous êtes bien enregistré');
-            return $this->redirectToRoute('snow_tricks_home_homepage');
+            return $this->redirectToRoute('snow_tricks_home_homepage', array('_fragment' => 'info'));
         }
 
         return $this->render(
