@@ -124,7 +124,7 @@ class UserController extends Controller
                         $email = $this->container->get('snow_tricks_home.request_password_mail');
                         $message='...';
                         $email->notifyByEmail($message, $user);
-                        $this->addFlash('info', "Un email a été envoyé à votre boîte aux lettres pour réinitialiser votre mot de passe.");  
+                        $this->addFlash('info', "Un email vous a été envoyé pour réinitialiser votre mot de passe.");  
                         return $this->redirectToRoute('snow_tricks_home_homepage');
                 }
 

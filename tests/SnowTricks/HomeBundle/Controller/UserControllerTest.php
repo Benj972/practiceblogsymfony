@@ -102,7 +102,7 @@ class UserControllerTest extends WebTestCase
             }
 
         $crawler = $client->followRedirect();
-        $this->assertEquals(1, $crawler->filter('html:contains("Un email a été envoyé à votre boîte aux lettres pour réinitialiser votre mot de passe.")')->count());
+        $this->assertEquals(1, $crawler->filter('html:contains("Un email vous a été envoyé pour réinitialiser votre mot de passe.")')->count());
     }
 
     public function testResetPassword()

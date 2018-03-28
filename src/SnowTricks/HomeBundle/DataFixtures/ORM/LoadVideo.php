@@ -31,7 +31,7 @@ class LoadVideo extends AbstractFixture implements DependentFixtureInterface
   $manager->persist($video3);
 
   $video4 = new Video;
-  $video4->setUrl('https://www.youtube.com/embed/KE6EbSdtw3U');
+  $video4->setUrl('https://www.youtube.com/embed/dciGawPvgro');
   $video4->setAlt('Sad');
   $video4->setTrick($this->getReference('trick2'));
   $manager->persist($video4);

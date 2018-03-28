@@ -160,7 +160,6 @@ input#user_registration_avatar_file.upload-image
 	bottom: 0px;
 }
 
-
 @media all and (max-device-width: 600px)
 {
 	.carousel-inner
@@ -197,7 +196,7 @@ input#user_registration_avatar_file.upload-image
 		width: 80%;
 		float: none;
     	display: block;
-    	margin: 0 auto;
+    	margin: 0;
 	}
 
 	.card-img-top

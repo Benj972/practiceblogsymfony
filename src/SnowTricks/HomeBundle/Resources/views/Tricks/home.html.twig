@@ -6,19 +6,22 @@
 
 {% block snow_tricks_body %}
 
-    <div>
-        {# On affiche tous les messages flash dont le nom est « info » #}
-        {% for message in app.session.flashbag.get('info') %}
-            <p>{{ message }}</p>
-        {% endfor %}
+    <div class="container text-center" id="info">
+        <div class="row">
+            <div class="col-lg-12 col-md-10 mx-auto">
+                {# On affiche tous les messages flash dont le nom est « info » #}
+                {% for message in app.session.flashbag.get('info') %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+        </div>
     </div>
-
     
     <div class="container text-center" id="two">
         <h1>Les Figures</h1>
             {% for trick in listTricks %}
                 <div class="row test">
-                    <div class="col-xs-12 col-sm-6 col-md-3">
+                    <div class="col-lg-12 col-md-10 mx-auto">
                         {% for image in trick.images|slice(0, 1) %}
                              <a href="{{ path('snow_tricks_home_view', {'slug': trick.slug}) }}#two"> <img src= "{{ asset(image.webPath) }}" height="250", width="250" /> </a>
                         {% else %}
@@ -26,7 +29,7 @@
                         {% endfor %}
                     </div>
 
-                    <div class="col-xs-12 col-sm-6 col-md-8 list">
+                    <div class="col-lg-12 col-md-10 mx-auto list">
                         <h3 class="post-subtitle">
                             <a href="{{ path('snow_tricks_home_view', {'slug': trick.slug}) }}#two">{{ trick.name }}</a>
                             {% if is_granted('ROLE_USER') %}
@@ -34,13 +37,11 @@
                                 <a href="{{ path('snow_tricks_home_delete', {'slug': trick.slug}) }}#two"><span class="fa fa-trash" aria-hidden="true"> Supprimer</span></a>
                             {% endif %}
                         </h3> 
-                        </h4>
-
                     </div>   
                 </div>
             {% endfor %}
 
-                <div class="col-lg-8 col-md-10 mx-auto page">
+                <div class="col-lg-12 col-md-10 mx-auto page">
                     <ul class="pagination">
                         {# On utilise la fonction range(a, b) qui crée un tableau de valeurs entre a et b #}
                         {% for p in range(1, nbPages) %}
