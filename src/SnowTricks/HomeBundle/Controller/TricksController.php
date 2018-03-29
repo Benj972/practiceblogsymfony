@@ -120,7 +120,7 @@ class TricksController extends Controller
             $em->flush();
 
             $request->getSession()->getFlashBag()->add('info', 'Figure bien enregistrée.');
-            return $this->redirectToRoute('snow_tricks_home_homepage');
+            return $this->redirectToRoute('snow_tricks_home_homepage',array('_fragment' => 'info'));
         }
         // Si on n'est pas en POST, alors on affiche le formulaire
         return $this->render('SnowTricksHomeBundle:Tricks:add.html.twig', array(
@@ -172,7 +172,7 @@ class TricksController extends Controller
             $em->flush();
 
             $request->getSession()->getFlashBag()->add('info', 'Figure bien modifiée.');
-            return $this->redirectToRoute('snow_tricks_home_homepage');
+            return $this->redirectToRoute('snow_tricks_home_homepage', array('_fragment' => 'info'));
         }
 
         return $this->render('SnowTricksHomeBundle:Tricks:edit.html.twig', array(
@@ -199,7 +199,7 @@ class TricksController extends Controller
            $em->remove($trick);
            $em->flush();
            $request->getSession()->getFlashBag()->add('info', 'La figure a bien été supprimée.');
-           return $this->redirectToRoute('snow_tricks_home_homepage');
+           return $this->redirectToRoute('snow_tricks_home_homepage', array('_fragment' => 'info'));
       }
 
       return $this->render('SnowTricksHomeBundle:Tricks:delete.html.twig', array(

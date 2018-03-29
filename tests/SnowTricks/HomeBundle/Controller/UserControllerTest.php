@@ -18,8 +18,6 @@ use SnowTricks\HomeBundle\Form\Model\RequestPassword;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use SnowTricks\HomeBundle\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class UserControllerTest extends WebTestCase
 {

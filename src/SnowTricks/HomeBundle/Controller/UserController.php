@@ -36,7 +36,7 @@ class UserController extends Controller
             $em->persist($user);
             $em->flush();
             $this->addFlash('info', 'Bienvenue '.$user->getEmail());
-            return $this->redirectToRoute('snow_tricks_home_login');
+            return $this->redirectToRoute('snow_tricks_home_login', array('_fragment' => 'info'));
         }
         return $this->render('SnowTricksHomeBundle:User:register.html.twig', [
             'form' => $form->createView()
@@ -70,7 +70,7 @@ class UserController extends Controller
             $em->flush();
 
             $this->addFlash('info', "Le mot de passe est changé avec succès!");    
-            return $this->redirectToRoute('snow_tricks_home_homepage');
+            return $this->redirectToRoute('snow_tricks_home_homepage', array('_fragment' => 'info'));
         }
 
         return $this->render('SnowTricksHomeBundle:User:changePassword.html.twig', array(
@@ -96,7 +96,7 @@ class UserController extends Controller
                         $em = $this->getDoctrine()->getManager();
                         $em->flush();
                         $this->addFlash('info', "Votre mot de passe a été réinitialisé. Vous pouvez vous connecter.");  
-                        return $this->redirectToRoute('snow_tricks_home_homepage');
+                        return $this->redirectToRoute('snow_tricks_home_homepage', array('_fragment' => 'info'));
                     }
             }
             return $this->render('SnowTricksHomeBundle:User:resetPassword.html.twig', array(
@@ -125,7 +125,7 @@ class UserController extends Controller
                         $message='...';
                         $email->notifyByEmail($message, $user);
                         $this->addFlash('info', "Un email vous a été envoyé pour réinitialiser votre mot de passe.");  
-                        return $this->redirectToRoute('snow_tricks_home_homepage');
+                        return $this->redirectToRoute('snow_tricks_home_homepage', array('_fragment' => 'info'));
                 }
 
                 else {
