@@ -10,4 +10,6 @@ services:
         autoconfigure: true
         public: false
 
-    
+    SnowTricks\HomeBundle\Controller\:
+        resource: '../../src/SnowTricks/HomeBundle/Controller'
+        autowire: true
