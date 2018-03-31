@@ -17,10 +17,12 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Doctrine\ORM\EntityManagerInterface;
 
 class TricksController extends Controller
 {
-    public function homeAction($page)
+
+    public function homeAction($page , EntityManagerInterface $em)
     {
         if ($page < 1) {
             throw new NotFoundHttpException('Page "'.$page.'" inexistante.');
@@ -28,10 +30,9 @@ class TricksController extends Controller
 
         $nbPerPage = 10;
 
-        $listTricks = $this->getDoctrine()
-          ->getManager()
-          ->getRepository('SnowTricksHomeBundle:Trick')
-          ->getTricks($page, $nbPerPage)
+        $listTricks = $em
+            ->getRepository(Trick::class)
+            ->getTricks($page, $nbPerPage)
         ;
 
         $nbPages = ceil(count($listTricks) / $nbPerPage);
@@ -50,18 +51,15 @@ class TricksController extends Controller
     /**
      * @ParamConverter("trick", options={"mapping": {"slug":"slug"}})
      */
- 	public function viewAction(Trick $trick, $page=1, Request $request)
+ 	public function viewAction(Trick $trick, $page=1, Request $request, EntityManagerInterface $em)
   	{
-        $user = $this->getUser();
         $message = new Message();
 
-        $form = $this->get('form.factory')->create(MessageType::class, $message);
+        $form = $this->createForm(MessageType::class, $message)->handleRequest($request);
 
-        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
-            $message->setUser($user);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $message->setUser($this->getUser());
             $message->setTrick($trick);
-            $message->setDate(new \DateTime('now'));
-            $em = $this->getDoctrine()->getManager();
             $em->persist($message);
             $em->flush();
 
@@ -74,9 +72,8 @@ class TricksController extends Controller
 
         $nbPerPage = 5;
 
-        $listMessages = $this->getDoctrine()
-          ->getManager()
-          ->getRepository('SnowTricksHomeBundle:Message')
+        $listMessages = $em
+          ->getRepository(Message::class)
           ->getMessages($page, $nbPerPage, $trick)
         ;
 
@@ -92,30 +89,26 @@ class TricksController extends Controller
             'nbPages' => $nbPages,
             'page' => $page,
             'message' => $message,
-            'form' => $form->createview()
+            'form' => $form->createView()
         ));   
     }
 
     /**
     * @Security("has_role('ROLE_USER')")
     */
-    public function addAction(Request $request)
+    public function addAction(Request $request, EntityManagerInterface $em)
     {
-        $user = $this->getUser();
         $trick = new Trick();
-
         //second method form nested
         //$video = new Video();
         //$image = new Image();
         //$trick->addVideo($video);
         //$trick->addImage($image);
 
-        $form = $this->get('form.factory')->create(TrickType::class, $trick);
+        $form = $this->createForm(TrickType::class, $trick)->handleRequest($request);
 
-        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
-            $trick->setUser($user);
-            $trick->setDate(new \DateTime('now'));
-            $em = $this->getDoctrine()->getManager();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $trick->setUser($this->getUser());
             $em->persist($trick);
             $em->flush();
 
@@ -132,24 +125,13 @@ class TricksController extends Controller
     /**
      * @ParamConverter("trick", options={"mapping": {"slug":"slug"}})
      */
-    public function editAction(Trick $trick, Request $request) 
+    public function editAction(Trick $trick, Request $request, EntityManagerInterface $em) 
     {
 
-        $em = $this->getDoctrine()->getManager();
-        $originalImages = new ArrayCollection();
-        $originalVideos = new ArrayCollection();
+        $originalImages = clone $trick->getImages();
+        $originalVideos = clone $trick->getVideos();
 
-        foreach ($trick->getImages() as $image) {
-            $originalImages->add($image);
-        }
-
-        foreach ($trick->getVideos() as $video) {
-            $originalVideos->add($video);
-        }
-
-        $editForm = $this->createForm(TrickType::class, $trick);
-
-        $editForm->handleRequest($request);
+        $editForm = $this->createForm(TrickType::class, $trick)->handleRequest($request);
       
         if ($editForm->isSubmitted() && $editForm->isValid()) {
 
@@ -167,7 +149,6 @@ class TricksController extends Controller
                 }
             }
             
-            $trick->setDate(new \DateTime('now'));
             $em->persist($trick);
             $em->flush();
 
@@ -184,18 +165,16 @@ class TricksController extends Controller
     /**
      * @ParamConverter("trick", options={"mapping": {"slug":"slug"}})
      */
-    public function deleteAction(Request $request, Trick $trick)
+    public function deleteAction(Request $request, Trick $trick, EntityManagerInterface $em)
     {
-         
-      $em = $this->getDoctrine()->getManager();
 
       if (null === $trick) {
         throw new NotFoundHttpException("La figure n'existe pas.");
       }
 
-      $form = $this->get('form.factory')->create();
+      $form = $this->get('form.factory')->create()->handleRequest($request);
 
-      if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+      if ($form->isSubmitted() && $form->isValid()) {
            $em->remove($trick);
            $em->flush();
            $request->getSession()->getFlashBag()->add('info', 'La figure a bien été supprimée.');
