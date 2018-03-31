@@ -10,6 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="message")
  * @ORM\Entity(repositoryClass="SnowTricks\HomeBundle\Repository\MessageRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Message
 {
@@ -169,6 +170,14 @@ class Message
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function updateDate()
+    {
+      $this->date = new \DateTime();
     }
 }
 
