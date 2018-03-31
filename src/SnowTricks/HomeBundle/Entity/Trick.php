@@ -12,6 +12,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * @ORM\Table(name="trick")
  * @ORM\Entity(repositoryClass="SnowTricks\HomeBundle\Repository\TrickRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Trick
 {
@@ -264,6 +265,14 @@ class Trick
     public function setSlug($slug)
     {
         $this->slug = $slug;
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function updateDate()
+    {
+        $this->setDate(new \DateTime());
     }
 }
 
