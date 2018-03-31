@@ -204,6 +204,7 @@ class Trick
             $this->images[] = $image;
             // We link the image to the figure
             $image->setTrick($this);
+            $this->updateDate();
             //return $this->images; 
             //second method form nested
         }
@@ -212,6 +213,7 @@ class Trick
     public function removeImage(Image $image)
     {
         $this->images->removeElement($image);
+        $this->updateDate();
     }
     
     public function getImages()
@@ -225,6 +227,7 @@ class Trick
             $this->videos[] = $video;
             // We link the video to the figure
             $video->setTrick($this);
+            $this->updateDate();
             //return $this;
             ////second method form nested
         }
@@ -233,6 +236,7 @@ class Trick
     public function removeVideo(Video $video)
     {
         $this->videos->removeElement($video);
+        $this->updateDate();
     }
     
     public function getVideos()
