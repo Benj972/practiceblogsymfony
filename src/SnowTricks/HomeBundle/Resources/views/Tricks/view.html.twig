@@ -15,7 +15,7 @@
         <div class="row">
             <div class="col-lg-8 col-md-10 mx-auto">
                 <h1 class="section-heading">{{ trick.name }} </h1>
-                <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Photos\Videos</a>
+                <button class="btn btn-primary">Photos\Videos</button>
             </div>
         </div>
     </div>
@@ -191,5 +191,11 @@
                 $('#collapseExample').collapse("hide")
             }
         }
+
+        $(document).ready(function(){
+        $("button").click(function(){
+            $("#collapseExample").toggle(1000);
+        });
+    });
     </script>
 {% endblock %}
