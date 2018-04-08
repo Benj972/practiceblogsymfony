@@ -31,39 +31,33 @@ class TricksControllerTest extends WebTestCase
         $this->secondClient = static::createClient();
     }
 
-    public function testHomepageIsUp()
+    public function testHomepageIsUp($page=1)
     {   
-        $crawler = $this->secondClient->request('GET', '/');
-        
-        $this->assertSame(200, $this->secondClient->getResponse()->getStatusCode());
-        $this->assertSame(2, $crawler->filter('h1')->count());
-
         $kernel = self::bootKernel();
         $this->em = $kernel->getContainer()
             ->get('doctrine')
             ->getManager();
-  
 
-        $page = 2;
+        $totalTricks = $this->em->getRepository(Trick::class)->findAll();
         $nbPerPage = 10;
+        $totalPage = ceil(count($totalTricks) / $nbPerPage);
 
-        $this->assertEquals($nbPerPage, $crawler->filter('h3')->count());
-
-        $listTricks = $this->em
-            ->getRepository(Trick::class)
-            ->getTricks($page, $nbPerPage)
-        ;
+        $listTricks = $this->em->getRepository(Trick::class)->getTricks($page, $nbPerPage);
+        $this->assertEquals(count($listTricks), count($totalTricks));
 
         $nbPages = ceil(count($listTricks) / $nbPerPage);
+        $this->assertEquals($nbPages, $totalPage); 
 
-        $this->assertEquals($nbPages, $page);
+        $crawler = $this->secondClient->request('GET', '/');
+        $this->assertSame(200, $this->secondClient->getResponse()->getStatusCode());
+        $this->assertSame(2, $crawler->filter('h1')->count());
+        $this->assertEquals($nbPerPage, $crawler->filter('h3')->count());
 
+        /* for lisTricks=13 and nbPages=2*/
         $crawler = $this->secondClient->request('GET', '/2');
-
-        $trickspage2 = ceil(count($listTricks) - $nbPerPage);
-
-        $this->assertEquals($trickspage2, $crawler->filter('h3')->count());
-
+        $this->assertSame(200, $this->secondClient->getResponse()->getStatusCode());
+        $nbtrickslastpage = fmod(count($listTricks), $nbPerPage);
+        $this->assertEquals($nbtrickslastpage, $crawler->filter('h3')->count());
     }
 
     public function testAddTrickWithLogin()
