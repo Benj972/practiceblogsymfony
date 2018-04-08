@@ -78,7 +78,7 @@ class UserController extends Controller
     public function resetPasswordAction(Request $request, $token, EntityManagerInterface $em)
     {
             $resetpassword = new ResetPassword;    
-            $user = $this->getDoctrine()->getManager()->getRepository('SnowTricksHomeBundle:User')->findOneByToken($token);
+            $user = $em->getRepository('SnowTricksHomeBundle:User')->findOneByToken($token);
                     
             if($user !== null) {
                     $form = $this->createForm(ResetPasswordType::class, $resetpassword)->handleRequest($request);
@@ -103,10 +103,7 @@ class UserController extends Controller
         $form = $this->createForm(RequestPasswordType::class, $requestpassword)->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) { 
-                $user = $this->getDoctrine()
-                    ->getManager()
-                    ->getRepository(User::class)
-                    ->findOneByEmail($requestpassword->getEmail());
+                $user = $em->getRepository(User::class)->findOneByEmail($requestpassword->getEmail());
 
                 if($user !== null) {
                         $confirmationtoken = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
