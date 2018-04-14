@@ -18,11 +18,9 @@ class SecurityController extends Controller
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        $form = $this->createForm(LoginType::class, [
-        	'_username' => $lastUsername,
-        ]);
+        $form = $this->createForm(LoginType::class, ['_username' => $lastUsername])->handleRequest($request);
 
-        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $request->getSession()->getFlashBag()->add('info', 'Vous êtes bien enregistré');
             return $this->redirectToRoute('snow_tricks_home_homepage', array('_fragment' => 'info'));
         }
