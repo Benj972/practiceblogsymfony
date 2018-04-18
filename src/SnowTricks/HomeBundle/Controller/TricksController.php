@@ -2,7 +2,7 @@
 
 namespace SnowTricks\HomeBundle\Controller;
 
-use SnowTricks\HomeBundle\Entity\Member;
+use SnowTricks\HomeBundle\Entity\User;
 use SnowTricks\HomeBundle\Entity\Video;
 use SnowTricks\HomeBundle\Entity\Image;
 use SnowTricks\HomeBundle\Entity\Trick;
@@ -18,6 +18,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Doctrine\ORM\EntityManagerInterface;
+use SnowTricks\HomeBundle\Form\Handler\MessageHandler;
+use SnowTricks\HomeBundle\Form\Handler\AddHandler;
+use SnowTricks\HomeBundle\Form\Handler\EditHandler;
+use SnowTricks\HomeBundle\Form\Handler\DeleteHandler;
 
 class TricksController extends Controller
 {
@@ -54,15 +58,12 @@ class TricksController extends Controller
  	public function viewAction(Trick $trick, $page=1, Request $request, EntityManagerInterface $em)
   	{
         $message = new Message();
-
+        $user = $this->getUser();
+        
         $form = $this->createForm(MessageType::class, $message)->handleRequest($request);
+        $formHandler = new MessageHandler($form, $user, $trick, $em, $message);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $message->setUser($this->getUser());
-            $message->setTrick($trick);
-            $em->persist($message);
-            $em->flush();
-
+        if ($formHandler->process()){
             return $this->redirectToRoute('snow_tricks_home_view', array('slug' => $trick->getSlug(), '_fragment' => 'discussion'));
         }
 
@@ -99,6 +100,7 @@ class TricksController extends Controller
     public function addAction(Request $request, EntityManagerInterface $em)
     {
         $trick = new Trick();
+        $user = $this->getUser();
         //second method form nested
         //$video = new Video();
         //$image = new Image();
@@ -106,15 +108,13 @@ class TricksController extends Controller
         //$trick->addImage($image);
 
         $form = $this->createForm(TrickType::class, $trick)->handleRequest($request);
+        $formHandler = new AddHandler($form, $user, $trick, $em);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $trick->setUser($this->getUser());
-            $em->persist($trick);
-            $em->flush();
-
+        if ($formHandler->processAdd()){
             $request->getSession()->getFlashBag()->add('info', 'Figure bien enregistrée.');
-            return $this->redirectToRoute('snow_tricks_home_homepage',array('_fragment' => 'info'));
+            return $this->redirectToRoute('snow_tricks_home_homepage', array('_fragment' => 'info'));
         }
+
         // Si on n'est pas en POST, alors on affiche le formulaire
         return $this->render('SnowTricksHomeBundle:Tricks:add.html.twig', array(
             'trick' => $trick,
@@ -132,26 +132,10 @@ class TricksController extends Controller
         $originalVideos = clone $trick->getVideos();
 
         $editForm = $this->createForm(TrickType::class, $trick)->handleRequest($request);
-      
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
+        $formHandler = new EditHandler($editForm, $trick, $em, $originalImages, $originalVideos);
 
-            foreach ($originalImages as $image) {
-                if (false === $trick->getImages()->contains($image)) {
-                    $image->setTrick(null);
-                    $em->remove($image);
-                }
-            }
-
-            foreach ($originalVideos as $video) {
-                if (false === $trick->getVideos()->contains($video)) {
-                    $video->setTrick(null);
-                    $em->remove($video);
-                }
-            }
-            
-            $em->persist($trick);
-            $em->flush();
-
+        if ($formHandler->processEdit())
+        {
             $request->getSession()->getFlashBag()->add('info', 'Figure bien modifiée.');
             return $this->redirectToRoute('snow_tricks_home_homepage', array('_fragment' => 'info'));
         }
@@ -168,23 +152,24 @@ class TricksController extends Controller
     public function deleteAction(Request $request, Trick $trick, EntityManagerInterface $em)
     {
 
-      if (null === $trick) {
-        throw new NotFoundHttpException("La figure n'existe pas.");
-      }
+        if (null === $trick) {
+          throw new NotFoundHttpException("La figure n'existe pas.");
+        }
 
-      $form = $this->get('form.factory')->create()->handleRequest($request);
+        $form = $this->get('form.factory')->create()->handleRequest($request);
 
-      if ($form->isSubmitted() && $form->isValid()) {
-           $em->remove($trick);
-           $em->flush();
-           $request->getSession()->getFlashBag()->add('info', 'La figure a bien été supprimée.');
-           return $this->redirectToRoute('snow_tricks_home_homepage', array('_fragment' => 'info'));
-      }
+        $formHandler = new DeleteHandler($form, $trick, $em);
 
-      return $this->render('SnowTricksHomeBundle:Tricks:delete.html.twig', array(
+        if ($formHandler->processDelete())
+        {
+            $request->getSession()->getFlashBag()->add('info', 'La figure a bien été supprimée.');
+            return $this->redirectToRoute('snow_tricks_home_homepage', array('_fragment' => 'info'));
+        }
+
+        return $this->render('SnowTricksHomeBundle:Tricks:delete.html.twig', array(
            'trick' => $trick,
            'form'   => $form->createView(),
-      ));
+        ));
     }
     
 }
