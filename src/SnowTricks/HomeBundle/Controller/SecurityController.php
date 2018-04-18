@@ -6,6 +6,7 @@ use SnowTricks\HomeBundle\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use SnowTricks\HomeBundle\Form\LoginType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 class SecurityController extends Controller
 {
@@ -19,12 +20,7 @@ class SecurityController extends Controller
         $lastUsername = $authenticationUtils->getLastUsername();
 
         $form = $this->createForm(LoginType::class, ['_username' => $lastUsername])->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $request->getSession()->getFlashBag()->add('info', 'Vous êtes bien enregistré');
-            return $this->redirectToRoute('snow_tricks_home_homepage', array('_fragment' => 'info'));
-        }
-
+        
         return $this->render(
             'SnowTricksHomeBundle:Security:login.html.twig',
             array(

@@ -81,8 +81,14 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
-        // on success, let the request continue
-        return null;
+        $form = $this->formFactory->create(LoginType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $request->getSession()->getFlashBag()->add('info', 'Vous êtes bien enregistré');
+            return null;
+        }
+
     }
 
     protected function getDefaultSuccessRedirectUrl()
