@@ -3,14 +3,13 @@
 namespace SnowTricks\HomeBundle\Controller;
 
 use SnowTricks\HomeBundle\Entity\User;
-use SnowTricks\HomeBundle\Form\UserRegistrationType;
+use SnowTricks\HomeBundle\Form\Handler\RegisterHandler;
+use SnowTricks\HomeBundle\Form\Handler\ChangePasswordHandler;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use SnowTricks\HomeBundle\Form\ChangePasswordType;
 use SnowTricks\HomeBundle\Form\ResetPasswordType;
 use SnowTricks\HomeBundle\Form\RequestPasswordType;
-use SnowTricks\HomeBundle\Form\Model\ChangePassword;
 use SnowTricks\HomeBundle\Form\Model\ResetPassword;
 use SnowTricks\HomeBundle\Form\Model\RequestPassword;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -26,53 +25,18 @@ use Doctrine\ORM\EntityManagerInterface;
 class UserController extends Controller
 {
 
-    public function registerAction(Request $request, EntityManagerInterface $em)
+    public function registerAction(RegisterHandler $handler)
     {
-    	$form = $this->createForm(UserRegistrationType::class)->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            /** @var User $user */
-            $user = $form->getData();
-            $em->persist($user);
-            $em->flush();
-            $this->addFlash('info', 'Bienvenue '.$user->getEmail());
-            return $this->redirectToRoute('snow_tricks_home_login', array('_fragment' => 'info'));
-        }
-        return $this->render('SnowTricksHomeBundle:User:register.html.twig', [
-            'form' => $form->createView()
-        ]);
+        return $handler->handle(); 
     }
 
     /**
     * @Security("has_role('ROLE_USER')")
     */
-    public function changePasswordAction(Request $request, EntityManagerInterface $em)
+    public function changePasswordAction(ChangePasswordHandler $handler)
     {
-        $changePasswordModel = new ChangePassword();
         $user = $this->getUser();
-        $form = $this->createForm(ChangePasswordType::class, $changePasswordModel)->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            $passwordEncoder = $this->container->get('security.password_encoder');
-            $oldplainPassword = $changePasswordModel->getOldPassword();
-            $plainPassword = $changePasswordModel->getNewPassword();
-
-		      if (!$passwordEncoder->isPasswordValid($user, $oldplainPassword)) {
-                    $this->addFlash('info', "Wrong old password!");
-                } 
-
-            $user->setPlainPassword($plainPassword);
-            $em->persist($user);
-            $em->flush();
-
-            $this->addFlash('info', "Le mot de passe est changé avec succès!");    
-            return $this->redirectToRoute('snow_tricks_home_homepage', array('_fragment' => 'info'));
-        }
-
-        return $this->render('SnowTricksHomeBundle:User:changePassword.html.twig', array(
-          'form' => $form->createView(),
-        ));      
+        return $handler->handle($user);          
     }
 
     public function resetPasswordAction(Request $request, $token, EntityManagerInterface $em)
