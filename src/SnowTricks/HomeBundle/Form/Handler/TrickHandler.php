@@ -3,19 +3,18 @@
 namespace SnowTricks\HomeBundle\Form\Handler;
 
 use Doctrine\ORM\EntityManagerInterface;
-use SnowTricks\HomeBundle\Entity\Message;
+use Doctrine\ORM\UnitOfWork;
 use SnowTricks\HomeBundle\Entity\Trick;
-use SnowTricks\HomeBundle\Form\MessageType;
+use SnowTricks\HomeBundle\Form\TrickType;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
 use Symfony\Component\Routing\Router;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Twig\Environment;
 
-class MessageHandler
+class TrickHandler
 {
     /**
      * @var FormFactory
@@ -38,19 +37,14 @@ class MessageHandler
     private $flashBag;
 
     /**
+     * @var Environment
+     */
+    private $twig;
+
+    /**
      * @var Router
      */
     private $router;
-
-    /**
-     * @var TokenStorage
-     */
-    private $tokenStorage;
-
-    /**
-     * @var MessageType
-     */
-    private $form;
 
     /**
      * TrickHandler constructor.
@@ -58,48 +52,42 @@ class MessageHandler
      * @param RequestStack $requestStack
      * @param EntityManagerInterface $manager
      * @param FlashBag $flashBag
+     * @param Environment $twig
      * @param Router $router
-     * @param TokenStorage $tokenStorage
      */
-    public function __construct(FormFactory $formFactory, RequestStack $requestStack, EntityManagerInterface $manager, FlashBag $flashBag, Router $router, TokenStorage $tokenStorage)
+    public function __construct(FormFactory $formFactory, RequestStack $requestStack, EntityManagerInterface $manager, FlashBag $flashBag, Environment $twig, Router $router)
     {
         $this->formFactory = $formFactory;
         $this->requestStack = $requestStack;
         $this->manager = $manager;
         $this->flashBag = $flashBag;
+        $this->twig = $twig;
         $this->router = $router;
-        $this->tokenStorage = $tokenStorage;
     }
 
-
     /**
+     * @param Trick $trick
+     * @param string $validatedMessage
      * @return RedirectResponse|Response
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
-    public function handle(Trick $trick)
+    public function handle(Trick $trick, string $validatedMessage)
     {
-        $message = new Message();
-
-        $this->form = $this->formFactory->create(MessageType::class, $message)->handleRequest($this->requestStack->getCurrentRequest());
-
-        if ($this->form->isSubmitted() && $this->form->isValid()) {
-            $message->setUser($this->tokenStorage->getToken()->getUser());
-            $message->setTrick($trick);
-            $this->manager->persist($message);
+        $form = $this->formFactory->create(TrickType::class, $trick)->handleRequest($this->requestStack->getCurrentRequest());
+        if($form->isSubmitted() && $form->isValid()) {
+            if($this->manager->getUnitOfWork()->getEntityState($trick) == UnitOfWork::STATE_NEW) {
+                $this->manager->persist($trick);
+            }
             $this->manager->flush();
-            return new RedirectResponse($this->router->generate('snow_tricks_home_view', array('slug' => $trick->getSlug(), '_fragment' => 'discussion')));
+            $this->flashBag->add('info', $validatedMessage);
+            return new RedirectResponse($this->router->generate('snow_tricks_home_homepage', array('_fragment' => 'info')));
         }
-
-        return;
-    }
-
-    /**
-     * @return MessageType
-     */
-    public function getForm()
-    {
-        return $this->form;
+        return new Response($this->twig->render('SnowTricksHomeBundle:Tricks:edit.html.twig', array(
+            'trick' => $trick,
+            'form'  => $form->createView(),
+            'title' => $this->manager->getUnitOfWork()->getEntityState($trick) == UnitOfWork::STATE_NEW ? "Ajouter une figure" : "Modifier une figure"
+        )));
     }
 }

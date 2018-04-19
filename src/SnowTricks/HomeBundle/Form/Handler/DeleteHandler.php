@@ -2,45 +2,88 @@
 
 namespace SnowTricks\HomeBundle\Form\Handler;
 
-/**
- * The DeleteHandler.
- * Use for manage your form submitions
- */
+use Doctrine\ORM\EntityManagerInterface;
+use SnowTricks\HomeBundle\Entity\Trick;
+use Symfony\Component\Form\FormFactory;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
+use Symfony\Component\Routing\Router;
+use Twig\Environment;
+
 class DeleteHandler
 {
-   
-    private $form;
-    private $trick;
-    private $em;
+    /**
+     * @var FormFactory
+     */
+    private $formFactory;
 
     /**
-     * Initialize the handler with the form and the request
-     *
-     * @param Form $form
-     * @param Request $request
-     *
+     * @var RequestStack
      */
-    public function __construct($form, $trick, $em)
+    private $requestStack;
+
+    /**
+     * @var EntityManagerInterface
+     */
+    private $manager;
+
+    /**
+     * @var FlashBag
+     */
+    private $flashBag;
+
+    /**
+     * @var Environment
+     */
+    private $twig;
+
+    /**
+     * @var Router
+     */
+    private $router;
+
+    /**
+     * TrickHandler constructor.
+     * @param FormFactory $formFactory
+     * @param RequestStack $requestStack
+     * @param EntityManagerInterface $manager
+     * @param FlashBag $flashBag
+     * @param Environment $twig
+     * @param Router $router
+     */
+    public function __construct(FormFactory $formFactory, RequestStack $requestStack, EntityManagerInterface $manager, FlashBag $flashBag, Environment $twig, Router $router)
     {
-        $this->form = $form;
-        $this->trick = $trick;
-        $this->em = $em;
+        $this->formFactory = $formFactory;
+        $this->requestStack = $requestStack;
+        $this->manager = $manager;
+        $this->flashBag = $flashBag;
+        $this->twig = $twig;
+        $this->router = $router;
     }
 
     /**
-    * Process form
-    *
-    * @return boolean
-    */
-    public function processDelete()
+     * @param Trick $trick
+     * @param string $validatedMessage
+     * @return RedirectResponse|Response
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     */
+    public function handle(Trick $trick, string $validatedMessage)
     {
-       if ($this->form->isSubmitted() && $this->form->isValid()) {
-            $this->em->remove($this->trick);
-            $this->em->flush();
+        $form = $this->formFactory->create()->handleRequest($this->requestStack->getCurrentRequest());
+        if($form->isSubmitted() && $form->isValid()) {
+            $this->manager->remove($trick);
+            $this->manager->flush();
+            $this->flashBag->add('info', $validatedMessage);
+            return new RedirectResponse($this->router->generate('snow_tricks_home_homepage', array('_fragment' => 'info')));
+        }
 
-            return true;
-       }
-
-       return false;
+        return new Response($this->twig->render('SnowTricksHomeBundle:Tricks:delete.html.twig', array(
+            'trick' => $trick,
+            'form'  => $form->createView(),
+        )));
     }
 }
