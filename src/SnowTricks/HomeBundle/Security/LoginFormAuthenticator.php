@@ -6,6 +6,7 @@ namespace SnowTricks\HomeBundle\Security;
 use SnowTricks\HomeBundle\Entity\User;
 use SnowTricks\HomeBundle\Form\LoginType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticator;
@@ -81,14 +82,8 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
-        $form = $this->formFactory->create(LoginType::class);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $request->getSession()->getFlashBag()->add('info', 'Vous êtes bien enregistré');
-            return null;
-        }
-
+        $request->getSession()->getFlashBag()->add('info', 'Vous êtes bien enregistré');
+        return new RedirectResponse($this->router->generate("snow_tricks_home_homepage", array('_fragment' => 'info')));
     }
 
     protected function getDefaultSuccessRedirectUrl()
