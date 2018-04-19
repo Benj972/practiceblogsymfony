@@ -53,7 +53,7 @@ class Trick
     private $images;
 
     /**
-    * @ORM\OneToMany(targetEntity="SnowTricks\HomeBundle\Entity\Video", mappedBy="trick", cascade={"persist", "remove"})
+    * @ORM\OneToMany(targetEntity="SnowTricks\HomeBundle\Entity\Video", mappedBy="trick", cascade={"persist", "remove"}, orphanRemoval=true)
     * @Assert\Valid()
     */
     private $videos;
@@ -212,6 +212,7 @@ class Trick
 
     public function removeImage(Image $image)
     {
+        $image->setTrick(null);
         $this->images->removeElement($image);
         $this->updateDate();
     }
@@ -235,6 +236,7 @@ class Trick
 
     public function removeVideo(Video $video)
     {
+        $video->setTrick(null);
         $this->videos->removeElement($video);
         $this->updateDate();
     }
