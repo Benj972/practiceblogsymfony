@@ -7,7 +7,6 @@ use SnowTricks\HomeBundle\Entity\User;
 use SnowTricks\HomeBundle\Form\Model\ChangePassword;
 use SnowTricks\HomeBundle\Form\ChangePasswordType;
 use Symfony\Component\Form\FormFactory;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
