@@ -8,12 +8,12 @@ use SnowTricks\HomeBundle\Form\Model\ResetPassword;
 use SnowTricks\HomeBundle\Form\Model\RequestPassword;
 use SnowTricks\HomeBundle\Form\ResetPasswordType;
 use SnowTricks\HomeBundle\Form\RequestPasswordType;
-use Symfony\Component\Form\FormFactory;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
-use Symfony\Component\Routing\Router;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
+use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -22,7 +22,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 class ResetPasswordHandler
 {
     /**
-     * @var FormFactory
+     * @var FormFactoryInterface
      */
     private $formFactory;
 
@@ -37,7 +37,7 @@ class ResetPasswordHandler
     private $manager;
 
     /**
-     * @var FlashBag
+     * @var FlashBagInterface
      */
     private $flashBag;
 
@@ -47,21 +47,21 @@ class ResetPasswordHandler
     private $twig;
 
     /**
-     * @var Router
+     * @var RouterInterface
      */
     private $router;
 
     private $container;
     /**
-     * ChangePasswordHandler constructor.
-     * @param FormFactory $formFactory
+     * ResetPasswordHandler constructor.
+     * @param FormFactoryInterface $formFactory
      * @param RequestStack $requestStack
      * @param EntityManagerInterface $manager
-     * @param FlashBag $flashBag
+     * @param FlashBagInterface $flashBag
      * @param Environment $twig
-     * @param Router $router
+     * @param RouterInterface $router
      */
-    public function __construct(FormFactory $formFactory, RequestStack $requestStack, EntityManagerInterface $manager, FlashBag $flashBag, Environment $twig, Router $router, ContainerInterface $container)
+    public function __construct(FormFactoryInterface $formFactory, RequestStack $requestStack, EntityManagerInterface $manager, FlashBagInterface $flashBag, Environment $twig, RouterInterface $router, ContainerInterface $container)
     {
         $this->formFactory = $formFactory;
         $this->requestStack = $requestStack;

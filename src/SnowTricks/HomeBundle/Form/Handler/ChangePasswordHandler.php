@@ -3,22 +3,22 @@
 namespace SnowTricks\HomeBundle\Form\Handler;
 
 use Doctrine\ORM\EntityManagerInterface;
-use SnowTricks\HomeBundle\Entity\User;
 use SnowTricks\HomeBundle\Form\Model\ChangePassword;
 use SnowTricks\HomeBundle\Form\ChangePasswordType;
-use Symfony\Component\Form\FormFactory;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
-use Symfony\Component\Routing\Router;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
+use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class ChangePasswordHandler
 {
     /**
-     * @var FormFactory
+     * @var FormFactoryInterface
      */
     private $formFactory;
 
@@ -33,7 +33,7 @@ class ChangePasswordHandler
     private $manager;
 
     /**
-     * @var FlashBag
+     * @var FlashBagInterface
      */
     private $flashBag;
 
@@ -43,22 +43,27 @@ class ChangePasswordHandler
     private $twig;
 
     /**
-     * @var Router
+     * @var RouterInterface
      */
     private $router;
 
     private $container;
 
     /**
+     * @var TokenStorageInterface
+     */
+    private $tokenStorage;
+
+    /**
      * ChangePasswordHandler constructor.
-     * @param FormFactory $formFactory
+     * @param FormFactoryInterface $formFactory
      * @param RequestStack $requestStack
      * @param EntityManagerInterface $manager
-     * @param FlashBag $flashBag
+     * @param FlashBagInterface $flashBag
      * @param Environment $twig
-     * @param Router $router
+     * @param RouterInterface $router
      */
-    public function __construct(FormFactory $formFactory, RequestStack $requestStack, EntityManagerInterface $manager, FlashBag $flashBag, Environment $twig, Router $router, ContainerInterface $container)
+    public function __construct(FormFactoryInterface $formFactory, RequestStack $requestStack, EntityManagerInterface $manager, FlashBagInterface $flashBag, Environment $twig, RouterInterface $router, ContainerInterface $container, TokenStorageInterface $tokenStorage)
     {
         $this->formFactory = $formFactory;
         $this->requestStack = $requestStack;
@@ -67,6 +72,7 @@ class ChangePasswordHandler
         $this->twig = $twig;
         $this->router = $router;
         $this->container = $container;
+        $this->tokenStorage = $tokenStorage;
     }
 
     /**
@@ -77,10 +83,11 @@ class ChangePasswordHandler
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
-    public function handle($user)
+    public function handle()
     {
         $changePasswordModel = new ChangePassword();
-        
+        $user = $this->tokenStorage->getToken()->getUser();
+
         $form = $this->formFactory->create(ChangePasswordType::class, $changePasswordModel)->handleRequest($this->requestStack->getCurrentRequest());
         if($form->isSubmitted() && $form->isValid()) {
             $passwordEncoder = $this->container->get('security.password_encoder');

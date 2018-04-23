@@ -10,16 +10,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-
 
 class UserController extends Controller
 {
-
     public function registerAction(RegisterHandler $handler)
     {
         return $handler->handle(); 
@@ -30,8 +24,7 @@ class UserController extends Controller
     */
     public function changePasswordAction(ChangePasswordHandler $handler)
     {
-        $user = $this->getUser();
-        return $handler->handle($user);          
+        return $handler->handle();          
     }
 
     public function resetPasswordAction($token, ResetPasswordHandler $handler)

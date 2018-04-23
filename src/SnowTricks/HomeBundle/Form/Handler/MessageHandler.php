@@ -6,19 +6,18 @@ use Doctrine\ORM\EntityManagerInterface;
 use SnowTricks\HomeBundle\Entity\Message;
 use SnowTricks\HomeBundle\Entity\Trick;
 use SnowTricks\HomeBundle\Form\MessageType;
-use Symfony\Component\Form\FormFactory;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
-use Symfony\Component\Routing\Router;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
+use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Twig\Environment;
 
 class MessageHandler
 {
     /**
-     * @var FormFactory
+     * @var FormFactoryInterface
      */
     private $formFactory;
 
@@ -33,17 +32,12 @@ class MessageHandler
     private $manager;
 
     /**
-     * @var FlashBag
-     */
-    private $flashBag;
-
-    /**
-     * @var Router
+     * @var RouterInterface
      */
     private $router;
 
     /**
-     * @var TokenStorage
+     * @var TokenStorageInterface
      */
     private $tokenStorage;
 
@@ -54,19 +48,17 @@ class MessageHandler
 
     /**
      * TrickHandler constructor.
-     * @param FormFactory $formFactory
+     * @param FormFactoryInterface $formFactory
      * @param RequestStack $requestStack
      * @param EntityManagerInterface $manager
-     * @param FlashBag $flashBag
-     * @param Router $router
-     * @param TokenStorage $tokenStorage
+     * @param RouterInterface $router
+     * @param TokenStorageInterface $tokenStorage
      */
-    public function __construct(FormFactory $formFactory, RequestStack $requestStack, EntityManagerInterface $manager, FlashBag $flashBag, Router $router, TokenStorage $tokenStorage)
+    public function __construct(FormFactoryInterface $formFactory, RequestStack $requestStack, EntityManagerInterface $manager, RouterInterface $router, TokenStorageInterface $tokenStorage)
     {
         $this->formFactory = $formFactory;
         $this->requestStack = $requestStack;
         $this->manager = $manager;
-        $this->flashBag = $flashBag;
         $this->router = $router;
         $this->tokenStorage = $tokenStorage;
     }

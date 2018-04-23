@@ -2,32 +2,27 @@
 
 namespace SnowTricks\HomeBundle\Controller;
 
-use SnowTricks\HomeBundle\Entity\User;
-use SnowTricks\HomeBundle\Entity\Video;
-use SnowTricks\HomeBundle\Entity\Image;
 use SnowTricks\HomeBundle\Entity\Trick;
 use SnowTricks\HomeBundle\Entity\Message;
-use SnowTricks\HomeBundle\Entity\Category;
 use SnowTricks\HomeBundle\Form\Handler\MessageHandler;
 use SnowTricks\HomeBundle\Form\Handler\TrickHandler;
+use SnowTricks\HomeBundle\Form\Handler\AddHandler;
+use SnowTricks\HomeBundle\Form\Handler\EditHandler;
+use SnowTricks\HomeBundle\Form\Handler\DeleteHandler;
 use SnowTricks\HomeBundle\Form\TrickType;
 use SnowTricks\HomeBundle\Form\MessageType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Doctrine\ORM\EntityManagerInterface;
-use SnowTricks\HomeBundle\Form\Handler\AddHandler;
-use SnowTricks\HomeBundle\Form\Handler\EditHandler;
-use SnowTricks\HomeBundle\Form\Handler\DeleteHandler;
+
 
 class TricksController extends Controller
 {
 
-    public function homeAction($page , EntityManagerInterface $em)
+    public function homeAction($page, EntityManagerInterface $em)
     {
 
         $listTricks = $em->getRepository(Trick::class)->getTricks($page);

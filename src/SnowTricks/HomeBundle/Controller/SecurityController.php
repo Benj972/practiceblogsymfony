@@ -2,7 +2,6 @@
 
 namespace SnowTricks\HomeBundle\Controller;
 
-use SnowTricks\HomeBundle\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use SnowTricks\HomeBundle\Form\LoginType;
 use Symfony\Component\HttpFoundation\Request;

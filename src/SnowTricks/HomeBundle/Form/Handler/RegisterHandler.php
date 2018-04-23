@@ -4,18 +4,18 @@ namespace SnowTricks\HomeBundle\Form\Handler;
 
 use Doctrine\ORM\EntityManagerInterface;
 use SnowTricks\HomeBundle\Form\UserRegistrationType;
-use Symfony\Component\Form\FormFactory;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
-use Symfony\Component\Routing\Router;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
+use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment;
 
 class RegisterHandler
 {
     /**
-     * @var FormFactory
+     * @var FormFactoryInterface
      */
     private $formFactory;
 
@@ -30,7 +30,7 @@ class RegisterHandler
     private $manager;
 
     /**
-     * @var FlashBag
+     * @var FlashBagInterface
      */
     private $flashBag;
 
@@ -40,20 +40,20 @@ class RegisterHandler
     private $twig;
 
     /**
-     * @var Router
+     * @var RouterInterface
      */
     private $router;
 
     /**
      * TrickHandler constructor.
-     * @param FormFactory $formFactory
+     * @param FormFactoryInterface $formFactory
      * @param RequestStack $requestStack
      * @param EntityManagerInterface $manager
-     * @param FlashBag $flashBag
+     * @param FlashBagInterface $flashBag
      * @param Environment $twig
-     * @param Router $router
+     * @param RouterInterface $router
      */
-    public function __construct(FormFactory $formFactory, RequestStack $requestStack, EntityManagerInterface $manager, FlashBag $flashBag, Environment $twig, Router $router)
+    public function __construct(FormFactoryInterface $formFactory, RequestStack $requestStack, EntityManagerInterface $manager, FlashBagInterface $flashBag, Environment $twig, RouterInterface $router)
     {
         $this->formFactory = $formFactory;
         $this->requestStack = $requestStack;
