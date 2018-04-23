@@ -89,21 +89,22 @@ class ChangePasswordHandler
         $user = $this->tokenStorage->getToken()->getUser();
 
         $form = $this->formFactory->create(ChangePasswordType::class, $changePasswordModel)->handleRequest($this->requestStack->getCurrentRequest());
-        if($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $passwordEncoder = $this->container->get('security.password_encoder');
             $oldplainPassword = $changePasswordModel->getOldPassword();
             $plainPassword = $changePasswordModel->getNewPassword();
 
-              if (!$passwordEncoder->isPasswordValid($user, $oldplainPassword)) {
-                    $this->addFlash('info', "Wrong old password!");
-                } 
+            if (!$passwordEncoder->isPasswordValid($user, $oldplainPassword)) {
+                $this->addFlash('info', "Wrong old password!");
+            } 
 
             $user->setPlainPassword($plainPassword);
             $this->manager->persist($user);
             $this->manager->flush();
-
             $this->flashBag->add('info', "Le mot de passe est changé avec succès!");    
-            return new RedirectResponse($this->router->generate('snow_tricks_home_homepage', array('_fragment' => 'info')));
+            return new RedirectResponse(
+                $this->router->generate('snow_tricks_home_homepage', array('_fragment' => 'info'))
+            );
         }
 
         return new Response($this->twig->render('SnowTricksHomeBundle:User:changePassword.html.twig', array(

@@ -26,5 +26,4 @@ class SecurityController extends Controller
     {     
         throw new \Exception('this should not be reached!');
     }
-
 }

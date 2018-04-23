@@ -76,13 +76,15 @@ class TrickHandler
     public function handle(Trick $trick, string $validatedMessage)
     {
         $form = $this->formFactory->create(TrickType::class, $trick)->handleRequest($this->requestStack->getCurrentRequest());
-        if($form->isSubmitted() && $form->isValid()) {
-            if($this->manager->getUnitOfWork()->getEntityState($trick) == UnitOfWork::STATE_NEW) {
+        if ($form->isSubmitted() && $form->isValid()) {
+            if ($this->manager->getUnitOfWork()->getEntityState($trick) == UnitOfWork::STATE_NEW) {
                 $this->manager->persist($trick);
             }
             $this->manager->flush();
             $this->flashBag->add('info', $validatedMessage);
-            return new RedirectResponse($this->router->generate('snow_tricks_home_homepage', array('_fragment' => 'info')));
+            return new RedirectResponse(
+                $this->router->generate('snow_tricks_home_homepage', array('_fragment' => 'info'))
+            );
         }
         return new Response($this->twig->render('SnowTricksHomeBundle:Tricks:edit.html.twig', array(
             'trick' => $trick,

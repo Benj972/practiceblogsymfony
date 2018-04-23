@@ -74,11 +74,13 @@ class DeleteHandler
     public function handle(Trick $trick, string $validatedMessage)
     {
         $form = $this->formFactory->create()->handleRequest($this->requestStack->getCurrentRequest());
-        if($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $this->manager->remove($trick);
             $this->manager->flush();
             $this->flashBag->add('info', $validatedMessage);
-            return new RedirectResponse($this->router->generate('snow_tricks_home_homepage', array('_fragment' => 'info')));
+            return new RedirectResponse(
+                $this->router->generate('snow_tricks_home_homepage', array('_fragment' => 'info'))
+            );
         }
 
         return new Response($this->twig->render('SnowTricksHomeBundle:Tricks:delete.html.twig', array(

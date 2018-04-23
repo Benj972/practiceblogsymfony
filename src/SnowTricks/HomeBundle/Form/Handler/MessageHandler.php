@@ -81,7 +81,9 @@ class MessageHandler
             $message->setTrick($trick);
             $this->manager->persist($message);
             $this->manager->flush();
-            return new RedirectResponse($this->router->generate('snow_tricks_home_view', array('slug' => $trick->getSlug(), '_fragment' => 'discussion')));
+            return new RedirectResponse(
+                $this->router->generate('snow_tricks_home_view', array('slug' => $trick->getSlug(), '_fragment' => 'discussion'))
+            );
         }
 
         return;
