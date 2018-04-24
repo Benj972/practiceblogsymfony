@@ -2,7 +2,6 @@
 
 namespace SnowTricks\HomeBundle\Security;
 
-
 use SnowTricks\HomeBundle\Entity\User;
 use SnowTricks\HomeBundle\Form\LoginType;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,16 +18,16 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 {
-	private $formFactory;
-	private $em;
-	private $router;
+    private $formFactory;
+    private $em;
+    private $router;
     private $passwordEncoder;
 
-	public function __construct(FormFactoryInterface $formFactory, EntityManagerInterface $em, RouterInterface $router, UserPasswordEncoderInterface $passwordEncoder)
+    public function __construct(FormFactoryInterface $formFactory, EntityManagerInterface $em, RouterInterface $router, UserPasswordEncoderInterface $passwordEncoder)
     {
-    	$this->formFactory = $formFactory;
-    	$this->em = $em;
-    	$this->router = $router;
+        $this->formFactory = $formFactory;
+        $this->em = $em;
+        $this->router = $router;
         $this->passwordEncoder = $passwordEncoder;
     }
 
@@ -37,10 +36,10 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
         return $request->getPathInfo() == '/login' && $request->isMethod('POST');
     }
     
-	public function getCredentials(Request $request)
+    public function getCredentials(Request $request)
     {
-    	$isLoginSubmit = $request->getPathInfo() == '/login' && $request->isMethod('POST');
-    	if (!$isLoginSubmit) {
+        $isLoginSubmit = $request->getPathInfo() == '/login' && $request->isMethod('POST');
+        if (!$isLoginSubmit) {
             // skip authentication
             return;
         }
@@ -58,17 +57,17 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
-    	$username = $credentials['_username'];
+        $username = $credentials['_username'];
 
-    	return $this->em->getRepository('SnowTricksHomeBundle:User')
+        return $this->em->getRepository('SnowTricksHomeBundle:User')
             ->findOneBy(['email' => $username]);
     }
 
     public function checkCredentials($credentials, UserInterface $user)
     {
-    	$password = $credentials['_password'];
+        $password = $credentials['_password'];
 
-    	if ($this->passwordEncoder->isPasswordValid($user, $password)) {
+        if ($this->passwordEncoder->isPasswordValid($user, $password)) {
             return true;
         }
         
@@ -77,7 +76,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 
     protected function getLoginUrl()
     {
-    	return $this->router->generate('snow_tricks_home_login');
+        return $this->router->generate('snow_tricks_home_login');
     }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)

@@ -17,21 +17,21 @@ class UserRegistrationType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-    	$builder
+        $builder
             ->add('pseudo', TextType::class)
             ->add('email', EmailType::class)
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class
             ])
-            ->add('avatar', ImageType::class,[
+            ->add('avatar', ImageType::class, [
                 "required" => false,
             ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-    	 $resolver->setDefaults([
+         $resolver->setDefaults([
             'data_class' => User::class
-        ]);
+         ]);
     }
 }

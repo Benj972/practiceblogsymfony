@@ -96,12 +96,12 @@ class ChangePasswordHandler
 
             if (!$passwordEncoder->isPasswordValid($user, $oldplainPassword)) {
                 $this->addFlash('info', "Wrong old password!");
-            } 
+            }
 
             $user->setPlainPassword($plainPassword);
             $this->manager->persist($user);
             $this->manager->flush();
-            $this->flashBag->add('info', "Le mot de passe est changé avec succès!");    
+            $this->flashBag->add('info', "Le mot de passe est changé avec succès!");
             return new RedirectResponse(
                 $this->router->generate('snow_tricks_home_homepage', array('_fragment' => 'info'))
             );

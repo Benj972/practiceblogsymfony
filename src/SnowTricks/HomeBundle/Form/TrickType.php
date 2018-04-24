@@ -56,5 +56,4 @@ class TrickType extends AbstractType
             'data_class' => 'SnowTricks\HomeBundle\Entity\Trick'
         ));
     }
-
 }

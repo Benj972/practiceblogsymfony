@@ -25,7 +25,7 @@ class MessageType extends AbstractType
                 ->add('date', HiddenType::class)
                 ->add('trick', HiddenType::class)
                 ->add('user', HiddenType::class)
-                ->add('save',  SubmitType::class);
+                ->add('save', SubmitType::class);
     }
     
     /**
@@ -45,6 +45,4 @@ class MessageType extends AbstractType
     {
         return 'snowtricks_homebundle_message';
     }
-
-
 }

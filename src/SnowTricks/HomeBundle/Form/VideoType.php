@@ -16,13 +16,13 @@ class VideoType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        ->add('url', TextType::class,[
+        ->add('url', TextType::class, [
             "required" => false,
             "attr" => [
                 "class" => "upload-video"
             ]
         ])
-        ->add('alt', TextType::class,[
+        ->add('alt', TextType::class, [
             "required" => false,
         ]);
     }
@@ -36,5 +36,4 @@ class VideoType extends AbstractType
             'data_class' => 'SnowTricks\HomeBundle\Entity\Video'
         ));
     }
-
 }
