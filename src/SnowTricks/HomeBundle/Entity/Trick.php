@@ -94,7 +94,7 @@ class Trick
         $this->images = new ArrayCollection();
         $this->videos = new ArrayCollection();
         $this->messages = new ArrayCollection();
-        $this->date = new \Datetime();    
+        $this->date = new \Datetime();
     }
 
 
@@ -200,12 +200,12 @@ class Trick
 
     public function addImage(Image $image)
     {
-        if($image->getFile() !== null) {
+        if ($image->getFile() !== null) {
             $this->images[] = $image;
             // We link the image to the figure
             $image->setTrick($this);
             $this->updateDate();
-            //return $this->images; 
+            //return $this->images;
             //second method form nested
         }
     }
@@ -224,7 +224,7 @@ class Trick
 
     public function addVideo(Video $video)
     {
-        if($video->getUrl() !== null) {
+        if ($video->getUrl() !== null) {
             $this->videos[] = $video;
             // We link the video to the figure
             $video->setTrick($this);
@@ -281,7 +281,3 @@ class Trick
         $this->setDate(new \DateTime());
     }
 }
-
-
-
-
