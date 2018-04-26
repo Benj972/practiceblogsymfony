@@ -147,20 +147,22 @@
                                           </div>
                                       </li>
                                     </ul>
-                                </div>    
+                                </div>
                             {% endfor %}
-                        {% else %}
-                            <li>Pas (encore !) de messages</li>
                         {% endif %}   
 
-                        <ul class="pagination">
-                            {# On utilise la fonction range(a, b) qui crée un tableau de valeurs entre a et b #}
-                            {% for p in range(1, nbPages) %}
-                                <li{% if p == page %} class="active"{% endif %}>
-                                    <a href="{{ path('snow_tricks_home_view', {'page': p, slug:trick.slug }) }}#discussion">{{ p }}</a> 
-                                </li>
-                            {% endfor %} 
-                        </ul>   
+                        {% if listMessages is empty %}
+                            <li>Pas encore de messages</li>
+                        {% else %}
+                            <ul class="pagination">
+                                {# On utilise la fonction range(a, b) qui crée un tableau de valeurs entre a et b #}
+                                {% for p in range(1, nbPages) %}
+                                    <li{% if p == page %} class="active"{% endif %}>
+                                        <a href="{{ path('snow_tricks_home_view', {'page': p, slug:trick.slug }) }}#discussion">{{ p }}</a> 
+                                    </li>
+                                {% endfor %} 
+                            </ul> 
+                        {% endif %}                  
                 </div>
             </div>
         </div>
