@@ -10,13 +10,3 @@ services:
         autowire: true
         tags:
          - { name: doctrine.event_subscriber }
-
-    snow_tricks_home.request_password_mail:
-        class: SnowTricks\HomeBundle\SendRequestMail\SendRequestPasswordMail
-        arguments:
-            - "@mailer"
-            - "@router"
-            - "@templating"
-            
-            
-    

@@ -16,8 +16,8 @@ use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use SnowTricks\HomeBundle\SendRequestMail\SendRequestPasswordMail;
 
 class ResetPasswordHandler
 {
@@ -51,7 +51,11 @@ class ResetPasswordHandler
      */
     private $router;
 
-    private $container;
+    /**
+     * @var SendRequestPasswordMail
+     */
+    private $email;
+
     /**
      * ResetPasswordHandler constructor.
      * @param FormFactoryInterface $formFactory
@@ -60,8 +64,9 @@ class ResetPasswordHandler
      * @param FlashBagInterface $flashBag
      * @param Environment $twig
      * @param RouterInterface $router
+     * @param SendRequestPasswordMail $email
      */
-    public function __construct(FormFactoryInterface $formFactory, RequestStack $requestStack, EntityManagerInterface $manager, FlashBagInterface $flashBag, Environment $twig, RouterInterface $router, ContainerInterface $container)
+    public function __construct(FormFactoryInterface $formFactory, RequestStack $requestStack, EntityManagerInterface $manager, FlashBagInterface $flashBag, Environment $twig, RouterInterface $router, SendRequestPasswordMail $email)
     {
         $this->formFactory = $formFactory;
         $this->requestStack = $requestStack;
@@ -69,7 +74,7 @@ class ResetPasswordHandler
         $this->flashBag = $flashBag;
         $this->twig = $twig;
         $this->router = $router;
-        $this->container = $container;
+        $this->email = $email;
     }
 
     /**
@@ -118,9 +123,8 @@ class ResetPasswordHandler
                 $confirmationtoken = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
                 $user->setToken($confirmationtoken);
                 $this->manager->flush();
-                $email = $this->container->get('snow_tricks_home.request_password_mail');
                 $message='...';
-                $email->notifyByEmail($message, $user);
+                $this->email->notifyByEmail($message, $user);
                 $this->flashBag->add('info', "Un email vous a été envoyé pour réinitialiser votre mot de passe.");
                 return new RedirectResponse(
                     $this->router->generate('snow_tricks_home_homepage', array('_fragment' => 'info'))
