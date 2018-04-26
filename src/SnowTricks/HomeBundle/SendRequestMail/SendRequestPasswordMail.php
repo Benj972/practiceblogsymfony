@@ -30,7 +30,7 @@ class SendRequestPasswordMail
 
         $message = \Swift_Message::newInstance()
             ->setSubject('SnowTricks : Récupération de votre mot de passe')
-            ->setFrom('xxxx@xxxx.xx')
+            ->setFrom(['snowtricks@tricks.com' => 'SnowTricks'])
             ->setTo($user->getEmail())
             ->setBody($this->templating->render(
                 'SnowTricksHomeBundle:User:request_password_mail.html.twig',
