@@ -136,7 +136,7 @@ class TricksControllerTest extends WebTestCase
 
             $crawler = $this->client->followRedirect();
 
-            $this->assertEquals(1, $crawler->filter('html:contains("Figure bien enregistrée.")')->count());
+            $this->assertEquals(1, $crawler->filter('html:contains("Figure ajoutée avec succès.")')->count());
         }
          
     }
@@ -204,7 +204,7 @@ class TricksControllerTest extends WebTestCase
 
         $crawler = $this->client->submit($form);
         $crawler = $this->client->followRedirect();
-        $this->assertEquals(1, $crawler->filter('html:contains("La figure a bien été supprimée.")')->count());
+        $this->assertEquals(1, $crawler->filter('html:contains("Figure supprimée avec succès.")')->count());
     }
     
     public function testEditTrickWithLogin()
@@ -272,7 +272,7 @@ class TricksControllerTest extends WebTestCase
 
             $crawler = $this->client->followRedirect();
 
-            $this->assertEquals(1, $crawler->filter('html:contains("Figure bien modifiée.")')->count());
+            $this->assertEquals(1, $crawler->filter('html:contains("Figure modifiée avec succès.")')->count());
         }
 
     }

@@ -123,6 +123,4 @@ class Video
     {
         return $this->trick;
     }
-
 }
-

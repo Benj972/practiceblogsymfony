@@ -5,7 +5,7 @@ namespace SnowTricks\HomeBundle\Form\Model;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class RequestPassword 
+class RequestPassword
 {
     /**
      * @var UserInterface
@@ -26,5 +26,4 @@ class RequestPassword
     {
         $this->email = $email;
     }
-    
 }

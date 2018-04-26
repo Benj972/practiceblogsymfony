@@ -13,3 +13,7 @@ services:
     SnowTricks\HomeBundle\Controller\:
         resource: '../../src/SnowTricks/HomeBundle/Controller'
         autowire: true
+
+    Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface:
+        alias: session.flash_bag
+       

@@ -1,0 +1,1 @@
+{"php":"7.1.7","version":"2.11.1","rules":{"encoding":true,"full_opening_tag":true},"hashes":{"src\\SnowTricks\\HomeBundle\\Controller\\\\SecurityController.php":27900616,"src\\SnowTricks\\HomeBundle\\Controller\\\\TricksController.php":212786272,"src\\SnowTricks\\HomeBundle\\Controller\\\\UserController.php":-1487686136}}

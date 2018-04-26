@@ -10,16 +10,16 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class HashPasswordListener implements EventSubscriber
 {
 
-	private $passwordEncoder;
+    private $passwordEncoder;
 
-	public function __construct(UserPasswordEncoderInterface $passwordEncoder)
+    public function __construct(UserPasswordEncoderInterface $passwordEncoder)
     {
         $this->passwordEncoder = $passwordEncoder;
     }
 
     public function prePersist(LifecycleEventArgs $args)
     {
-    	$entity = $args->getEntity();
+        $entity = $args->getEntity();
         if (!$entity instanceof User) {
             return;
         }

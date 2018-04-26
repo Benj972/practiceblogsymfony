@@ -5,7 +5,7 @@ namespace SnowTricks\HomeBundle\Form\Model;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class ResetPassword 
+class ResetPassword
 {
     /**
      * @Assert\NotBlank(
@@ -34,5 +34,4 @@ class ResetPassword
     {
         return $this->plainPassword;
     }
-
 }

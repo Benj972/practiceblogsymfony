@@ -3,7 +3,6 @@
 
 namespace SnowTricks\HomeBundle\SendRequestMail;
 
-
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -23,7 +22,6 @@ class SendRequestPasswordMail
         $this->mailer = $mailer;
         $this->router = $router;
         $this->templating = $templating;
-             
     }
     
 
@@ -32,15 +30,19 @@ class SendRequestPasswordMail
 
         $message = \Swift_Message::newInstance()
             ->setSubject('SnowTricks : Récupération de votre mot de passe')
-            ->setFrom('xxxx@xxxx.xx')
+            ->setFrom(['snowtricks@tricks.com' => 'SnowTricks'])
             ->setTo($user->getEmail())
-            ->setBody($this->templating->render('SnowTricksHomeBundle:User:request_password_mail.html.twig',
+            ->setBody($this->templating->render(
+                'SnowTricksHomeBundle:User:request_password_mail.html.twig',
                 [
                 'username' => $user->getUsername(),
-                'request_link' => $this->router->generate('snow_tricks_home_reset_password',
-                    ['token' => $user->getToken()], UrlGeneratorInterface::ABSOLUTE_URL)
-            ])
-        );
+                'request_link' => $this->router->generate(
+                    'snow_tricks_home_reset_password',
+                    ['token' => $user->getToken()],
+                    UrlGeneratorInterface::ABSOLUTE_URL
+                )
+                ]
+            ));
 
         $this->mailer->send($message);
     }

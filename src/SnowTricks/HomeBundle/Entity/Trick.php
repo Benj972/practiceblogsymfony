@@ -53,7 +53,7 @@ class Trick
     private $images;
 
     /**
-    * @ORM\OneToMany(targetEntity="SnowTricks\HomeBundle\Entity\Video", mappedBy="trick", cascade={"persist", "remove"})
+    * @ORM\OneToMany(targetEntity="SnowTricks\HomeBundle\Entity\Video", mappedBy="trick", cascade={"persist", "remove"}, orphanRemoval=true)
     * @Assert\Valid()
     */
     private $videos;
@@ -94,7 +94,7 @@ class Trick
         $this->images = new ArrayCollection();
         $this->videos = new ArrayCollection();
         $this->messages = new ArrayCollection();
-        $this->date = new \Datetime();    
+        $this->date = new \Datetime();
     }
 
 
@@ -200,18 +200,19 @@ class Trick
 
     public function addImage(Image $image)
     {
-        if($image->getFile() !== null) {
+        if ($image->getFile() !== null) {
             $this->images[] = $image;
             // We link the image to the figure
             $image->setTrick($this);
             $this->updateDate();
-            //return $this->images; 
+            //return $this->images;
             //second method form nested
         }
     }
 
     public function removeImage(Image $image)
     {
+        $image->setTrick(null);
         $this->images->removeElement($image);
         $this->updateDate();
     }
@@ -223,7 +224,7 @@ class Trick
 
     public function addVideo(Video $video)
     {
-        if($video->getUrl() !== null) {
+        if ($video->getUrl() !== null) {
             $this->videos[] = $video;
             // We link the video to the figure
             $video->setTrick($this);
@@ -235,6 +236,7 @@ class Trick
 
     public function removeVideo(Video $video)
     {
+        $video->setTrick(null);
         $this->videos->removeElement($video);
         $this->updateDate();
     }
@@ -279,7 +281,3 @@ class Trick
         $this->setDate(new \DateTime());
     }
 }
-
-
-
-

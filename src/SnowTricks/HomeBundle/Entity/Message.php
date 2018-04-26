@@ -177,7 +177,6 @@ class Message
      */
     public function updateDate()
     {
-      $this->date = new \DateTime();
+        $this->date = new \DateTime();
     }
 }
-

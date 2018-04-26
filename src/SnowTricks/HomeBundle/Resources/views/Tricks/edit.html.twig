@@ -5,7 +5,7 @@
     <div class="container" id="two">
         <div class="row">
             <div class="col-lg-8 col-md-10 mx-auto">
-                <h2 class="post-title">Modifier une figure</h2>
+                <h2 class="post-title">{{ title }}</h2>
 
                     <!-- Modal -->
                     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -36,13 +36,14 @@
                     l'esprit générale de la figure déjà publiée.
                 </p>
 
-                <p>
-                    <a href="{{ path('snow_tricks_home_view', {'slug': trick.slug}) }}" class="btn btn-default">
-                        <i class="glyphicon glyphicon-chevron-left"></i>
-                        Retour à la figure
-                    </a>
-                </p>
-
+                {% if trick.slug %}
+                    <p>
+                        <a href="{{ path('snow_tricks_home_view', {'slug': trick.slug}) }}" class="btn btn-default">
+                            <i class="glyphicon glyphicon-chevron-left"></i>
+                            Retour à la figure
+                        </a>
+                    </p>
+                {% endif %}
             </div>
         </div>
     </div>

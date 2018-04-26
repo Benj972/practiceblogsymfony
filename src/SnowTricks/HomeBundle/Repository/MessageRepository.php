@@ -14,30 +14,26 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
 
 class MessageRepository extends \Doctrine\ORM\EntityRepository
 {
-
-	public function getMessages($page, $nbPerPage, $trick)
-  {
-    $query = $this->createQueryBuilder('m')
-      ->leftJoin('m.user', 'u')
-      ->addSelect('u')
-      ->leftJoin('m.trick', 't')
-      ->addSelect('t')
-      ->where('m.trick = :trick')
-      ->setParameter('trick', $trick)
-      ->addOrderBy('m.date', 'DESC')
-      ->getQuery()
-    ;
-
-
-    $query
-      // On définit l'annonce à partir de laquelle commencer la liste
-      ->setFirstResult(($page-1) * $nbPerPage)
-      // Ainsi que le nombre d'annonce à afficher sur une page
-      ->setMaxResults($nbPerPage)
-    ;
-    // Enfin, on retourne l'objet Paginator correspondant à la requête construite
-    // (n'oubliez pas le use correspondant en début de fichier)
-    return new Paginator($query, true);
-  }
-
+    public function getMessages($page, $trick)
+    {
+        $query = $this->createQueryBuilder('m')
+            ->leftJoin('m.user', 'u')
+            ->addSelect('u')
+            ->leftJoin('m.trick', 't')
+            ->addSelect('t')
+            ->where('m.trick = :trick')
+            ->setParameter('trick', $trick)
+            ->addOrderBy('m.date', 'DESC')
+            ->getQuery()
+        ;
+        $query
+            // On définit l'annonce à partir de laquelle commencer la liste
+            ->setFirstResult((($page < 1 ? 1 : $page)-1) * 5)
+            // Ainsi que le nombre d'annonce à afficher sur une page
+            ->setMaxResults(5)
+        ;
+        // Enfin, on retourne l'objet Paginator correspondant à la requête construite
+        // (n'oubliez pas le use correspondant en début de fichier)
+        return new Paginator($query, true);
+    }
 }

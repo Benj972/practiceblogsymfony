@@ -23,7 +23,6 @@ class ResetPasswordType extends AbstractType
             'second_options' => array('label' => RepeatedType::class),
             'type'           => PasswordType::class,
         ));
-
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -32,5 +31,4 @@ class ResetPasswordType extends AbstractType
             'data_class' => 'SnowTricks\HomeBundle\Form\Model\ResetPassword',
         ]);
     }
-} 
-
+}

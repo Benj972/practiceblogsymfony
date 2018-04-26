@@ -92,8 +92,4 @@ class Category
     {
         return $this->tricks;
     }
-
-
-
 }
-

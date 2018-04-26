@@ -49,5 +49,5 @@ class ChangePassword
     {
         $this->newPassword = $newPassword;
         return $this;
-    }   
+    }
 }
